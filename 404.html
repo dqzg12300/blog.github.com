@@ -245,7 +245,24 @@
 
 
 
+  
+  <div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+var gitalk = new Gitalk({
+        clientID:  'e9248ff35ccfaf344499', 
+        clientSecret: '29a53e013802099f3eea9f54af3f50edf93a4d20',
+        id: window.location.pathname,
+        repo: 'blog.github.io', 
+        owner: 'dqzg12300', 
+        admin: 'dqzg12300', 
+        distractionFreeMode: 'true',
+     })
+gitalk.render('gitalk-container')
+</script>
 
+  
   
   
   
