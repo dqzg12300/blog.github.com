@@ -138,6 +138,195 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-IOSDump" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog.github.io/2020/08/26/IOSDump/">ios的砸壳和基础工具</a>
+    </h1>
+  
+
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数:<span id="/blog.github.io/2020/08/26/IOSDump/" class="pageViews">0</span>次
+  </a>
+
+
+        
+        <a href="/blog.github.io/2020/08/26/IOSDump/" class="archive-article-date">
+  	<time datetime="2020-08-26T12:42:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、砸壳"><a href="#一、砸壳" class="headerlink" title="一、砸壳"></a>一、砸壳</h2><h3 id="1、dumpdecrypted"><a href="#1、dumpdecrypted" class="headerlink" title="1、dumpdecrypted"></a>1、dumpdecrypted</h3><p>这种砸壳方式我在ios11的机子上测试没能解密成功，然后ios10一点问题都没有。可能是我太渣了吧。新手还请用ios10来尝试</p>
+<p>首先从github上下载了编译出来dumpdecrypted，这个基本没啥问题的。</p>
+<p>接着我们用到了两个路径，一个是沙盒到路径，还有一个是运行的路径</p>
+<p>运行想要砸壳的应用，然后ps -e|grep Application找到要砸壳的应用，将路径保存出来</p>
+<p>然后我们需要找到沙盒到路径，简单的办法就是使用cycript注入之后，再查询出来。</p>
+<p>ios11的是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask][0]</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file:&#x2F;&#x2F;&#x2F;var&#x2F;mobile&#x2F;Containers&#x2F;Data&#x2F;Application&#x2F;3B94D3F0-2CFB-4E0E-A0A2-03F960B2BA60&#x2F;Documents&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>ios10的是NSHomeDirectory()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;var&#x2F;mobile&#x2F;Containers&#x2F;Data&#x2F;Application&#x2F;3B94D3F0-2CFB-4E0E-A0A2-03F960B2BA60</span><br></pre></td></tr></table></figure>
+
+<p>接着把编译好的dumpdecrypted.dylib用scp上传到设备的/var/mobile/Containers/Data/Application/3B94D3F0-2CFB-4E0E-A0A2-03F960B2BA60/Documents/这个目录下</p>
+<p>然后就可以砸壳了，cd到沙盒的目录下。执行下面的命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DYLD_INSERT_LIBRARIES=dumpdecrypted.dylib  /var/containers/Bundle/Application/4AE69936-E547-4B27-B76F-D5CEAB992553/Target.app/Target</span><br></pre></td></tr></table></figure>
+
+<p>成功后会在当前目录生成出砸壳后的文件，scp到本地即可</p>
+<h3 id="2、bfinject"><a href="#2、bfinject" class="headerlink" title="2、bfinject"></a>2、bfinject</h3><p>使用这个方式砸壳是因为刚开始我手上只有ios11的手机，然后萌新各种无法成功解密，并且获取沙盒路径也不好使，并且cycript也无法正常运行。然后我就找到了bfinject。我们可以用它来实现在ios11上运行cycript，也可以直接用它来进行砸壳。使用起来也很简单便捷</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bash bfinject -P iRead.app -L decrypt</span><br><span class="line">bash bfinject -p 进程id -L decrypt</span><br></pre></td></tr></table></figure>
+
+<p>两种方式都能砸壳，成功砸壳后会生成文件。我们要搜索下文件生成在哪里了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /var/mobile/Containers/Data/Application/ -name decrypted-app.ipa</span><br></pre></td></tr></table></figure>
+
+<p>然后把这个砸好的拷贝到本地即可。</p>
+<h3 id="3、frida-ios-dump"><a href="#3、frida-ios-dump" class="headerlink" title="3、frida-ios-dump"></a>3、frida-ios-dump</h3><p>这个使用我感觉没啥好介绍了的了。ios的frida用起来简单方便</p>
+<p>添加源<a target="_blank" rel="noopener" href="https://build.frida.re/">https://build.frida.re</a></p>
+<p>然后搜索frida，安装。有点小坑的是，frida有点略大，然后国内的网经常下载失败，反正我安装尝试很多次，最后搭梯子才下好的。</p>
+<p>然后github上的frida-ios-dump项目拉下来。有一点坑的是，砸壳的这个py脚本里面用了一些linux的命令。如果你是在window下面来进行砸壳的话，那么你就得尽兴一些特殊处理才能成功砸壳了。</p>
+<p>方案一，将py里面用到的一些linux命令转换成对应的win的命令。</p>
+<p>方案二，安装cywin，安装的时候，把py脚本中用到的一些linux命令添加一下。这样脚本就可以成功运行并砸壳了。</p>
+<h2 id="二、各类工具"><a href="#二、各类工具" class="headerlink" title="二、各类工具"></a>二、各类工具</h2><h3 id="1、reveal"><a href="#1、reveal" class="headerlink" title="1、reveal"></a>1、reveal</h3><p>这个是界面ui分析工具，也是有些小坑在里面，我照着书里面的发现ios library根本点不了，没有找到这个文件，最后查了下，原来新版本的不一样。</p>
+<p>Reveal⁩/⁨Contents⁩/⁨SharedSupport⁩/⁨iOS-Libraries⁩/RevealServer.framework 目录下的 RevealServer 复制到设备/Library/RHRevealLoader/libReveal.dylib</p>
+<p>然后RevealServer.framework 拷贝到手机上的/System/Library/Frameworks 目录下</p>
+<p>然后到设置里面找到reveal，点开后选择自己想要抓到应用，我们就可以抓到界面了。</p>
+<h3 id="2、dpkg"><a href="#2、dpkg" class="headerlink" title="2、dpkg"></a>2、dpkg</h3><p>先安装Xcode，然后就是按照下面的步骤来。如果安装了不能用要记得sudo port selfupdate</p>
+<p>xcode-select –install </p>
+<p>sudo xcodebuild -license</p>
+<p>安装 Macports ，网址：<a target="_blank" rel="noopener" href="http://www.macports.org/install.php">http://www.macports.org/install.php</a></p>
+<p>测试时否能用port可以先sudo port list一下</p>
+<p>如果找不到port是需要设置环境变量</p>
+<p>export PATH=/opt/local/bin:/opt/local/sbin:$PATH</p>
+<p>如果不能用就先sudo port selfupdate</p>
+<p>最后执行安装dpkg</p>
+<p>sudo port -f install dpkg</p>
+<h3 id="3、Charles"><a href="#3、Charles" class="headerlink" title="3、Charles"></a>3、Charles</h3><p>这个是用来抓http包的，用法很简单，这里我只说下ios设备抓https时，使用10及10以上会有个小坑</p>
+<p>手机代理端口设置好。保证能抓包http包先，然后手机访问<a target="_blank" rel="noopener" href="http://chls.pro/ssl%EF%BC%8C%E5%A6%82%E6%9E%9C%E8%83%BD%E6%88%90%E5%8A%9F%E5%AE%89%E8%A3%85%EF%BC%8C%E8%AF%B4%E6%98%8E%E9%85%8D%E7%BD%AEok%E3%80%82%E4%B8%8D%E8%83%BD%E5%B0%B1%E6%98%AF%E6%89%8B%E6%9C%BA%E8%BF%98%E6%B2%A1%E8%AE%BE%E7%BD%AE%E5%A5%BD">http://chls.pro/ssl，如果能成功安装，说明配置ok。不能就是手机还没设置好</a></p>
+<p>这里注意手机不能翻q，否则可能会导致不能正常的安装</p>
+<p>然后进入设置，通用，关于本机，证书信任，开启刚刚的证书即可</p>
+<h3 id="4、cycript"><a href="#4、cycript" class="headerlink" title="4、cycript"></a>4、cycript</h3><p>这个不得不说相当强大，应用运行时注入，写插件的时候可以提前用这个执行测试效果。很大的提高开发效率，简单的功能可以省掉写测试插件了。</p>
+<p>但是也有坑，ios10运行相当顺利。但是ios11需要使用bfinject注入才能运行成功，并且control+d退出好像有点问题，我没有去查啥情况。</p>
+<p>在ios11上运行 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash bfinject -P Reddit -L cycript</span><br></pre></td></tr></table></figure>
+
+<p>据说最新的插件装上也可以直接运行cycript。不过我没有测试了。</p>
+<p>ios10直接运行 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cycript -p demo2</span><br></pre></td></tr></table></figure>
+
+<p>由于cycript上可以导入脚本的，如果先导入脚本，把常用的简单操作可以直接封装在脚本中，这样就可以节省我们很多时间</p>
+<p>这里我用的github上的mjcripy。这样使用前先@import mjcript  然后查询一些信息的命令可以直接调用封装好的，主要还是因为我object-c太渣了。毕竟没做过ios开发。</p>
+<h3 id="5、debugserver-lldb动态调试"><a href="#5、debugserver-lldb动态调试" class="headerlink" title="5、debugserver+lldb动态调试"></a>5、debugserver+lldb动态调试</h3><p>xcode如果有进行过调试的话，会在自动把debugserver复制到移动设备上，路径是/Developer/usr/bin下面会有个debugserver</p>
+<p>复制到pc端，然后签名授权下，下面的内容保存为ent.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plist</span> <span class="attr">version</span>=<span class="string">&quot;1.0&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dict</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">key</span>&gt;</span>com.apple.springboard.debugapplications<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">true</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">key</span>&gt;</span>get-task-allow<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">true</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">key</span>&gt;</span>task_for_pid-allow<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">true</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">key</span>&gt;</span>run-unsigned-code<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">true</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dict</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plist</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后签名</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ldid -S ent.xml debugserver</span><br></pre></td></tr></table></figure>
+
+<p>然后把这个文件复制到手机的/usr/bin目录下</p>
+<p>如果动态调试太卡，我们可以用iport转发下端口，然后使用localhost来进行连接</p>
+<p>移动设备</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">debugserver *:1234 -a “demo2”</span><br></pre></td></tr></table></figure>
+
+<p>pc端执行lldb</p>
+<p>然后链接到移动设备</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">process connect connect://ip:1234</span><br></pre></td></tr></table></figure>
+
+<p>查询模块在内存中的偏移量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">image list -o -f</span><br></pre></td></tr></table></figure>
+
+<p>Ida中的函数地址+偏移量=偏移后的基址</p>
+<p>根据函数名设置断点</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b function_name</span><br></pre></td></tr></table></figure>
+
+<p>根据地址设置断点</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b s -a 0x1111</span><br></pre></td></tr></table></figure>
+
+<p>不得不说github就说我们这些渣渣新的好基友，lldb的命令对我来说，也是头昏脑花，于是搜一搜。</p>
+<p>果然有仗义大佬，chisel这个项目就可以让我们舒舒服服的玩耍起来了。</p>
+<h3 id="6、插件编写"><a href="#6、插件编写" class="headerlink" title="6、插件编写"></a>6、插件编写</h3><h4 id="theos"><a href="#theos" class="headerlink" title="theos"></a>theos</h4><p>theos的编译</p>
+<p>nic.pl 创建项目</p>
+<p>make 编译</p>
+<p>make package 打包成deb</p>
+<p>make install 安装到远程移动设备</p>
+<p>安装到远程设备是用的环境变量的值</p>
+<p>THEOS_DEVICE_IP和THEOS_DEVICE_PORT来设置远程设备的ip和端口</p>
+<h4 id="MonkeyDev"><a href="#MonkeyDev" class="headerlink" title="MonkeyDev"></a>MonkeyDev</h4><p>我感觉就是xcode集成了theos，直接用theos每次我都是直接用编辑器来写，感觉是各种不方便，想着要是能用个ide该多爽。然后就发现是有的。</p>
+<p>github上找到monkeydev，按照readme安装后，就可以看到Xcode创建的时候下面多了一些模版，里面的logos tweak就和theos的一样了。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">砸壳,iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/blog.github.io/categories/ios逆向//" class="article-tag-list-link color1">ios逆向</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog.github.io/2020/08/26/IOSDump/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-ClassStructure" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -446,6 +635,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">砸壳,iOS</a>
               </li>
             
             <div class="clearfix"></div>
