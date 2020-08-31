@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://dqzg12300.github.io/blog.github.io">
-  <title>king的博客</title>
+  <title>jni函数动态注册分析 | king的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="king的博客">
-<meta property="og:url" content="https://dqzg12300.github.io/blog.github.io/index.html">
+  <meta name="description" content="动态注册jni函数时的流程学习过程的记录，以下代码参考自aosp8.1 jni函数绑定主要是有两种方式。静态注册和动态注册的jni函数 静态注册的jni函数有两次绑定，在类加载时会绑定一次，在jni函数第一次被调用时，art会对jni函数的地址进行查询并绑定 动态注册的jni函数也有两次绑定，在类加载时绑定一次，第二次由开发人员的代码主动绑定。 DexClassLoader是安卓的一种类加载器，然">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jni函数动态注册分析">
+<meta property="og:url" content="https://dqzg12300.github.io/blog.github.io/2020/08/30/JNI-DexClassLoader/index.html">
 <meta property="og:site_name" content="king的博客">
+<meta property="og:description" content="动态注册jni函数时的流程学习过程的记录，以下代码参考自aosp8.1 jni函数绑定主要是有两种方式。静态注册和动态注册的jni函数 静态注册的jni函数有两次绑定，在类加载时会绑定一次，在jni函数第一次被调用时，art会对jni函数的地址进行查询并绑定 动态注册的jni函数也有两次绑定，在类加载时绑定一次，第二次由开发人员的代码主动绑定。 DexClassLoader是安卓的一种类加载器，然">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-30T13:43:17.000Z">
+<meta property="article:modified_time" content="2020-08-31T13:14:35.794Z">
 <meta property="article:author" content="king">
 <meta name="twitter:card" content="summary">
   
@@ -136,16 +140,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-JNI-DexClassLoader" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-JNI-DexClassLoader" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog.github.io/2020/08/30/JNI-DexClassLoader/">jni函数动态注册分析</a>
+    <h1 class="article-title" itemprop="name">
+      jni函数动态注册分析
     </h1>
   
 
@@ -282,16 +284,75 @@
 
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog.github.io/2020/08/30/JNI-DexClassLoader/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://dqzg12300.github.io/blog.github.io/2020/08/30/JNI-DexClassLoader/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/blog.github.io/2020/08/26/IOSDump/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ios的砸壳和基础工具</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -311,354 +372,32 @@
 
 
 
+  
+  <div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+var gitalk = new Gitalk({
+        clientID:  'e9248ff35ccfaf344499', 
+        clientSecret: '29a53e013802099f3eea9f54af3f50edf93a4d20',
+        id: window.location.pathname,
+        repo: 'blog.github.io', 
+        owner: 'dqzg12300', 
+        admin: 'dqzg12300', 
+        distractionFreeMode: 'true',
+     })
+gitalk.render('gitalk-container')
+</script>
 
   
-    <article id="post-IOSDump" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog.github.io/2020/08/26/IOSDump/">ios的砸壳和基础工具</a>
-    </h1>
+  
   
 
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/blog.github.io/2020/08/26/IOSDump/" class="pageViews">0</span>次
-  </a>
-
-
-        
-        <a href="/blog.github.io/2020/08/26/IOSDump/" class="archive-article-date">
-  	<time datetime="2020-08-26T12:42:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一、砸壳"><a href="#一、砸壳" class="headerlink" title="一、砸壳"></a>一、砸壳</h2><h3 id="1、dumpdecrypted"><a href="#1、dumpdecrypted" class="headerlink" title="1、dumpdecrypted"></a>1、dumpdecrypted</h3><p>这种砸壳方式我在ios11的机子上测试没能解密成功，然后ios10一点问题都没有。可能是我太渣了吧。新手还请用ios10来尝试</p>
-<p>首先从github上下载了编译出来dumpdecrypted，这个基本没啥问题的。</p>
-<p>接着我们用到了两个路径，一个是沙盒到路径，还有一个是运行的路径</p>
-<p>运行想要砸壳的应用，然后ps -e|grep Application找到要砸壳的应用，将路径保存出来</p>
-<p>然后我们需要找到沙盒到路径，简单的办法就是使用cycript注入之后，再查询出来。</p>
-<p>ios11的是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask][0]</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file:&#x2F;&#x2F;&#x2F;var&#x2F;mobile&#x2F;Containers&#x2F;Data&#x2F;Application&#x2F;3B94D3F0-2CFB-4E0E-A0A2-03F960B2BA60&#x2F;Documents&#x2F;</span><br></pre></td></tr></table></figure>
-
-<p>ios10的是NSHomeDirectory()</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;var&#x2F;mobile&#x2F;Containers&#x2F;Data&#x2F;Application&#x2F;3B94D3F0-2CFB-4E0E-A0A2-03F960B2BA60</span><br></pre></td></tr></table></figure>
-
-<p>接着把编译好的dumpdecrypted.dylib用scp上传到设备的/var/mobile/Containers/Data/Application/3B94D3F0-2CFB-4E0E-A0A2-03F960B2BA60/Documents/这个目录下</p>
-<p>然后就可以砸壳了，cd到沙盒的目录下。执行下面的命令</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DYLD_INSERT_LIBRARIES=dumpdecrypted.dylib  /var/containers/Bundle/Application/4AE69936-E547-4B27-B76F-D5CEAB992553/Target.app/Target</span><br></pre></td></tr></table></figure>
-
-<p>成功后会在当前目录生成出砸壳后的文件，scp到本地即可</p>
-<h3 id="2、bfinject"><a href="#2、bfinject" class="headerlink" title="2、bfinject"></a>2、bfinject</h3><p>使用这个方式砸壳是因为刚开始我手上只有ios11的手机，然后萌新各种无法成功解密，并且获取沙盒路径也不好使，并且cycript也无法正常运行。然后我就找到了bfinject。我们可以用它来实现在ios11上运行cycript，也可以直接用它来进行砸壳。使用起来也很简单便捷</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bash bfinject -P iRead.app -L decrypt</span><br><span class="line">bash bfinject -p 进程id -L decrypt</span><br></pre></td></tr></table></figure>
-
-<p>两种方式都能砸壳，成功砸壳后会生成文件。我们要搜索下文件生成在哪里了</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /var/mobile/Containers/Data/Application/ -name decrypted-app.ipa</span><br></pre></td></tr></table></figure>
-
-<p>然后把这个砸好的拷贝到本地即可。</p>
-<h3 id="3、frida-ios-dump"><a href="#3、frida-ios-dump" class="headerlink" title="3、frida-ios-dump"></a>3、frida-ios-dump</h3><p>这个使用我感觉没啥好介绍了的了。ios的frida用起来简单方便</p>
-<p>添加源<a target="_blank" rel="noopener" href="https://build.frida.re/">https://build.frida.re</a></p>
-<p>然后搜索frida，安装。有点小坑的是，frida有点略大，然后国内的网经常下载失败，反正我安装尝试很多次，最后搭梯子才下好的。</p>
-<p>然后github上的frida-ios-dump项目拉下来。有一点坑的是，砸壳的这个py脚本里面用了一些linux的命令。如果你是在window下面来进行砸壳的话，那么你就得尽兴一些特殊处理才能成功砸壳了。</p>
-<p>方案一，将py里面用到的一些linux命令转换成对应的win的命令。</p>
-<p>方案二，安装cywin，安装的时候，把py脚本中用到的一些linux命令添加一下。这样脚本就可以成功运行并砸壳了。</p>
-<h2 id="二、各类工具"><a href="#二、各类工具" class="headerlink" title="二、各类工具"></a>二、各类工具</h2><h3 id="1、reveal"><a href="#1、reveal" class="headerlink" title="1、reveal"></a>1、reveal</h3><p>这个是界面ui分析工具，也是有些小坑在里面，我照着书里面的发现ios library根本点不了，没有找到这个文件，最后查了下，原来新版本的不一样。</p>
-<p>Reveal⁩/⁨Contents⁩/⁨SharedSupport⁩/⁨iOS-Libraries⁩/RevealServer.framework 目录下的 RevealServer 复制到设备/Library/RHRevealLoader/libReveal.dylib</p>
-<p>然后RevealServer.framework 拷贝到手机上的/System/Library/Frameworks 目录下</p>
-<p>然后到设置里面找到reveal，点开后选择自己想要抓到应用，我们就可以抓到界面了。</p>
-<h3 id="2、dpkg"><a href="#2、dpkg" class="headerlink" title="2、dpkg"></a>2、dpkg</h3><p>先安装Xcode，然后就是按照下面的步骤来。如果安装了不能用要记得sudo port selfupdate</p>
-<p>xcode-select –install </p>
-<p>sudo xcodebuild -license</p>
-<p>安装 Macports ，网址：<a target="_blank" rel="noopener" href="http://www.macports.org/install.php">http://www.macports.org/install.php</a></p>
-<p>测试时否能用port可以先sudo port list一下</p>
-<p>如果找不到port是需要设置环境变量</p>
-<p>export PATH=/opt/local/bin:/opt/local/sbin:$PATH</p>
-<p>如果不能用就先sudo port selfupdate</p>
-<p>最后执行安装dpkg</p>
-<p>sudo port -f install dpkg</p>
-<h3 id="3、Charles"><a href="#3、Charles" class="headerlink" title="3、Charles"></a>3、Charles</h3><p>这个是用来抓http包的，用法很简单，这里我只说下ios设备抓https时，使用10及10以上会有个小坑</p>
-<p>手机代理端口设置好。保证能抓包http包先，然后手机访问<a target="_blank" rel="noopener" href="http://chls.pro/ssl%EF%BC%8C%E5%A6%82%E6%9E%9C%E8%83%BD%E6%88%90%E5%8A%9F%E5%AE%89%E8%A3%85%EF%BC%8C%E8%AF%B4%E6%98%8E%E9%85%8D%E7%BD%AEok%E3%80%82%E4%B8%8D%E8%83%BD%E5%B0%B1%E6%98%AF%E6%89%8B%E6%9C%BA%E8%BF%98%E6%B2%A1%E8%AE%BE%E7%BD%AE%E5%A5%BD">http://chls.pro/ssl，如果能成功安装，说明配置ok。不能就是手机还没设置好</a></p>
-<p>这里注意手机不能翻q，否则可能会导致不能正常的安装</p>
-<p>然后进入设置，通用，关于本机，证书信任，开启刚刚的证书即可</p>
-<h3 id="4、cycript"><a href="#4、cycript" class="headerlink" title="4、cycript"></a>4、cycript</h3><p>这个不得不说相当强大，应用运行时注入，写插件的时候可以提前用这个执行测试效果。很大的提高开发效率，简单的功能可以省掉写测试插件了。</p>
-<p>但是也有坑，ios10运行相当顺利。但是ios11需要使用bfinject注入才能运行成功，并且control+d退出好像有点问题，我没有去查啥情况。</p>
-<p>在ios11上运行 </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash bfinject -P Reddit -L cycript</span><br></pre></td></tr></table></figure>
-
-<p>据说最新的插件装上也可以直接运行cycript。不过我没有测试了。</p>
-<p>ios10直接运行 </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cycript -p demo2</span><br></pre></td></tr></table></figure>
-
-<p>由于cycript上可以导入脚本的，如果先导入脚本，把常用的简单操作可以直接封装在脚本中，这样就可以节省我们很多时间</p>
-<p>这里我用的github上的mjcripy。这样使用前先@import mjcript  然后查询一些信息的命令可以直接调用封装好的，主要还是因为我object-c太渣了。毕竟没做过ios开发。</p>
-<h3 id="5、debugserver-lldb动态调试"><a href="#5、debugserver-lldb动态调试" class="headerlink" title="5、debugserver+lldb动态调试"></a>5、debugserver+lldb动态调试</h3><p>xcode如果有进行过调试的话，会在自动把debugserver复制到移动设备上，路径是/Developer/usr/bin下面会有个debugserver</p>
-<p>复制到pc端，然后签名授权下，下面的内容保存为ent.xml</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plist</span> <span class="attr">version</span>=<span class="string">&quot;1.0&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dict</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">key</span>&gt;</span>com.apple.springboard.debugapplications<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">true</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">key</span>&gt;</span>get-task-allow<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">true</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">key</span>&gt;</span>task_for_pid-allow<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">true</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">key</span>&gt;</span>run-unsigned-code<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">true</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dict</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plist</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>然后签名</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ldid -S ent.xml debugserver</span><br></pre></td></tr></table></figure>
-
-<p>然后把这个文件复制到手机的/usr/bin目录下</p>
-<p>如果动态调试太卡，我们可以用iport转发下端口，然后使用localhost来进行连接</p>
-<p>移动设备</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">debugserver *:1234 -a “demo2”</span><br></pre></td></tr></table></figure>
-
-<p>pc端执行lldb</p>
-<p>然后链接到移动设备</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">process connect connect://ip:1234</span><br></pre></td></tr></table></figure>
-
-<p>查询模块在内存中的偏移量</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">image list -o -f</span><br></pre></td></tr></table></figure>
-
-<p>Ida中的函数地址+偏移量=偏移后的基址</p>
-<p>根据函数名设置断点</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b function_name</span><br></pre></td></tr></table></figure>
-
-<p>根据地址设置断点</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b s -a 0x1111</span><br></pre></td></tr></table></figure>
-
-<p>不得不说github就说我们这些渣渣新的好基友，lldb的命令对我来说，也是头昏脑花，于是搜一搜。</p>
-<p>果然有仗义大佬，chisel这个项目就可以让我们舒舒服服的玩耍起来了。</p>
-<h3 id="6、插件编写"><a href="#6、插件编写" class="headerlink" title="6、插件编写"></a>6、插件编写</h3><h4 id="theos"><a href="#theos" class="headerlink" title="theos"></a>theos</h4><p>theos的编译</p>
-<p>nic.pl 创建项目</p>
-<p>make 编译</p>
-<p>make package 打包成deb</p>
-<p>make install 安装到远程移动设备</p>
-<p>安装到远程设备是用的环境变量的值</p>
-<p>THEOS_DEVICE_IP和THEOS_DEVICE_PORT来设置远程设备的ip和端口</p>
-<h4 id="MonkeyDev"><a href="#MonkeyDev" class="headerlink" title="MonkeyDev"></a>MonkeyDev</h4><p>我感觉就是xcode集成了theos，直接用theos每次我都是直接用编辑器来写，感觉是各种不方便，想着要是能用个ide该多爽。然后就发现是有的。</p>
-<p>github上找到monkeydev，按照readme安装后，就可以看到Xcode创建的时候下面多了一些模版，里面的logos tweak就和theos的一样了。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">砸壳</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/blog.github.io/categories/ios逆向//" class="article-tag-list-link color1">ios逆向</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog.github.io/2020/08/26/IOSDump/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-ClassStructure" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog.github.io/2020/08/12/ClassStructure/">类对象的内存布局</a>
-    </h1>
   
 
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/blog.github.io/2020/08/12/ClassStructure/" class="pageViews">0</span>次
-  </a>
-
-
-        
-        <a href="/blog.github.io/2020/08/12/ClassStructure/" class="archive-article-date">
-  	<time datetime="2020-08-12T13:32:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="类对象的存储结构"><a href="#类对象的存储结构" class="headerlink" title="类对象的存储结构"></a>类对象的存储结构</h2><p>首先看下一个空的对象占用的内存大小</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>&#123;</span>&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Student stu;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;stu size:%lu\n&quot;</span>,<span class="keyword">sizeof</span>(stu));</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>下面是结果，说明一个对象的内存占用至少是1个字节</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@&quot;stu size:1\r\n&quot;</span><br></pre></td></tr></table></figure>
-
-<p>然后再看看增加成员变量的结构体的内存占用</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> arg;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Student stu;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;stu size:%lu\n&quot;</span>,<span class="keyword">sizeof</span>(stu));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果是int的大小</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@&quot;stu size:4\r\n&quot;</span><br></pre></td></tr></table></figure>
-
-<p>如果再增加一个char变量,结果就有区别了</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> arg;</span><br><span class="line">    <span class="keyword">char</span> sex;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Student stu;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;stu size:%lu\n&quot;</span>,<span class="keyword">sizeof</span>(stu));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这时的结果是8,因为底层为了高效的内存操作,有一个内存对齐的处理，如果不足4的倍数，则补全，比如此时4字节+1字节，则对齐到8字节。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@&quot;stu size:8\r\n&quot;</span><br></pre></td></tr></table></figure>
-
-<p>类的成员除了成员变量，还有成员函数，那么成员函数占用多少内存呢</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> arg;</span><br><span class="line">    <span class="keyword">char</span> sex;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;show()\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Student stu;</span><br><span class="line">    stu.show();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;stu size:%lu\n&quot;</span>,<span class="keyword">sizeof</span>(stu));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果依然为8，这里说明了成员函数并不是存储在类对象的内存结构中。而我们虽然在函数中能够访问到类对象的成员变量，实际上是因为当类对象调用成员函数时，默认将类对象作为第一个参数传递</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@&quot;show()\r\n&quot;</span><br><span class="line">@&quot;stu size:8\r\n&quot;</span><br></pre></td></tr></table></figure>
-
-<p>然后用ida解析看看这个show经过编译器优化后的样子</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> __fastcall <span class="title">Student::show</span><span class="params">(Student *<span class="keyword">this</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">printf</span>(<span class="string">&quot;show()\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>静态成员函数和成员函数一样不占用空间</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> arg;</span><br><span class="line">    <span class="keyword">char</span> sex;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;show()\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">show2</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;show2()\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Student stu;</span><br><span class="line">    stu.show();</span><br><span class="line">    stu.show2();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;stu size:%lu\n&quot;</span>,<span class="keyword">sizeof</span>(stu));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果同样是8个字节</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@&quot;show()\r\n&quot;</span><br><span class="line">@&quot;show2()\r\n&quot;</span><br><span class="line">@&quot;stu size:8\r\n&quot;</span><br></pre></td></tr></table></figure>
-
-<p>以上是简单的类对象内存布局，还有一种情况比较特殊情况，就是虚函数，现在看一个简单的虚函数例子</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> arg;</span><br><span class="line">    <span class="keyword">char</span> sex;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">virtual_show</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;virtual_show()\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Student stu;</span><br><span class="line">    stu.virtual_show();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;stu size:%lu\n&quot;</span>,<span class="keyword">sizeof</span>(stu));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个例子的结果在32位中是12字节，在64位中是16字节。我现在是在64位中测试，所以结果是16字节，这里是怎么组合的呢，如果类中有虚函数，则会在内存的头部存放一个虚函数表的指针。而在32位中指针的大小是4字节，在64位中指针的大小是8字节，所以32位中4+1+4然后再内存对齐，结果就12字节，在64位中4+1+8再内存对齐，结果就是16字节</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@&quot;virtual_show()\r\n&quot;</span><br><span class="line">@&quot;stu size:16\r\n&quot;</span><br></pre></td></tr></table></figure>
-
-<p>那么如果有多个虚函数呢</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> arg;</span><br><span class="line">    <span class="keyword">char</span> sex;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">virtual_show</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;virtual_show()\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">virtual_show2</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;virtual_show2()\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Student stu;</span><br><span class="line">    stu.virtual_show();</span><br><span class="line">    stu.virtual_show2();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;stu size:%lu\n&quot;</span>,<span class="keyword">sizeof</span>(stu));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果依然是16字节，因为内存头部存储的是虚函数表的指针，而虚函数全部存储在虚函数表中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@&quot;virtual_show()\r\n&quot;</span><br><span class="line">@&quot;virtual_show2()\r\n&quot;</span><br><span class="line">@&quot;stu size:16\r\n&quot;</span><br></pre></td></tr></table></figure>
-
-<p>刚刚说了，内存头部存储了虚函数指针，那么我们证实一下吧。看看这个对象16个字节的数据是装了些什么</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> arg;</span><br><span class="line">    <span class="keyword">char</span> sex;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">virtual_show</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;virtual_show()\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">virtual_show2</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;virtual_show2()\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Student stu;</span><br><span class="line">    stu.arg=<span class="number">0x20</span>;</span><br><span class="line">    stu.sex=<span class="string">&#x27;A&#x27;</span>;</span><br><span class="line">    stu.virtual_show();</span><br><span class="line">    stu.virtual_show2();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;stu size:%lu\n&quot;</span>,<span class="keyword">sizeof</span>(stu));</span><br><span class="line">    <span class="keyword">char</span>* stu_pointer=(<span class="keyword">char</span>*)&amp;stu;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="keyword">sizeof</span>(stu);i++)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%x &quot;</span>,stu_pointer[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>根据我们的分析，这个stu对象前面8个字节为虚函数表指针，然后4个字节为arg的数据，然后1个字节为sex的数据，最后3个字节为内存对齐的无用数据。那么这样理解下面的数据后就是20 10 0 0 1 0 0 0 是虚函数表指针，然后内存中存放的是小端序，转换一下就是0x1000102为虚函数表指针，20 0 0 0 为年龄，同样转换一下就是0x20。最后0x41是ascii码表中的’A’，而7f 0 0则是用来对齐的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@&quot;virtual_show()\r\n&quot;</span><br><span class="line">@&quot;virtual_show2()\r\n&quot;</span><br><span class="line">@&quot;stu size:16\r\n&quot;</span><br><span class="line">@&quot;20 10 0 0 1 0 0 0 20 0 0 0 41 7f 0 0 &quot;</span><br></pre></td></tr></table></figure>
-
-<p>头部的指针既然说他是虚函数表指针。那么是不是可以访问到虚函数呢。下面调用试一下，通过这种对象指针的方式访问虚函数表的函数，是可以访问到类对象的私有函数的。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> arg;</span><br><span class="line">    <span class="keyword">char</span> sex;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">virtual_show</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;virtual_show()\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">virtual_show2</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;virtual_show2()\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span> <span class="params">(*FUNC)</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Student stu;</span><br><span class="line">    stu.arg=<span class="number">0x20</span>;</span><br><span class="line">    stu.sex=<span class="string">&#x27;A&#x27;</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;stu size:%lu\n&quot;</span>,<span class="keyword">sizeof</span>(stu));</span><br><span class="line">    <span class="keyword">long</span> stu_pointer=*(<span class="keyword">long</span>*)&amp;stu;</span><br><span class="line">    FUNC show1=(FUNC)*(<span class="keyword">long</span>*)stu_pointer;</span><br><span class="line">    FUNC show2=(FUNC)*(<span class="keyword">long</span>*)(stu_pointer+<span class="keyword">sizeof</span>(<span class="keyword">int</span>*));</span><br><span class="line">    show1();</span><br><span class="line">    show2();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>最后成功的调用了这两个函数，我们主要缕一下怎么找到的这两个函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@&quot;stu size:16\r\n&quot;</span><br><span class="line">@&quot;virtual_show()\r\n&quot;</span><br><span class="line">@&quot;virtual_show2()\r\n&quot;</span><br></pre></td></tr></table></figure>
-
-<p>首先我们前面知道的，如果类中有虚函数，则会在类对象的内存最开始的位置存放一个虚函数表的指针。由此，我们首先拿到这个虚函数表的指针</p>
-<p><code>long stu_pointer=*(long*)&amp;stu;</code></p>
-<p>上面这句中&amp;stu这里会获取到stu的内存最开始的地址。也就是相当于。&amp;stu这里的指针指向了虚函数表指针。stu_pointer最后这里得到的也就是虚函数表指针</p>
-<p><code>FUNC show1=(FUNC)*(long*)stu_pointer;</code></p>
-<p>虚函数表指针直接再获取一下指针的数据。则取到了虚函数的指针。</p>
-<p><code>FUNC show2=(FUNC)*(long*)(stu_pointer+sizeof(int*));</code></p>
-<p>如果是想要获取下一个虚函数的指针，则偏移一个指针的位置。这里也可以直接先转long*了之后再+1。同样可以偏移到下一个虚函数指针位置</p>
-<p><code>FUNC show2=(FUNC)*((long*)(stu_pointer)+1);</code></p>
-<p>这样同样可以偏移到第二个虚函数指针的位置</p>
-<p>如果类再加上继承，多继承，虚函数。内存分布则会更加复杂。下一篇我再详细测试下比较复杂关系的类的布局情况。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/blog.github.io/categories/c//" class="article-tag-list-link color4">c++</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/blog.github.io/2020/08/12/ClassStructure/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
+
   
 
 
@@ -681,8 +420,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
