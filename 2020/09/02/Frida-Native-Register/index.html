@@ -6,16 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://dqzg12300.github.io/blog.github.io">
-  <title>tags | king的博客</title>
+  <title>使用frida来hook artmethod的RegisterNative | king的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="https://dqzg12300.github.io/blog.github.io/tags/index.html">
+  <meta name="description" content="继续学习记录 之前找到了最终有调用到ArtMethod的RegisterNative来进行绑定。现在使用frida来hook打印一下注册的函数名和地址。先用ida找到我们之前找到的ArtMethod下的RegisterNative 找到了导出函数符号_ZN3art9ArtMethod14RegisterNativeEPKvb 然后这里只有ArtMethod的指针，要获取完整的函数名。要使用ArtM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用frida来hook artmethod的RegisterNative">
+<meta property="og:url" content="https://dqzg12300.github.io/blog.github.io/2020/09/02/Frida-Native-Register/index.html">
 <meta property="og:site_name" content="king的博客">
+<meta property="og:description" content="继续学习记录 之前找到了最终有调用到ArtMethod的RegisterNative来进行绑定。现在使用frida来hook打印一下注册的函数名和地址。先用ida找到我们之前找到的ArtMethod下的RegisterNative 找到了导出函数符号_ZN3art9ArtMethod14RegisterNativeEPKvb 然后这里只有ArtMethod的指针，要获取完整的函数名。要使用ArtM">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-08-05T13:12:31.000Z">
-<meta property="article:modified_time" content="2020-08-07T14:44:09.343Z">
+<meta property="article:published_time" content="2020-09-02T14:07:54.000Z">
+<meta property="article:modified_time" content="2020-09-02T14:43:23.505Z">
 <meta property="article:author" content="king">
+<meta property="article:tag" content="基础,frida">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="king的博客" type="application/atom+xml">
@@ -138,33 +141,52 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="tags-" class="article article-type-tags " itemscope itemprop="blogPost">
+            <article id="post-Frida-Native-Register" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      tags
+      使用frida来hook artmethod的RegisterNative
     </h1>
   
 
 
   <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/blog.github.io/tags/index.html" class="pageViews">0</span>次
+      <i class="icon-smile icon"></i> 阅读数:<span id="/blog.github.io/2020/09/02/Frida-Native-Register/" class="pageViews">0</span>次
   </a>
 
 
         
-        <a href="/blog.github.io/tags/index.html" class="archive-article-date">
-  	<time datetime="2020-08-05T13:12:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-05</time>
+        <a href="/blog.github.io/2020/09/02/Frida-Native-Register/" class="archive-article-date">
+  	<time datetime="2020-09-02T14:07:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-02</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>继续学习记录</p>
+<p>之前找到了最终有调用到ArtMethod的RegisterNative来进行绑定。现在使用frida来hook打印一下注册的函数名和地址。先用ida找到我们之前找到的ArtMethod下的RegisterNative</p>
+<p>找到了导出函数符号<code>_ZN3art9ArtMethod14RegisterNativeEPKvb</code></p>
+<p>然后这里只有ArtMethod的指针，要获取完整的函数名。要使用ArtMethod的函数PrettyMethod。</p>
+<p>导出函数符号为 <code>_ZN3art9ArtMethod12PrettyMethodEb</code></p>
+<p>然后frida的代码就是先hook到RegisterNative，然后调用PrettyMethod来获取函数名</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hook_native_register</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> <span class="built_in">module</span>= Process.getModuleByName(<span class="string">&quot;libart.so&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> ArtMethodRegisterNative=<span class="built_in">module</span>.getExportByName(<span class="string">&quot;_ZN3art9ArtMethod14RegisterNativeEPKvb&quot;</span>);</span><br><span class="line">    Interceptor.attach(ArtMethodRegisterNative,&#123;</span><br><span class="line">        onEnter:<span class="function"><span class="keyword">function</span>(<span class="params">args</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> curArtMethod=ptr(args[<span class="number">0</span>]);</span><br><span class="line">            <span class="keyword">var</span> native_method=args[<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">var</span> method_idx=ptr(curArtMethod).add(<span class="number">12</span>).readU32();</span><br><span class="line">            <span class="keyword">var</span> prettyMethodPtr=Module.getExportByName(<span class="string">&quot;libart.so&quot;</span>,<span class="string">&quot;_ZN3art9ArtMethod12PrettyMethodEb&quot;</span>);</span><br><span class="line">            <span class="keyword">var</span> result=Memory.alloc(<span class="number">0x100</span>);</span><br><span class="line">            <span class="keyword">var</span> prettyMethod=<span class="keyword">new</span> NativeFunction(prettyMethodPtr,<span class="string">&#x27;pointer&#x27;</span>,[<span class="string">&#x27;pointer&#x27;</span>,<span class="string">&#x27;pointer&#x27;</span>,<span class="string">&#x27;bool&#x27;</span>]);</span><br><span class="line">            prettyMethod(ptr(result),ptr(curArtMethod),<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">var</span> methodName=result.add(<span class="number">0x8</span>).readPointer().readCString()</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&quot;,method_idx:&quot;</span>,method_idx,<span class="string">&quot;native_ptr:&quot;</span>,native_method,<span class="string">&quot;,methodName:&quot;</span>,methodName);</span><br><span class="line">        &#125;,</span><br><span class="line">        onLeave:<span class="function"><span class="keyword">function</span>(<span class="params">retval</span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    hook_native_register();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">setImmediate(main);</span><br></pre></td></tr></table></figure>
+
+<p>关键要注意的一个地方是prettyMethod的调用，它是一个特殊的调用，类和结构的返回值都会进行特殊的方式返回。这里返回的是一个string，所以使用了特殊方式进行返回结果。默认新加一个参数在最前面，然后将返回值填充到第一个参数里面。而不是直接返回。下面放一下frida文档的原文</p>
+<p><code>As for structs or classes passed by value, instead of a string provide an array containing the struct’s field types following each other. You may nest these as deep as desired for representing structs inside structs. Note that the returned object is also a NativePointer, and can thus be passed to Interceptor#attach.This must match the struct/class exactly, so if you have a struct with three ints, you must pass [&#39;int&#39;, &#39;int&#39;, &#39;int&#39;]For a class that has virtual methods, the first parameter will be a pointer to the vtable.For C++ scenarios involving a return value that is larger than Process.pointerSize, a NativePointer to preallocated space must be passed in as the first parameter. (This scenario is common in WebKit, for example.)</code></p>
+<p>这里原本执行是</p>
+<p><code>var prettyMethod=new NativeFunction(prettyMethodPtr,&#39;pointer&#39;,[&#39;pointer&#39;,&#39;bool&#39;]);</code></p>
+<p>特殊处理后变成了</p>
+<p><code>var prettyMethod=new NativeFunction(prettyMethodPtr,&#39;pointer&#39;,[&#39;pointer&#39;,&#39;pointer&#39;,&#39;bool&#39;]);</code></p>
+<p>最后frida启动测试</p>
+<p><code>frida -U --no-pause -f com.example.classloadertest -l mydemo1.js</code></p>
+<p>下面是运行结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">method_idx: <span class="number">131</span> native_ptr: <span class="number">0xcb4ddea5</span> ,methodName: java.lang.String com.stub.StubApp.interface14(int)</span><br><span class="line">method_idx: <span class="number">141</span> native_ptr: <span class="number">0xcb516d41</span> ,methodName: void com.stub.StubApp.mark()</span><br><span class="line">method_idx: <span class="number">142</span> native_ptr: <span class="number">0xcb516a75</span> ,methodName: void com.stub.StubApp.mark(android.location.Location)</span><br><span class="line">method_idx: <span class="number">140</span> native_ptr: <span class="number">0xcb516979</span> ,methodName: android.location.Location com.stub.StubApp.mark(android.location.LocationManager, java.lang.String)</span><br><span class="line">method_idx: <span class="number">136</span> native_ptr: <span class="number">0xcb4ddf05</span> ,methodName: void com.stub.StubApp.interface5(android.app.Application)</span><br><span class="line">method_idx: <span class="number">128</span> native_ptr: <span class="number">0xcb4eb3d5</span> ,methodName: void com.stub.StubApp.interface11(int)</span><br><span class="line">method_idx: <span class="number">129</span> native_ptr: <span class="number">0xcb4de28d</span> ,methodName: java.util.Enumeration com.stub.StubApp.interface12(dalvik.system.DexFile)</span><br><span class="line">method_idx: <span class="number">138</span> native_ptr: <span class="number">0xcb4e0b19</span> ,methodName: boolean com.stub.StubApp.interface7(android.app.Application, android.content.Context)</span><br><span class="line">method_idx: <span class="number">139</span> native_ptr: <span class="number">0xcb4de721</span> ,methodName: boolean com.stub.StubApp.interface8(android.app.Application, android.content.Context)</span><br><span class="line">method_idx: <span class="number">5228</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: java.lang.String com.jg.bh.BH.getCloundTag(android.content.Context)</span><br><span class="line">method_idx: <span class="number">5229</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: java.lang.String com.jg.bh.BH.getMsg(android.content.Context)</span><br><span class="line">method_idx: <span class="number">5230</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.BH.install(android.content.Context)</span><br><span class="line">method_idx: <span class="number">5233</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.BH.updateConfig(android.content.Context, java.lang.String)</span><br><span class="line">method_idx: <span class="number">5358</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: java.lang.String com.jg.bh.proxy.MyProxy.getEnable(android.content.Context)</span><br><span class="line">method_idx: <span class="number">5359</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: java.lang.String com.jg.bh.proxy.MyProxy.getMetaRow(android.content.Context)</span><br><span class="line">method_idx: <span class="number">5360</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: java.lang.Object com.jg.bh.proxy.MyProxy.getProxyObject(java.lang.Object, java.lang.reflect.InvocationHandler)</span><br><span class="line">method_idx: <span class="number">5361</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: java.lang.String com.jg.bh.proxy.MyProxy.getVersion(android.content.Context)</span><br><span class="line">method_idx: <span class="number">5362</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.proxy.MyProxy.installAll(android.content.Context)</span><br><span class="line">method_idx: <span class="number">5363</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: java.lang.Object com.jg.bh.proxy.MyProxy.newProxyInstance(java.lang.ClassLoader, java.lang.Class[], java.lang.reflect.InvocationHandler)</span><br><span class="line">method_idx: <span class="number">5364</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: org.json.JSONObject com.jg.bh.proxy.MyProxy.parseConfig(java.lang.String)</span><br><span class="line">method_idx: <span class="number">5365</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.proxy.MyProxy.putBHString(android.content.Context, java.lang.String)</span><br><span class="line">method_idx: <span class="number">5366</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.proxy.MyProxy.putConfig(android.content.Context, java.lang.String)</span><br><span class="line">method_idx: <span class="number">5399</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: boolean com.jg.bh.util.MetaRow.access$<span class="number">000</span>(com.jg.bh.util.MetaRow)</span><br><span class="line">method_idx: <span class="number">5400</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: boolean com.jg.bh.util.MetaRow.access$<span class="number">002</span>(com.jg.bh.util.MetaRow, boolean)</span><br><span class="line">method_idx: <span class="number">5401</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.util.MetaRow.access$<span class="number">100</span>(com.jg.bh.util.MetaRow, org.json.JSONObject)</span><br><span class="line">method_idx: <span class="number">5402</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: org.json.JSONObject com.jg.bh.util.MetaRow.getCellList()</span><br><span class="line">method_idx: <span class="number">5403</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: org.json.JSONObject com.jg.bh.util.MetaRow.getCelllData(android.telephony.CellInfo)</span><br><span class="line">method_idx: <span class="number">5405</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: org.json.JSONObject com.jg.bh.util.MetaRow.getWiFiInfo()</span><br><span class="line">method_idx: <span class="number">5406</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: org.json.JSONObject com.jg.bh.util.MetaRow.getWifiScanList()</span><br><span class="line">method_idx: <span class="number">5417</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.util.MetaRow.syncJsonData(org.json.JSONObject)</span><br><span class="line">method_idx: <span class="number">5404</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: java.lang.String com.jg.bh.util.MetaRow.getNetConnType()</span><br><span class="line">method_idx: <span class="number">5407</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: boolean com.jg.bh.util.MetaRow.isGlobalVpn()</span><br><span class="line">method_idx: <span class="number">5408</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.util.MetaRow.setCellInfoList(java.util.List)</span><br><span class="line">method_idx: <span class="number">5409</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.util.MetaRow.setConnWifi(android.net.wifi.WifiInfo)</span><br><span class="line">method_idx: <span class="number">5410</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.util.MetaRow.setData(java.lang.String)</span><br><span class="line">method_idx: <span class="number">5411</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.util.MetaRow.setDhcpInfo(android.net.DhcpInfo)</span><br><span class="line">method_idx: <span class="number">5412</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.util.MetaRow.setLocation(android.location.Location)</span><br><span class="line">method_idx: <span class="number">5413</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.util.MetaRow.setWifiConf(java.lang.Object)</span><br><span class="line">method_idx: <span class="number">5414</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.util.MetaRow.setWifiScanner(java.util.List)</span><br><span class="line">method_idx: <span class="number">5415</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.util.MetaRow.setmNISubtype(int)</span><br><span class="line">method_idx: <span class="number">5416</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.util.MetaRow.setmNIType(int)</span><br><span class="line">method_idx: <span class="number">5418</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: org.json.JSONObject com.jg.bh.util.MetaRow.toJSON()</span><br><span class="line">method_idx: <span class="number">5257</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.hook.binder.BaseServiceHook.onInstall()</span><br><span class="line">method_idx: <span class="number">5301</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.hook.binder.TelephonyHook.access$<span class="number">000</span>(com.jg.bh.hook.binder.TelephonyHook, java.lang.Object)</span><br><span class="line">method_idx: <span class="number">5302</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.hook.binder.TelephonyHook.access$<span class="number">100</span>(com.jg.bh.hook.binder.TelephonyHook, java.lang.Object)</span><br><span class="line">method_idx: <span class="number">5303</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.hook.binder.TelephonyHook.callGetAllCellInfo(java.lang.Object)</span><br><span class="line">method_idx: <span class="number">5304</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.hook.binder.TelephonyHook.callGetCellLocation(java.lang.Object)</span><br><span class="line">method_idx: <span class="number">5305</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: com.jg.bh.hook.binder.BinderProxyHookHandler$IInterfaceHookHandler com.jg.bh.hook.binder.TelephonyHook.createBinderProxyHookHandler(android.os.IBinder, java.lang.Class)</span><br><span class="line">method_idx: <span class="number">5265</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: com.jg.bh.hook.binder.BinderProxyHookHandler$IInterfaceHookHandler com.jg.bh.hook.binder.BinderProxyHookHandler.getmInterfacehandler()</span><br><span class="line">method_idx: <span class="number">5266</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: java.lang.Object com.jg.bh.hook.binder.BinderProxyHookHandler.invoke(java.lang.Object, java.lang.reflect.Method, java.lang.Object[])</span><br><span class="line">method_idx: <span class="number">5267</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.jg.bh.hook.binder.BinderProxyHookHandler.setmInterfacehandler(com.jg.bh.hook.binder.BinderProxyHookHandler$IInterfaceHookHandler)</span><br><span class="line">method_idx: <span class="number">5273</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: com.jg.bh.hook.binder.BinderProxyHookHandler$IInterfaceHookHandler com.jg.bh.hook.binder.IConnectivityManagerHook.createBinderProxyHookHandler(android.os.IBinder, java.lang.Class)</span><br><span class="line">method_idx: <span class="number">5280</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: com.jg.bh.hook.binder.BinderProxyHookHandler$IInterfaceHookHandler com.jg.bh.hook.binder.ILocationManagerHook.createBinderProxyHookHandler(android.os.IBinder, java.lang.Class)</span><br><span class="line">method_idx: <span class="number">5287</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: com.jg.bh.hook.binder.BinderProxyHookHandler$IInterfaceHookHandler com.jg.bh.hook.binder.IWifiManagerHook.createBinderProxyHookHandler(android.os.IBinder, java.lang.Class)</span><br><span class="line">method_idx: <span class="number">5294</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: com.jg.bh.hook.binder.BinderProxyHookHandler$IInterfaceHookHandler com.jg.bh.hook.binder.IWifiScannerHook.createBinderProxyHookHandler(android.os.IBinder, java.lang.Class)</span><br><span class="line">method_idx: <span class="number">11474</span> native_ptr: <span class="number">0xcb4defb9</span> ,methodName: java.lang.String[] dalvik.system.DexFile.getClassNameList(java.lang.Object)</span><br><span class="line">method_idx: <span class="number">5172</span> native_ptr: <span class="number">0xcb4dd59d</span> ,methodName: java.lang.String com.common.busi.CustomView.getAppkey()</span><br><span class="line">method_idx: <span class="number">5173</span> native_ptr: <span class="number">0xcb4dd78d</span> ,methodName: long com.common.busi.CustomView.getPT()</span><br><span class="line">method_idx: <span class="number">5451</span> native_ptr: <span class="number">0xcb4dd8a9</span> ,methodName: int com.jg.ce.Interface2.interface1(android.content.Context)</span><br><span class="line">method_idx: <span class="number">5452</span> native_ptr: <span class="number">0xcb4dd8b7</span> ,methodName: int com.jg.ce.Interface2.interface2(android.content.Context)</span><br><span class="line">method_idx: <span class="number">5453</span> native_ptr: <span class="number">0xcb4dd8bb</span> ,methodName: int com.jg.ce.Interface2.interface3(android.content.Context)</span><br><span class="line">method_idx: <span class="number">5454</span> native_ptr: <span class="number">0xcb4dd8c1</span> ,methodName: int com.jg.ce.Interface2.interface4(android.content.Context)</span><br><span class="line">method_idx: <span class="number">5455</span> native_ptr: <span class="number">0xcb4dd8c5</span> ,methodName: int com.jg.ce.Interface2.interface5(android.content.Context)</span><br><span class="line">method_idx: <span class="number">5643</span> native_ptr: <span class="number">0xcb4db755</span> ,methodName: void com.stub.stub07.Stub01.mark1(java.lang.String)</span><br><span class="line">method_idx: <span class="number">5231</span> native_ptr: <span class="number">0xcb4db8d9</span> ,methodName: void com.jg.bh.BH.mark2(java.lang.String, double, double)</span><br><span class="line">method_idx: <span class="number">5232</span> native_ptr: <span class="number">0xcb52d269</span> ,methodName: java.lang.String com.jg.bh.BH.mark3()</span><br><span class="line">method_idx: <span class="number">5196</span> native_ptr: <span class="number">0xcb4ec3f1</span> ,methodName: void com.example.classloadertest.MainActivity.onCreate(android.os.Bundle)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
       
 
       
@@ -172,7 +194,29 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">基础,frida</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/blog.github.io/categories/android//" class="article-tag-list-link color3">android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -222,7 +266,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://dqzg12300.github.io/blog.github.io/tags/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://dqzg12300.github.io/blog.github.io/2020/09/02/Frida-Native-Register/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -234,6 +278,16 @@
 </article>
 
   
+<nav id="article-nav">
+  
+  
+    <a href="/blog.github.io/2020/08/30/JNI-DexClassLoader/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">jni函数动态注册分析</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -252,6 +306,34 @@
 </aside>
 
 
+
+  
+  <div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+var gitalk = new Gitalk({
+        clientID:  'e9248ff35ccfaf344499', 
+        clientSecret: '29a53e013802099f3eea9f54af3f50edf93a4d20',
+        id: window.location.pathname,
+        repo: 'blog.github.io', 
+        owner: 'dqzg12300', 
+        admin: 'dqzg12300', 
+        distractionFreeMode: 'true',
+     })
+gitalk.render('gitalk-container')
+</script>
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
 
 
           </div>
@@ -274,7 +356,7 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
