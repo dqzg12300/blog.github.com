@@ -188,8 +188,8 @@
 
 <p>这样就导致了我们在ida中看到的结果和hook的方式有一些区别。</p>
 <p>这里列出我测试的一些区别。</p>
-<p><img src="/blog.github.io/blog.github.io/2020/09/03/Hook-Interpreter/king/blog/source/_posts/Hook-Interpreter/image-20200903225802440.png" alt="image-20200903225911990"></p>
-<p><img src="/blog.github.io/blog.github.io/2020/09/03/Hook-Interpreter/king/blog/source/_posts/Hook-Interpreter/image-20200903225956560.png" alt="image-20200903225956560"></p>
+<p><img src="/Users/king/blog/source/_posts/Hook-Interpreter/image-20200903225802440.png" alt="image-20200903225911990"></p>
+<p><img src="/Users/king/blog/source/_posts/Hook-Interpreter/image-20200903225956560.png" alt="image-20200903225956560"></p>
 <p>可以看出来ExecuteSwitchImpl这个在export中，而ExecuteMterpImpl这个只在symbol中有。</p>
 <p>继续看另外一个区别，下面是ida解析的ExecuteSwitchImpl</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __fastcall art::interpreter::ExecuteSwitchImpl&lt;<span class="literal">true</span>,<span class="literal">true</span>&gt;(<span class="keyword">int</span> a1, art::interpreter *<span class="keyword">this</span>, __int64 a3, __int64 a4, <span class="keyword">int</span> a5)</span><br></pre></td></tr></table></figure>
