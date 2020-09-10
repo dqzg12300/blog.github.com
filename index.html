@@ -138,6 +138,151 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-llvm1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog.github.io/2020/09/10/llvm1/">llvm简单的使用</a>
+    </h1>
+  
+
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数:<span id="/blog.github.io/2020/09/10/llvm1/" class="pageViews">0</span>次
+  </a>
+
+
+        
+        <a href="/blog.github.io/2020/09/10/llvm1/" class="archive-article-date">
+  	<time datetime="2020-09-10T14:05:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>学习记录</p>
+<p>llvm是一款跨平台的编译器，我们可以用它来优化编译代码，让代码执行的更加高效，而ollvm是将代码进行编译混淆，增加代码的不可读性。它的官方网站是<a target="_blank" rel="noopener" href="http://llvm.org/">http://llvm.org/</a></p>
+<p>llvm中有一个中间语言是LLVM IR，这里看一段官方的说明</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The LLVM Core libraries provide a modern source- and target-independent optimizer, along with code generation support for many popular CPUs (as well as some less common ones!) These libraries are built around a well specified code representation known as the LLVM intermediate representation (&quot;LLVM IR&quot;). The LLVM Core libraries are well documented, and it is particularly easy to invent your own language (or port an existing compiler) to use LLVM as an optimizer and code generator.</span><br></pre></td></tr></table></figure>
+
+<p>大概意思就是，LLVM IR是核心库的一个中间的语言，主要用来跨平台针对不同cpu的。在跨平台的时候我们可以这样编译，c源码编译成IR文件，然后IR是平台无关性的，我们在linux下编译的IR文件可以拿到win上面，然后再将IR文件编译成当前cpu的汇编。然后再由汇编编译成可执行二进制。这样就达到了跨平台的目的。</p>
+<p>再看看另外一个llvm中的重要部分clang，先看一段官方说明</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Clang is an &quot;LLVM native&quot; C&#x2F;C++&#x2F;Objective-C compiler, which aims to deliver amazingly fast compiles, extremely useful error and warning messages and to provide a platform for building great source level tools. The Clang Static Analyzer and clang-tidy are tools that automatically find bugs in your code, and are great examples of the sort of tools that can be built using the Clang frontend as a library to parse C&#x2F;C++ code.</span><br></pre></td></tr></table></figure>
+
+<p>clang是llvm中的一个c编译器，可以支持大多数和c相关的语言编译，比如C, C++, Objective C/C++, OpenCL, CUDA, and RenderScript。用gcc可以编译的，基本clang都可以。</p>
+<p>然后看看llvm的编译，先放上官方的编译说明文档地址</p>
+<p><code>http://llvm.org/docs/GettingStarted.html#getting-the-source-code-and-building-llvm</code></p>
+<p>然后就可以看着说明文档编译</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Checkout LLVM (including related subprojects like Clang):</span><br><span class="line"></span><br><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;llvm&#x2F;llvm-project.git</span><br><span class="line">Or, on windows, git clone --config core.autocrlf&#x3D;false https:&#x2F;&#x2F;github.com&#x2F;llvm&#x2F;llvm-project.git</span><br><span class="line">Configure and build LLVM and Clang:</span><br><span class="line"></span><br><span class="line">cd llvm-project</span><br><span class="line"></span><br><span class="line">mkdir build</span><br><span class="line"></span><br><span class="line">cd build</span><br><span class="line"></span><br><span class="line">cmake -G &lt;generator&gt; [options] ..&#x2F;llvm</span><br></pre></td></tr></table></figure>
+
+<p>这里要注意的是cmake时的参数，第一个参数<generator> 这里是编译方式，默认是使用make，也可以设置使用Ninja。这里看官方的说明即可</generator></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Ninja — for generating Ninja build files. Most llvm developers use Ninja.</span><br><span class="line">Unix Makefiles — for generating make-compatible parallel makefiles.</span><br><span class="line">Visual Studio — for generating Visual Studio projects and solutions.</span><br><span class="line">Xcode — for generating Xcode projects.</span><br></pre></td></tr></table></figure>
+
+<p>另外一个参数<options> 可以设置编译的类型是debug还是release，编译哪些子项。</options></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-DLLVM_ENABLE_PROJECTS&#x3D;&#39;...&#39; — semicolon-separated list of the LLVM subprojects you’d like to additionally build. Can include any of: clang, clang-tools-extra, libcxx, libcxxabi, libunwind, lldb, compiler-rt, lld, polly, or debuginfo-tests.</span><br><span class="line"></span><br><span class="line">For example, to build LLVM, Clang, libcxx, and libcxxabi, use -DLLVM_ENABLE_PROJECTS&#x3D;&quot;clang;libcxx;libcxxabi&quot;.</span><br><span class="line"></span><br><span class="line">-DCMAKE_INSTALL_PREFIX&#x3D;directory — Specify for directory the full pathname of where you want the LLVM tools and libraries to be installed (default &#x2F;usr&#x2F;local).</span><br><span class="line"></span><br><span class="line">-DCMAKE_BUILD_TYPE&#x3D;type — Valid options for type are Debug, Release, RelWithDebInfo, and MinSizeRel. Default is Debug.</span><br><span class="line"></span><br><span class="line">-DLLVM_ENABLE_ASSERTIONS&#x3D;On — Compile with assertion checks enabled (default is Yes for Debug builds, No for all other build types).</span><br></pre></td></tr></table></figure>
+
+<p>默认不填写编译类型是debug，下面是一个debug的编译</p>
+<p><code>cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug -DLLVM_ENABLE_PROJECTS=&quot;clang&quot; ../llvm</code></p>
+<p>如果要编译release直接修改编译类型就可以了。这里完成之后。直接ninja -j4就开始编译了。如果不想完整编译可以直接ninja &lt;模块名&gt;这样能进行编译，比如只编译clang就是ninja clang</p>
+<p>然后写个例子试一下clang的编译和中间语言IR</p>
+<p>先写一个简单的hello world代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>** argv)</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;hello world!!&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后把这段代码用clang编译成IR中间语言</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang -emit-llvm -S main.c -o main.ll</span><br></pre></td></tr></table></figure>
+
+<p>编译出来的这个main.ll就是IR中间语言，是和cpu无关性的。下面是IR的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">; ModuleID &#x3D; &#39;main.c&#39;</span><br><span class="line">source_filename &#x3D; &quot;main.c&quot;</span><br><span class="line">target datalayout &#x3D; &quot;e-m:o-i64:64-f80:128-n8:16:32:64-S128&quot;</span><br><span class="line">target triple &#x3D; &quot;x86_64-apple-macosx10.15.0&quot;</span><br><span class="line"></span><br><span class="line">@.str &#x3D; private unnamed_addr constant [14 x i8] c&quot;hello world!!\00&quot;, align 1</span><br><span class="line"></span><br><span class="line">; Function Attrs: noinline nounwind optnone ssp uwtable</span><br><span class="line">define i32 @main(i32 %argc, i8** %argv) #0 &#123;</span><br><span class="line">entry:</span><br><span class="line">  %retval &#x3D; alloca i32, align 4</span><br><span class="line">  %argc.addr &#x3D; alloca i32, align 4</span><br><span class="line">  %argv.addr &#x3D; alloca i8**, align 8</span><br><span class="line">  store i32 0, i32* %retval, align 4</span><br><span class="line">  store i32 %argc, i32* %argc.addr, align 4</span><br><span class="line">  store i8** %argv, i8*** %argv.addr, align 8</span><br><span class="line">  %call &#x3D; call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.str, i64 0, i64 0))</span><br><span class="line">  ret i32 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">declare i32 @printf(i8*, ...) #1</span><br><span class="line"></span><br><span class="line">attributes #0 &#x3D; &#123; noinline nounwind optnone ssp uwtable &quot;correctly-rounded-divide-sqrt-fp-math&quot;&#x3D;&quot;false&quot; &quot;disable-tail-calls&quot;&#x3D;&quot;false&quot; &quot;less-precise-fpmad&quot;&#x3D;&quot;false&quot; &quot;min-legal-vector-width&quot;&#x3D;&quot;0&quot; &quot;no-frame-pointer-elim&quot;&#x3D;&quot;true&quot; &quot;no-frame-pointer-elim-non-leaf&quot; &quot;no-infs-fp-math&quot;&#x3D;&quot;false&quot; &quot;no-jump-tables&quot;&#x3D;&quot;false&quot; &quot;no-nans-fp-math&quot;&#x3D;&quot;false&quot; &quot;no-signed-zeros-fp-math&quot;&#x3D;&quot;false&quot; &quot;no-trapping-math&quot;&#x3D;&quot;false&quot; &quot;stack-protector-buffer-size&quot;&#x3D;&quot;8&quot; &quot;target-cpu&quot;&#x3D;&quot;penryn&quot; &quot;target-features&quot;&#x3D;&quot;+cx16,+cx8,+fxsr,+mmx,+sahf,+sse,+sse2,+sse3,+sse4.1,+ssse3,+x87&quot; &quot;unsafe-fp-math&quot;&#x3D;&quot;false&quot; &quot;use-soft-float&quot;&#x3D;&quot;false&quot; &#125;</span><br><span class="line">attributes #1 &#x3D; &#123; &quot;correctly-rounded-divide-sqrt-fp-math&quot;&#x3D;&quot;false&quot; &quot;disable-tail-calls&quot;&#x3D;&quot;false&quot; &quot;less-precise-fpmad&quot;&#x3D;&quot;false&quot; &quot;no-frame-pointer-elim&quot;&#x3D;&quot;true&quot; &quot;no-frame-pointer-elim-non-leaf&quot; &quot;no-infs-fp-math&quot;&#x3D;&quot;false&quot; &quot;no-nans-fp-math&quot;&#x3D;&quot;false&quot; &quot;no-signed-zeros-fp-math&quot;&#x3D;&quot;false&quot; &quot;no-trapping-math&quot;&#x3D;&quot;false&quot; &quot;stack-protector-buffer-size&quot;&#x3D;&quot;8&quot; &quot;target-cpu&quot;&#x3D;&quot;penryn&quot; &quot;target-features&quot;&#x3D;&quot;+cx16,+cx8,+fxsr,+mmx,+sahf,+sse,+sse2,+sse3,+sse4.1,+ssse3,+x87&quot; &quot;unsafe-fp-math&quot;&#x3D;&quot;false&quot; &quot;use-soft-float&quot;&#x3D;&quot;false&quot; &#125;</span><br><span class="line"></span><br><span class="line">!llvm.module.flags &#x3D; !&#123;!0, !1, !2&#125;</span><br><span class="line">!llvm.ident &#x3D; !&#123;!3&#125;</span><br><span class="line"></span><br><span class="line">!0 &#x3D; !&#123;i32 2, !&quot;SDK Version&quot;, [3 x i32] [i32 10, i32 15, i32 6]&#125;</span><br><span class="line">!1 &#x3D; !&#123;i32 1, !&quot;wchar_size&quot;, i32 4&#125;</span><br><span class="line">!2 &#x3D; !&#123;i32 7, !&quot;PIC Level&quot;, i32 2&#125;</span><br><span class="line">!3 &#x3D; !&#123;!&quot;clang version 9.0.1 &quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后将这个IR文件转成bcode二进制</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">llvm-as main.ll -o main.bc</span><br></pre></td></tr></table></figure>
+
+<p>同时也可以直接将c文件生成bc文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang -emit-llvm -c main.c -o main.bc</span><br></pre></td></tr></table></figure>
+
+<p>这个bc二进制文件是可以再重新转回IR文件的。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">llvm-dis main.dc -o main.ll</span><br></pre></td></tr></table></figure>
+
+<p>也可以直接bc文件转换成当前cpu的汇编文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">llc main.bc -o main.s</span><br></pre></td></tr></table></figure>
+
+<p>这个时候的就是当前cpu的汇编文件了，下面列下main.s</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">    .section    __TEXT,__text,regular,pure_instructions</span><br><span class="line">    .macosx_version_min 10, 15    sdk_version 10, 15, 6</span><br><span class="line">    .globl    _main                   ## -- Begin function main</span><br><span class="line">    .p2align    4, 0x90</span><br><span class="line">_main:                                  ## @main</span><br><span class="line">    .cfi_startproc</span><br><span class="line">## %bb.0:                               ## %entry</span><br><span class="line">    pushq    %rbp</span><br><span class="line">    .cfi_def_cfa_offset 16</span><br><span class="line">    .cfi_offset %rbp, -16</span><br><span class="line">    movq    %rsp, %rbp</span><br><span class="line">    .cfi_def_cfa_register %rbp</span><br><span class="line">    subq    $16, %rsp</span><br><span class="line">    movl    $0, -8(%rbp)</span><br><span class="line">    movl    %edi, -4(%rbp)</span><br><span class="line">    movq    %rsi, -16(%rbp)</span><br><span class="line">    leaq    L_.str(%rip), %rdi</span><br><span class="line">    movb    $0, %al</span><br><span class="line">    callq    _printf</span><br><span class="line">    xorl    %eax, %eax</span><br><span class="line">    addq    $16, %rsp</span><br><span class="line">    popq    %rbp</span><br><span class="line">    retq</span><br><span class="line">    .cfi_endproc</span><br><span class="line">                                        ## -- End function</span><br><span class="line">    .section    __TEXT,__cstring,cstring_literals</span><br><span class="line">L_.str:                                 ## @.str</span><br><span class="line">    .asciz    &quot;hello world!!&quot;</span><br><span class="line">.subsections_via_symbols</span><br></pre></td></tr></table></figure>
+
+<p>最后就可以直接生成可执行二进制了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang main.s -o main</span><br></pre></td></tr></table></figure>
+
+<p>然后这个main就可以直接运行了，当文件还是IR文件或者是bc二进制时，也是可以使用lli来运行的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lli main.ll</span><br><span class="line">lli main.bc</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/blog.github.io/categories/llvm//" class="article-tag-list-link color5">llvm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog.github.io/2020/09/10/llvm1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Hook-Interpreter" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
