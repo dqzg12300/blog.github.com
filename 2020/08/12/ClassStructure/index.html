@@ -16,7 +16,7 @@
 <meta property="og:description" content="类对象的存储结构首先看下一个空的对象占用的内存大小 123456class Student&amp;#123;&amp;#125;;int main()&amp;#123;    Student stu;    printf(&quot;stu size:%lu\n&quot;,sizeof(stu));&amp;#125;  下面是结果，说明一个对象的内存占用至少是1个字节 1@&quot;stu size:1\r\n&amp;quo">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-08-12T13:32:55.000Z">
-<meta property="article:modified_time" content="2020-08-12T15:45:43.634Z">
+<meta property="article:modified_time" content="2020-10-16T14:54:54.757Z">
 <meta property="article:author" content="king">
 <meta property="article:tag" content="基础">
 <meta name="twitter:card" content="summary">
@@ -177,6 +177,8 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> arg;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Student stu;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;stu size:%lu\n&quot;</span>,<span class="keyword">sizeof</span>(stu));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>结果是int的大小</p>
+<a id="more"></a>
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@&quot;stu size:4\r\n&quot;</span><br></pre></td></tr></table></figure>
 
 <p>如果再增加一个char变量,结果就有区别了</p>

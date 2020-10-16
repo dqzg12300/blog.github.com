@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://dqzg12300.github.io/blog.github.io/2020/10/16/unicorn1/image-20201016210946663.png">
 <meta property="og:image" content="https://dqzg12300.github.io/blog.github.io/2020/10/16/unicorn1/image-20201016211429655.png">
 <meta property="article:published_time" content="2020-10-16T13:02:38.000Z">
-<meta property="article:modified_time" content="2020-10-16T14:45:28.600Z">
+<meta property="article:modified_time" content="2020-10-16T14:52:23.978Z">
 <meta property="article:author" content="king">
 <meta property="article:tag" content="安卓">
 <meta name="twitter:card" content="summary">
@@ -173,6 +173,8 @@
         <p>unicorn相当于是一个cpu的模拟器，可以用来执行so中的代码段，一般不要直接使用apk中的so文件，直接使用是需要修复上下文的，这样会比较复杂。最好是直接从内存中直接dump一个so出来。然后就可以直接执行so里面的代码段。然后看一个例子ollvm9.apk</p>
 <p>样品下载地址: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1ynsGvKAUbmvodvjG0mlLVg">https://pan.baidu.com/s/1ynsGvKAUbmvodvjG0mlLVg</a>  密码: wu45</p>
 <p>解密案例:<a target="_blank" rel="noopener" href="https://github.com/dqzg12300/unicornDemo">https://github.com/dqzg12300/unicornDemo</a></p>
+<a id="more"></a>
+
 <p>首先用jadx打开这个apk。看看里面的按钮的功能</p>
 <p><img src="/blog.github.io/2020/10/16/unicorn1/image-20201016210946663.png" alt="image-20201016210946663"></p>
 <p>然后看到这里主要用到了UUIDCheckSum这个函数来进行加密</p>

@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://dqzg12300.github.io/blog.github.io/2020/09/11/llvm2/image-20200911223236520.png">
 <meta property="og:image" content="https://dqzg12300.github.io/blog.github.io/2020/09/11/llvm2/image-20200921221821761.png">
 <meta property="article:published_time" content="2020-09-11T12:04:33.000Z">
-<meta property="article:modified_time" content="2020-09-23T14:00:14.017Z">
+<meta property="article:modified_time" content="2020-10-16T14:54:03.557Z">
 <meta property="article:author" content="king">
 <meta property="article:tag" content="基础">
 <meta name="twitter:card" content="summary">
@@ -184,6 +184,8 @@
 
 <p>然后把c文件编译成bc二进制</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang -emit-llvm -c main.c -o main.bc</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
 
 <p>然后用opt指定pass来处理这个main.bc，格式如下 opt -load &lt;pass动态库路径&gt;  -pass名称  要进行优化的对象</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">opt -load /Volumes/my_source/ollvm/llvm-project-llvmorg-9.0.1/llvm/cmake-build-debug/lib/LLVMHello.dylib -hello /Volumes/mac_disk/src/vscode_project/main.bc</span><br></pre></td></tr></table></figure>

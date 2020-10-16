@@ -16,7 +16,7 @@
 <meta property="og:description" content="学习记录 llvm是一款跨平台的编译器，我们可以用它来优化编译代码，让代码执行的更加高效，而ollvm是将代码进行编译混淆，增加代码的不可读性。它的官方网站是http:&#x2F;&#x2F;llvm.org&#x2F; llvm中有一个中间语言是LLVM IR，这里看一段官方的说明 1The LLVM Core libraries provide a modern source- and target-independent">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-09-10T14:05:41.000Z">
-<meta property="article:modified_time" content="2020-09-10T15:19:25.544Z">
+<meta property="article:modified_time" content="2020-10-16T14:53:43.733Z">
 <meta property="article:author" content="king">
 <meta property="article:tag" content="基础">
 <meta name="twitter:card" content="summary">
@@ -173,6 +173,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The LLVM Core libraries provide a modern source- and target-independent optimizer, along with code generation support for many popular CPUs (as well as some less common ones!) These libraries are built around a well specified code representation known as the LLVM intermediate representation (&quot;LLVM IR&quot;). The LLVM Core libraries are well documented, and it is particularly easy to invent your own language (or port an existing compiler) to use LLVM as an optimizer and code generator.</span><br></pre></td></tr></table></figure>
 
 <p>大概意思就是，LLVM IR是核心库的一个中间的语言，主要用来跨平台针对不同cpu的。在跨平台的时候我们可以这样编译，c源码编译成IR文件，然后IR是平台无关性的，我们在linux下编译的IR文件可以拿到win上面，然后再将IR文件编译成当前cpu的汇编。然后再由汇编编译成可执行二进制。这样就达到了跨平台的目的。</p>
+<a id="more"></a>
+
 <p>再看看另外一个llvm中的重要部分clang，先看一段官方说明</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Clang is an &quot;LLVM native&quot; C&#x2F;C++&#x2F;Objective-C compiler, which aims to deliver amazingly fast compiles, extremely useful error and warning messages and to provide a platform for building great source level tools. The Clang Static Analyzer and clang-tidy are tools that automatically find bugs in your code, and are great examples of the sort of tools that can be built using the Clang frontend as a library to parse C&#x2F;C++ code.</span><br></pre></td></tr></table></figure>
 

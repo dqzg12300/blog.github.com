@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="https://dqzg12300.github.io/blog.github.io">
   <title>jni函数动态注册分析 | king的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="动态注册jni函数时的流程学习过程的记录，以下代码参考自aosp8.1 jni函数绑定主要是有两种方式。静态注册和动态注册的jni函数 静态注册的jni函数有两次绑定，在类加载时会绑定一次，在jni函数第一次被调用时，art会对jni函数的地址进行查询并绑定 动态注册的jni函数也有两次绑定，在类加载时绑定一次，第二次由开发人员的代码主动绑定。 DexClassLoader是安卓的一种类加载器，然">
+  <meta name="description" content="动态注册jni函数时的流程学习过程的记录，以下代码参考自aosp8.1 jni函数绑定主要是有两种方式。静态注册和动态注册的jni函数 静态注册的jni函数有两次绑定，在类加载时会绑定一次，在jni函数第一次被调用时，art会对jni函数的地址进行查询并绑定 动态注册的jni函数也有两次绑定，在类加载时绑定一次，第二次由开发人员的代码主动绑定。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jni函数动态注册分析">
 <meta property="og:url" content="https://dqzg12300.github.io/blog.github.io/2020/08/30/JNI-DexClassLoader/index.html">
 <meta property="og:site_name" content="king的博客">
-<meta property="og:description" content="动态注册jni函数时的流程学习过程的记录，以下代码参考自aosp8.1 jni函数绑定主要是有两种方式。静态注册和动态注册的jni函数 静态注册的jni函数有两次绑定，在类加载时会绑定一次，在jni函数第一次被调用时，art会对jni函数的地址进行查询并绑定 动态注册的jni函数也有两次绑定，在类加载时绑定一次，第二次由开发人员的代码主动绑定。 DexClassLoader是安卓的一种类加载器，然">
+<meta property="og:description" content="动态注册jni函数时的流程学习过程的记录，以下代码参考自aosp8.1 jni函数绑定主要是有两种方式。静态注册和动态注册的jni函数 静态注册的jni函数有两次绑定，在类加载时会绑定一次，在jni函数第一次被调用时，art会对jni函数的地址进行查询并绑定 动态注册的jni函数也有两次绑定，在类加载时绑定一次，第二次由开发人员的代码主动绑定。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-08-30T13:43:17.000Z">
-<meta property="article:modified_time" content="2020-08-31T13:17:39.772Z">
+<meta property="article:modified_time" content="2020-10-16T14:54:42.524Z">
 <meta property="article:author" content="king">
 <meta name="twitter:card" content="summary">
   
@@ -170,6 +170,8 @@
 <p>jni函数绑定主要是有两种方式。静态注册和动态注册的jni函数</p>
 <p>静态注册的jni函数有两次绑定，在类加载时会绑定一次，在jni函数第一次被调用时，art会对jni函数的地址进行查询并绑定</p>
 <p>动态注册的jni函数也有两次绑定，在类加载时绑定一次，第二次由开发人员的代码主动绑定。</p>
+<a id="more"></a>
+
 <p>DexClassLoader是安卓的一种类加载器，然后用他的loadClass函数来进行类加载处理，而DexClassLoader中没有看到loadClass函数。通过在父类中寻找。最终发现loadClass在ClassLoad类中。继承关系如下</p>
 <p>DexClassLoader–&gt;BaseDexClassLoader–&gt;ClassLoader</p>
 <p>然后开始看看loadClass的实现</p>
