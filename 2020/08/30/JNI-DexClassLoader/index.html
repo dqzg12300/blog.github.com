@@ -5,13 +5,13 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="https://dqzg12300.github.io/blog.github.io">
+  <link rel="dns-prefetch" href="http://yoursite.com">
   <title>jni函数动态注册分析 | king的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="动态注册jni函数时的流程学习过程的记录，以下代码参考自aosp8.1 jni函数绑定主要是有两种方式。静态注册和动态注册的jni函数 静态注册的jni函数有两次绑定，在类加载时会绑定一次，在jni函数第一次被调用时，art会对jni函数的地址进行查询并绑定 动态注册的jni函数也有两次绑定，在类加载时绑定一次，第二次由开发人员的代码主动绑定。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jni函数动态注册分析">
-<meta property="og:url" content="https://dqzg12300.github.io/blog.github.io/2020/08/30/JNI-DexClassLoader/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/08/30/JNI-DexClassLoader/index.html">
 <meta property="og:site_name" content="king的博客">
 <meta property="og:description" content="动态注册jni函数时的流程学习过程的记录，以下代码参考自aosp8.1 jni函数绑定主要是有两种方式。静态注册和动态注册的jni函数 静态注册的jni函数有两次绑定，在类加载时会绑定一次，在jni函数第一次被调用时，art会对jni函数的地址进行查询并绑定 动态注册的jni函数也有两次绑定，在类加载时绑定一次，第二次由开发人员的代码主动绑定。">
 <meta property="og:locale" content="zh_CN">
@@ -333,7 +333,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://dqzg12300.github.io/blog.github.io/2020/08/30/JNI-DexClassLoader/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/08/30/JNI-DexClassLoader/" alt="微信分享二维码">
     </div>
 </div>
 
