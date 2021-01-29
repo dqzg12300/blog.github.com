@@ -15,14 +15,14 @@
 <meta property="og:site_name" content="king的博客">
 <meta property="og:description" content="学习的记录 准备hook一下Interpreter解释器的所有执行函数。先看下art&#x2F;runtime&#x2F;interpreter&#x2F;interpreter.cc这个主要文件 123456enum InterpreterImplKind &amp;#123;  kSwitchImplKind,        &#x2F;&#x2F; Switch-based interpreter implementation.  kMterpIm">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2020/09/03/Hook-Interpreter/image-20200903225802440.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2020/09/03/Hook-Interpreter/image-20200903225956560.png">
+<meta property="og:image" content="http://missking.cc/2020/09/03/Hook-Interpreter/image-20200903225802440.png">
+<meta property="og:image" content="http://missking.cc/2020/09/03/Hook-Interpreter/image-20200903225956560.png">
 <meta property="article:published_time" content="2020-09-03T14:29:32.000Z">
 <meta property="article:modified_time" content="2020-10-16T14:54:31.990Z">
 <meta property="article:author" content="king">
 <meta property="article:tag" content="基础,frida">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://missking.cc/blog.github.io/2020/09/03/Hook-Interpreter/image-20200903225802440.png">
+<meta name="twitter:image" content="http://missking.cc/2020/09/03/Hook-Interpreter/image-20200903225802440.png">
   
     <link rel="alternative" href="/atom.xml" title="king的博客" type="application/atom+xml">
   
@@ -51,7 +51,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="/blog.github.io/assets/blogImg/litten.png" class="js-avatar">
+			<img src="/assets/blogImg/litten.png" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/"></a></h1>
@@ -101,7 +101,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="/blog.github.io/assets/blogImg/litten.png" class="js-avatar">
+				<img src="/assets/blogImg/litten.png" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author"></h1>
@@ -196,8 +196,8 @@
 
 <p>这样就导致了我们在ida中看到的结果和hook的方式有一些区别。</p>
 <p>这里列出我测试的一些区别。</p>
-<p><img src="/blog.github.io/2020/09/03/Hook-Interpreter/image-20200903225802440.png" alt="image-20200903225911990"></p>
-<p><img src="/blog.github.io/2020/09/03/Hook-Interpreter/image-20200903225956560.png" alt="image-20200903225956560"></p>
+<p><img src="/2020/09/03/Hook-Interpreter/image-20200903225802440.png" alt="image-20200903225911990"></p>
+<p><img src="/2020/09/03/Hook-Interpreter/image-20200903225956560.png" alt="image-20200903225956560"></p>
 <p>可以看出来ExecuteSwitchImpl这个在export中，而ExecuteMterpImpl这个只在symbol中有。</p>
 <p>继续看另外一个区别，下面是ida解析的ExecuteSwitchImpl</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __fastcall art::interpreter::ExecuteSwitchImpl&lt;<span class="literal">true</span>,<span class="literal">true</span>&gt;(<span class="keyword">int</span> a1, art::interpreter *<span class="keyword">this</span>, __int64 a3, __int64 a4, <span class="keyword">int</span> a5)</span><br></pre></td></tr></table></figure>

@@ -15,18 +15,18 @@
 <meta property="og:site_name" content="king的博客">
 <meta property="og:description" content="llvm中的pass例子llvm中最重要的部分就是pass，llvm主要就是通过pass来对代码进行优化工作。然后先看怎么使用pass。官方有默认注册很多种pass。所有pass都是在llvm&#x2F;lib&#x2F;Transforms目录下，可以通过opt来使用pass,先看官方例子最简单的pass,路径是llvm&#x2F;lib&#x2F;Transforms&#x2F;Hello&#x2F;Hello.cpp 1234567891011121">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2020/09/11/llvm2/image-20200911214739897.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2020/09/11/llvm2/image-20200911214816004.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2020/09/11/llvm2/image-20200911214848705.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2020/09/11/llvm2/image-20200911222848851.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2020/09/11/llvm2/image-20200911223236520.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2020/09/11/llvm2/image-20200921221821761.png">
+<meta property="og:image" content="http://missking.cc/2020/09/11/llvm2/image-20200911214739897.png">
+<meta property="og:image" content="http://missking.cc/2020/09/11/llvm2/image-20200911214816004.png">
+<meta property="og:image" content="http://missking.cc/2020/09/11/llvm2/image-20200911214848705.png">
+<meta property="og:image" content="http://missking.cc/2020/09/11/llvm2/image-20200911222848851.png">
+<meta property="og:image" content="http://missking.cc/2020/09/11/llvm2/image-20200911223236520.png">
+<meta property="og:image" content="http://missking.cc/2020/09/11/llvm2/image-20200921221821761.png">
 <meta property="article:published_time" content="2020-09-11T12:04:33.000Z">
 <meta property="article:modified_time" content="2020-10-16T14:57:01.721Z">
 <meta property="article:author" content="king">
 <meta property="article:tag" content="基础">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://missking.cc/blog.github.io/2020/09/11/llvm2/image-20200911214739897.png">
+<meta name="twitter:image" content="http://missking.cc/2020/09/11/llvm2/image-20200911214739897.png">
   
     <link rel="alternative" href="/atom.xml" title="king的博客" type="application/atom+xml">
   
@@ -55,7 +55,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="/blog.github.io/assets/blogImg/litten.png" class="js-avatar">
+			<img src="/assets/blogImg/litten.png" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/"></a></h1>
@@ -105,7 +105,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="/blog.github.io/assets/blogImg/litten.png" class="js-avatar">
+				<img src="/assets/blogImg/litten.png" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author"></h1>
@@ -197,9 +197,9 @@
 
 <h2 id="自己写一个pass加密函数名称"><a href="#自己写一个pass加密函数名称" class="headerlink" title="自己写一个pass加密函数名称"></a>自己写一个pass加密函数名称</h2><p>先贴个官网文档的地址<a target="_blank" rel="noopener" href="https://releases.llvm.org/9.0.0/docs/WritingAnLLVMPass.html">https://releases.llvm.org/9.0.0/docs/WritingAnLLVMPass.html</a></p>
 <p>在官方文档中有详细描述怎么写个pass，下面先贴一下原文</p>
-<p><img src="/blog.github.io/2020/09/11/llvm2/image-20200911214739897.png" alt="image-20200911214739897"></p>
-<p><img src="/blog.github.io/2020/09/11/llvm2/image-20200911214816004.png" alt="image-20200911214816004"></p>
-<p><img src="/blog.github.io/2020/09/11/llvm2/image-20200911214848705.png" alt="image-20200911214848705"></p>
+<p><img src="/2020/09/11/llvm2/image-20200911214739897.png" alt="image-20200911214739897"></p>
+<p><img src="/2020/09/11/llvm2/image-20200911214816004.png" alt="image-20200911214816004"></p>
+<p><img src="/2020/09/11/llvm2/image-20200911214848705.png" alt="image-20200911214848705"></p>
 <p>按照文档的的描述，大概就是，在Transforms下新建一个目录，用来存放我们自己的pass，这里我建一个KingEncode目录，然后在这个目录下面创建两个文件,KingEncode.cpp和CMakeLists.txt。</p>
 <p>然后一顿复制粘贴，将Hello的地方替换成我们自己的pass名称即可,下面贴上我的两个文件内容，我们自己的这个pass简单的用md5对函数名加密了一下。然后再设置回去。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Created by king on 2020/9/10.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;llvm/Pass.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;llvm/IR/Function.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;llvm/Support/raw_ostream.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;llvm/IR/LegacyPassManager.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;llvm/Transforms/IPO/PassManagerBuilder.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> llvm;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">KingEncode</span> :</span> <span class="keyword">public</span> FunctionPass &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">char</span> ID;</span><br><span class="line">  KingEncode() : FunctionPass(ID) &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">runOnFunction</span><span class="params">(Function &amp;F)</span> <span class="keyword">override</span> </span>&#123;</span><br><span class="line">    errs() &lt;&lt; <span class="string">&quot;KingEncode: &quot;</span>;</span><br><span class="line">    MD5 Hasher;</span><br><span class="line">    MD5::MD5Result Result;</span><br><span class="line">    Hasher.update(F.getName());</span><br><span class="line">    Hasher.<span class="keyword">final</span>(Result);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> md5=Result.digest().str().str();</span><br><span class="line">    F.setName(md5);</span><br><span class="line">    errs().write_escaped(F.getName()) &lt;&lt;<span class="string">&quot;--&gt;&quot;</span>&lt;&lt;md5&lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> KingEncode::ID = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> RegisterPass&lt;KingEncode&gt; <span class="title">X</span><span class="params">(<span class="string">&quot;kingencode&quot;</span>, <span class="string">&quot;king encode Pass&quot;</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                             <span class="literal">false</span> <span class="comment">/* Only looks at CFG */</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                             <span class="literal">false</span> <span class="comment">/* Analysis Pass */</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">static</span> llvm::RegisterStandardPasses <span class="title">Y</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    llvm::PassManagerBuilder::EP_EarlyAsPossible,</span></span></span><br><span class="line"><span class="function"><span class="params">[](<span class="keyword">const</span> llvm::PassManagerBuilder &amp;Builder,</span></span></span><br><span class="line"><span class="function"><span class="params">   llvm::legacy::PassManagerBase &amp;PM) &#123; PM.add(<span class="keyword">new</span> KingEncode()); &#125;)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -233,12 +233,12 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ninja LLVMKingEncode</span><br><span class="line">clang -emit-llvm -S main.c -o main.ll</span><br><span class="line">opt -load /Volumes/my_source/ollvm/llvm-project-llvmorg-9.0.1/llvm/cmake-build-debug/lib/LLVMKingEncode.dylib -kingencode /Volumes/mac_disk/src/vscode_project/main.ll -o main.bc</span><br><span class="line">clang main.bc -o main</span><br></pre></td></tr></table></figure>
 
 <p>编译完后，再用ida打开这个main看看我们处理过的函数是什么样子</p>
-<p><img src="/blog.github.io/2020/09/11/llvm2/image-20200911222848851.png" alt="image-20200911222848851"></p>
+<p><img src="/2020/09/11/llvm2/image-20200911222848851.png" alt="image-20200911222848851"></p>
 <p>可以看到这个函数名称就被加密成MD5了。</p>
 <h2 id="外部项目写pass"><a href="#外部项目写pass" class="headerlink" title="外部项目写pass"></a>外部项目写pass</h2><p>很多时候开发pass都是想单独在外面新建一个项目，并不是想直接在llvm内部写一个pass。这样也是可以的。并且这样更方便调试。这里官方文档也是有说明，同样先贴一段官方文档的描述</p>
-<p><img src="/blog.github.io/2020/09/11/llvm2/image-20200911223236520.png" alt="image-20200911223236520"></p>
+<p><img src="/2020/09/11/llvm2/image-20200911223236520.png" alt="image-20200911223236520"></p>
 <p>这里有清楚描述项目的层级，新建一个项目叫MyPass，然后在KingPass下新建一个CMakeList.txt和一个空目录KingEncrypt，结构如下图</p>
-<p><img src="/blog.github.io/2020/09/11/llvm2/image-20200921221821761.png" alt="image-20200921221821761"></p>
+<p><img src="/2020/09/11/llvm2/image-20200921221821761.png" alt="image-20200921221821761"></p>
 <p>然后把以下代码复制到KingPass下的CMakeList.txt中</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.15</span>.<span class="number">3</span>)</span><br><span class="line"><span class="keyword">project</span>(KingEncrypt)</span><br><span class="line"><span class="keyword">set</span>(LLVM_DIR /home/king/ollvm/llvm-<span class="keyword">project</span>-llvmorg-<span class="number">9.0</span>.<span class="number">1</span>/llvm/cmake-build-debug/lib/cmake/llvm)</span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_FLAGS <span class="string">&quot;$&#123;CMAKE_CXX_FLAGS&#125; -std=c++11&quot;</span>)</span><br><span class="line"><span class="keyword">find_package</span>(LLVM REQUIRED CONFIG)</span><br><span class="line"><span class="keyword">list</span>(APPEND CMAKE_MODULE_PATH <span class="string">&quot;$&#123;LLVM_CMAKE_DIR&#125;&quot;</span>)</span><br><span class="line"><span class="keyword">include</span>(AddLLVM)</span><br><span class="line"><span class="keyword">add_definitions</span>(<span class="variable">$&#123;LLVM_DEFINITIONS&#125;</span>)</span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;LLVM_INCLUDE_DIRS&#125;</span>)</span><br><span class="line"><span class="keyword">add_subdirectory</span>(KingEncrypt)</span><br></pre></td></tr></table></figure>
 
