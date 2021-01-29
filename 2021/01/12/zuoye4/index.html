@@ -28,7 +28,7 @@
 <meta property="og:image" content="http://missking.cc/2021/01/12/zuoye4/image-20210113221902907.png">
 <meta property="og:image" content="http://missking.cc/2021/01/12/zuoye4/image-20210113222120944.png">
 <meta property="article:published_time" content="2021-01-12T14:32:51.000Z">
-<meta property="article:modified_time" content="2021-01-29T14:01:47.044Z">
+<meta property="article:modified_time" content="2021-01-29T14:06:55.794Z">
 <meta property="article:author" content="king">
 <meta property="article:tag" content="实战">
 <meta name="twitter:card" content="summary">
@@ -185,6 +185,8 @@
 <p>直接ida打开libnative-lib.so。找到Java_com_kanxue_algorithmbase_MainActivity_encodeFromJni_140。然后根据返回值看来源。最后v15是返回的。然后v8=&amp;v15。然后v8的值是v17逐个字节赋值的。所以关键在于v17。关键函数直接定位出来在sub_AB90.另外看v16的值。和MD5的算法有点像。可能也是一个hash算法。</p>
 <p><img src="/2021/01/12/zuoye4/image-20210112223827223.png" alt="image-20210112223827223"></p>
 <p>接着看到里面只有一个函数sub_9AFC。直接进去看看。</p>
+<a id="more"></a>
+
 <p><img src="/2021/01/12/zuoye4/image-20210112224210157.png" alt="image-20210112224210157"></p>
 <p>进去后也只有一个函数sub_9BA4。继续进去看看是不是算法的部分</p>
 <p><img src="/2021/01/12/zuoye4/image-20210112224302944.png" alt="image-20210112224302944"></p>
@@ -202,8 +204,6 @@
 <p>先ida简单看下关键函数处</p>
 <p><img src="/2021/01/12/zuoye4/image-20210113204338119.png" alt="image-20210113204338119"></p>
 <p>然后frida打印一下结果</p>
-<a id="more"></a>
-
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">input: fgfPLREXkGWWzfVPvtSjGxkkBsFP output: d58aa1c17830271e523dcc59808ec75e1f6660ad</span><br></pre></td></tr></table></figure>
 
 <p>然后再用sha1标准的计算一下kanxue_imyang_41_fgfPLREXkGWWzfVPvtSjGxkkBsFP的结果是b5d3a0ebffb5eb1048e19455bcea310068833c0e</p>
