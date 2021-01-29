@@ -15,24 +15,24 @@
 <meta property="og:site_name" content="king的博客">
 <meta property="og:description" content="分析样例下载：链接: https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1Mb6U4D24SlG_K6n1dxszOQ  密码: ikpe 第一题algorithmbase_40.apk 直接ida打开libnative-lib.so。找到Java_com_kanxue_algorithmbase_MainActivity_encodeFromJni_140。然后根据返回值看来源。最后v15是返回的">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/12/zuoye4/image-20210112223827223.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/12/zuoye4/image-20210112224210157.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/12/zuoye4/image-20210112224302944.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/12/zuoye4/image-20210112224400383.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/12/zuoye4/image-20210112224455289.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/12/zuoye4/image-20210112224911512.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/12/zuoye4/image-20210113204338119.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/12/zuoye4/image-20210113211935026.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/12/zuoye4/image-20210113220511030.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/12/zuoye4/image-20210113221844233.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/12/zuoye4/image-20210113221902907.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/12/zuoye4/image-20210113222120944.png">
+<meta property="og:image" content="http://missking.cc/2021/01/12/zuoye4/image-20210112223827223.png">
+<meta property="og:image" content="http://missking.cc/2021/01/12/zuoye4/image-20210112224210157.png">
+<meta property="og:image" content="http://missking.cc/2021/01/12/zuoye4/image-20210112224302944.png">
+<meta property="og:image" content="http://missking.cc/2021/01/12/zuoye4/image-20210112224400383.png">
+<meta property="og:image" content="http://missking.cc/2021/01/12/zuoye4/image-20210112224455289.png">
+<meta property="og:image" content="http://missking.cc/2021/01/12/zuoye4/image-20210112224911512.png">
+<meta property="og:image" content="http://missking.cc/2021/01/12/zuoye4/image-20210113204338119.png">
+<meta property="og:image" content="http://missking.cc/2021/01/12/zuoye4/image-20210113211935026.png">
+<meta property="og:image" content="http://missking.cc/2021/01/12/zuoye4/image-20210113220511030.png">
+<meta property="og:image" content="http://missking.cc/2021/01/12/zuoye4/image-20210113221844233.png">
+<meta property="og:image" content="http://missking.cc/2021/01/12/zuoye4/image-20210113221902907.png">
+<meta property="og:image" content="http://missking.cc/2021/01/12/zuoye4/image-20210113222120944.png">
 <meta property="article:published_time" content="2021-01-12T14:32:51.000Z">
-<meta property="article:modified_time" content="2021-01-28T13:57:16.427Z">
+<meta property="article:modified_time" content="2021-01-29T14:01:47.044Z">
 <meta property="article:author" content="king">
 <meta property="article:tag" content="实战">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://missking.cc/blog.github.io/2021/01/12/zuoye4/image-20210112223827223.png">
+<meta name="twitter:image" content="http://missking.cc/2021/01/12/zuoye4/image-20210112223827223.png">
   
     <link rel="alternative" href="/atom.xml" title="king的博客" type="application/atom+xml">
   
@@ -183,25 +183,27 @@
         <p>分析样例下载：链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1Mb6U4D24SlG_K6n1dxszOQ">https://pan.baidu.com/s/1Mb6U4D24SlG_K6n1dxszOQ</a>  密码: ikpe</p>
 <p>第一题algorithmbase_40.apk</p>
 <p>直接ida打开libnative-lib.so。找到Java_com_kanxue_algorithmbase_MainActivity_encodeFromJni_140。然后根据返回值看来源。最后v15是返回的。然后v8=&amp;v15。然后v8的值是v17逐个字节赋值的。所以关键在于v17。关键函数直接定位出来在sub_AB90.另外看v16的值。和MD5的算法有点像。可能也是一个hash算法。</p>
-<p><img src="/blog.github.io/2021/01/12/zuoye4/image-20210112223827223.png" alt="image-20210112223827223"></p>
+<p><img src="/2021/01/12/zuoye4/image-20210112223827223.png" alt="image-20210112223827223"></p>
 <p>接着看到里面只有一个函数sub_9AFC。直接进去看看。</p>
-<p><img src="/blog.github.io/2021/01/12/zuoye4/image-20210112224210157.png" alt="image-20210112224210157"></p>
+<p><img src="/2021/01/12/zuoye4/image-20210112224210157.png" alt="image-20210112224210157"></p>
 <p>进去后也只有一个函数sub_9BA4。继续进去看看是不是算法的部分</p>
-<p><img src="/blog.github.io/2021/01/12/zuoye4/image-20210112224302944.png" alt="image-20210112224302944"></p>
+<p><img src="/2021/01/12/zuoye4/image-20210112224302944.png" alt="image-20210112224302944"></p>
 <p>果然看到熟悉的算法部分。搜索一下常量看看有啥收获不</p>
-<p><img src="/blog.github.io/2021/01/12/zuoye4/image-20210112224400383.png" alt="image-20210112224400383"></p>
+<p><img src="/2021/01/12/zuoye4/image-20210112224400383.png" alt="image-20210112224400383"></p>
 <p>看到直接就是sha1的关键常量。我们验证下看看</p>
-<p><img src="/blog.github.io/2021/01/12/zuoye4/image-20210112224455289.png" alt="image-20210112224455289"></p>
+<p><img src="/2021/01/12/zuoye4/image-20210112224455289.png" alt="image-20210112224455289"></p>
 <p>先frida抓一下计算的结果</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">input: cKGiDKZnhktnzCxsXzGP output: ec048f770484aee853187e413d1dd4f478ce842e</span><br></pre></td></tr></table></figure>
 
 <p>然后验证一下kanxue_imyang_40_cKGiDKZnhktnzCxsXzGP的sha1值是否和结果一致。第一题搞定</p>
-<p><img src="/blog.github.io/2021/01/12/zuoye4/image-20210112224911512.png" alt="image-20210112224911512"></p>
+<p><img src="/2021/01/12/zuoye4/image-20210112224911512.png" alt="image-20210112224911512"></p>
 <p>==========================================================================================</p>
 <p>第二题algorithmbase_41.apk</p>
 <p>先ida简单看下关键函数处</p>
-<p><img src="/blog.github.io/2021/01/12/zuoye4/image-20210113204338119.png" alt="image-20210113204338119"></p>
+<p><img src="/2021/01/12/zuoye4/image-20210113204338119.png" alt="image-20210113204338119"></p>
 <p>然后frida打印一下结果</p>
+<a id="more"></a>
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">input: fgfPLREXkGWWzfVPvtSjGxkkBsFP output: d58aa1c17830271e523dcc59808ec75e1f6660ad</span><br></pre></td></tr></table></figure>
 
 <p>然后再用sha1标准的计算一下kanxue_imyang_41_fgfPLREXkGWWzfVPvtSjGxkkBsFP的结果是b5d3a0ebffb5eb1048e19455bcea310068833c0e</p>
@@ -216,7 +218,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">digest[0] &#x3D; 0x67452301;</span><br><span class="line">digest[1] &#x3D; 0xefcdab89;</span><br><span class="line">digest[2] &#x3D; 0x98badcfe;</span><br><span class="line">digest[3] &#x3D; 0x10325476;</span><br><span class="line">digest[4] &#x3D; 0xc3d2e1f0;</span><br></pre></td></tr></table></figure>
 
 <p>然后ida搜索一下</p>
-<p><img src="/blog.github.io/2021/01/12/zuoye4/image-20210113211935026.png" alt="image-20210113211935026"></p>
+<p><img src="/2021/01/12/zuoye4/image-20210113211935026.png" alt="image-20210113211935026"></p>
 <p>果然发生了变动。按照对应的值修改一下</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">reset</span><span class="params">(<span class="keyword">uint32_t</span> digest[], <span class="built_in">std</span>::<span class="built_in">string</span> &amp;<span class="built_in">buffer</span>, <span class="keyword">uint64_t</span> &amp;transforms)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/* SHA1 initialization constants */</span></span><br><span class="line">    digest[<span class="number">0</span>] = <span class="number">0x45670123</span>;</span><br><span class="line">    digest[<span class="number">1</span>] = <span class="number">0xCDEF89AB</span>;</span><br><span class="line">    digest[<span class="number">2</span>] = <span class="number">0xBA98FEDC</span>;</span><br><span class="line">    digest[<span class="number">3</span>] = <span class="number">0x32107654</span>;</span><br><span class="line">    digest[<span class="number">4</span>] = <span class="number">0xD2C3F0E1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Reset counters */</span></span><br><span class="line">    <span class="built_in">buffer</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    transforms = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -226,7 +228,7 @@
 <p>=============================================================================</p>
 <p>第三题algorithmbase_42.apk</p>
 <p>直接ida先检查下常量是否正确。然后init里面的常量是没有修改的。我们再看看算法内部用来计算的常量是否一致</p>
-<p><img src="/blog.github.io/2021/01/12/zuoye4/image-20210113220511030.png" alt="image-20210113220511030"></p>
+<p><img src="/2021/01/12/zuoye4/image-20210113220511030.png" alt="image-20210113220511030"></p>
 <p>对比后发现不单单值发生了变化。并且也从+变成了-。</p>
 <p>用frida来取一个计算结果先</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">input: FbeBTeatDdikDjhyV output: c603885c6817b5e15919d9b50d6d951eb1fd11fc</span><br></pre></td></tr></table></figure>
@@ -240,14 +242,14 @@
 <p>=============================================================================</p>
 <p>第四题algorithmbase_43.apk</p>
 <p>直接ida打开。结果发现字符串被加密了。没法直接看到前面固定加的字符串了。不要紧。先拿去用unidbg或者AndroidNativeEmu来生成一个解密的so</p>
-<p><img src="/blog.github.io/2021/01/12/zuoye4/image-20210113221844233.png" alt="image-20210113221844233"></p>
+<p><img src="/2021/01/12/zuoye4/image-20210113221844233.png" alt="image-20210113221844233"></p>
 <p>下面贴上解密后的结果</p>
-<p><img src="/blog.github.io/2021/01/12/zuoye4/image-20210113221902907.png" alt="image-20210113221902907"></p>
+<p><img src="/2021/01/12/zuoye4/image-20210113221902907.png" alt="image-20210113221902907"></p>
 <p>然后frida打印下输出</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">input: gkoOrszvENhJEgIFcmnccPtUkAPG output: 4b3ed910435a1b7231cd01ff7b8ddab64926ee75</span><br></pre></td></tr></table></figure>
 
 <p>先验证下sha1标准的对不对。结果是正确的。没有任何修改。第4题搞定</p>
-<p><img src="/blog.github.io/2021/01/12/zuoye4/image-20210113222120944.png" alt="image-20210113222120944"></p>
+<p><img src="/2021/01/12/zuoye4/image-20210113222120944.png" alt="image-20210113222120944"></p>
 
       
 

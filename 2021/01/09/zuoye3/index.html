@@ -15,21 +15,21 @@
 <meta property="og:site_name" content="king的博客">
 <meta property="og:description" content="分析样例下载：链接: https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1qxkYqMovR8Fe6sO-Zr-8ow  密码: dh7g 第一题algorithmbase_32 直接ida打开找到encodeFromJni_32函数。然后F5后。发现是ollvm混淆的。然后大概的分析一下。我的分析思路是。首先是大概的翻一下参数较多的那些函数，看看是否有什么比较眼熟的函数。果然很快锁定了一个函数su">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/09/zuoye3/image-20210109220431469.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/09/zuoye3/image-20210109220926171.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/09/zuoye3/image-20210109221223706.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/09/zuoye3/image-20210109221252596.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/09/zuoye3/image-20210109222044810.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/09/zuoye3/image-20210109222513629.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/09/zuoye3/image-20210109222606117.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/09/zuoye3/image-20210109222824334.png">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/09/zuoye3/image-20210109224758535.png">
+<meta property="og:image" content="http://missking.cc/2021/01/09/zuoye3/image-20210109220431469.png">
+<meta property="og:image" content="http://missking.cc/2021/01/09/zuoye3/image-20210109220926171.png">
+<meta property="og:image" content="http://missking.cc/2021/01/09/zuoye3/image-20210109221223706.png">
+<meta property="og:image" content="http://missking.cc/2021/01/09/zuoye3/image-20210109221252596.png">
+<meta property="og:image" content="http://missking.cc/2021/01/09/zuoye3/image-20210109222044810.png">
+<meta property="og:image" content="http://missking.cc/2021/01/09/zuoye3/image-20210109222513629.png">
+<meta property="og:image" content="http://missking.cc/2021/01/09/zuoye3/image-20210109222606117.png">
+<meta property="og:image" content="http://missking.cc/2021/01/09/zuoye3/image-20210109222824334.png">
+<meta property="og:image" content="http://missking.cc/2021/01/09/zuoye3/image-20210109224758535.png">
 <meta property="article:published_time" content="2021-01-09T13:34:35.000Z">
-<meta property="article:modified_time" content="2021-01-28T13:56:39.309Z">
+<meta property="article:modified_time" content="2021-01-29T14:01:37.801Z">
 <meta property="article:author" content="king">
 <meta property="article:tag" content="实战">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://missking.cc/blog.github.io/2021/01/09/zuoye3/image-20210109220431469.png">
+<meta name="twitter:image" content="http://missking.cc/2021/01/09/zuoye3/image-20210109220431469.png">
   
     <link rel="alternative" href="/atom.xml" title="king的博客" type="application/atom+xml">
   
@@ -180,32 +180,34 @@
         <p>分析样例下载：链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1qxkYqMovR8Fe6sO-Zr-8ow">https://pan.baidu.com/s/1qxkYqMovR8Fe6sO-Zr-8ow</a>  密码: dh7g</p>
 <p>第一题algorithmbase_32</p>
 <p>直接ida打开找到encodeFromJni_32函数。然后F5后。发现是ollvm混淆的。然后大概的分析一下。我的分析思路是。首先是大概的翻一下参数较多的那些函数，看看是否有什么比较眼熟的函数。果然很快锁定了一个函数sub_1D920。下面贴上交为眼熟的部分</p>
-<p><img src="/blog.github.io/2021/01/09/zuoye3/image-20210109220431469.png" alt="image-20210109220431469"></p>
+<p><img src="/2021/01/09/zuoye3/image-20210109220431469.png" alt="image-20210109220431469"></p>
 <p>我圈出来的这几个特征和我们之前分析过的md5的特征高度的相似。v10的那些明显就是MD5的那个key。而下面是拼接的三段固定数据再加上我们的输入值。所以我们先看看那三段数据分别是什么</p>
-<p><img src="/blog.github.io/2021/01/09/zuoye3/image-20210109220926171.png" alt="image-20210109220926171"></p>
+<p><img src="/2021/01/09/zuoye3/image-20210109220926171.png" alt="image-20210109220926171"></p>
 <p>点开后发现字符串被加密了。所以我们用之前研究的解ollvm字符串混淆的工具unidbg或者是AndroidNativeEmu来生成一个解密的so跑一下。下面贴上解完之后的结果</p>
-<p><img src="/blog.github.io/2021/01/09/zuoye3/image-20210109221223706.png" alt="image-20210109221223706"></p>
+<a id="more"></a>
+
+<p><img src="/2021/01/09/zuoye3/image-20210109221223706.png" alt="image-20210109221223706"></p>
 <p>然后点进去看看字符串。</p>
-<p><img src="/blog.github.io/2021/01/09/zuoye3/image-20210109221252596.png" alt="image-20210109221252596"></p>
+<p><img src="/2021/01/09/zuoye3/image-20210109221252596.png" alt="image-20210109221252596"></p>
 <p>知道是什么值拼接的之后。然后就简单了。先看看输出和输出的值。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rRZrALoUFxTqxDCJHjT -&gt; ea8caf7e47b8404d81de797995d6c3cc</span><br></pre></td></tr></table></figure>
 
 <p>然后我们拼接kanxue+imyang+ollvm_md5+输入数据来MD5看看是否一致</p>
-<p><img src="/blog.github.io/2021/01/09/zuoye3/image-20210109222044810.png" alt="image-20210109222044810"></p>
+<p><img src="/2021/01/09/zuoye3/image-20210109222044810.png" alt="image-20210109222044810"></p>
 <p>结果和上面的一致。第一题搞定</p>
 <p>=======================================================================================================</p>
 <p>第二题algorithmbase_32_2</p>
 <p>直接ida开始分析。找到encodeFromJni_32函数。由于上一个例子翻到了关键函数。直接找类似的函数。定位到了sub_1D48C。</p>
-<p><img src="/blog.github.io/2021/01/09/zuoye3/image-20210109222513629.png" alt="image-20210109222513629"></p>
+<p><img src="/2021/01/09/zuoye3/image-20210109222513629.png" alt="image-20210109222513629"></p>
 <p>看着和之前的差不多的。然后看看前面固定拼接了些什么</p>
-<p><img src="/blog.github.io/2021/01/09/zuoye3/image-20210109222606117.png" alt="image-20210109222606117"></p>
+<p><img src="/2021/01/09/zuoye3/image-20210109222606117.png" alt="image-20210109222606117"></p>
 <p>发现也是字符串混淆加密的。老办法。上unidbg或者是AndroidNativeEmu来生成一个解密的so。</p>
-<p><img src="/blog.github.io/2021/01/09/zuoye3/image-20210109222824334.png" alt="image-20210109222824334"></p>
+<p><img src="/2021/01/09/zuoye3/image-20210109222824334.png" alt="image-20210109222824334"></p>
 <p>解密后看到依然还是这几个值。我们跑的测试一下看是否计算的值一致了。先获取一个手机上的输入和输出</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cPKpWAMuRxJVSJORW -&gt; ec184c0980693ef670486feb407b6031</span><br></pre></td></tr></table></figure>
 
 <p>看下面的图。发现结果不是一致的</p>
-<p><img src="/blog.github.io/2021/01/09/zuoye3/image-20210109224758535.png" alt="image-20210109224758535"></p>
+<p><img src="/2021/01/09/zuoye3/image-20210109224758535.png" alt="image-20210109224758535"></p>
 <p>所以我们还得检查。key是否发生了变化。静态分析上面看。是没有什么变化。我们需要动态调试的情况下看看拼接完数据后。最后调用sub_1CDFC函数的时候v11的值是否已经变了。为了方便调试。我先用unidbg成功把这个函数跑通</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">lianxi32</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        lianxi32 lianxi = <span class="keyword">new</span> lianxi32();</span><br><span class="line">        lianxi.Call_EncodeFromJni_32();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AndroidEmulator emulator;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> VM vm;</span><br><span class="line">    <span class="keyword">private</span> DvmClass Clazz;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">lianxi32</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        emulator = <span class="keyword">new</span> AndroidARM64Emulator();</span><br><span class="line">        Memory memory = emulator.getMemory();</span><br><span class="line">        LibraryResolver resolver = <span class="keyword">new</span> AndroidResolver(<span class="number">23</span>);</span><br><span class="line">        memory.setLibraryResolver(resolver);</span><br><span class="line">        vm = emulator.createDalvikVM(<span class="keyword">null</span>);</span><br><span class="line">        vm.setVerbose(<span class="keyword">false</span>);</span><br><span class="line">        DalvikModule dm = vm.loadLibrary(<span class="keyword">new</span> File(<span class="string">&quot;unidbg-android/src/test/resources/example_binaries/lianxi32_2/libnative-lib.so&quot;</span>), <span class="keyword">false</span>);</span><br><span class="line">        dm.callJNI_OnLoad(emulator);</span><br><span class="line">        Clazz = vm.resolveClass(<span class="string">&quot;com/kanxue/algorithmbase/MainActivity&quot;</span>);</span><br><span class="line">        Debugger dbg = emulator.attach();</span><br><span class="line">        dbg.addBreakPoint(dm.getModule(), <span class="number">0x1D63C</span>);</span><br><span class="line">        dbg.debug();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Call_EncodeFromJni_32</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String res=Clazz.callStaticJniMethodObject(emulator,<span class="string">&quot;encodeFromJni_132(Ljava/lang/String;)Ljava/lang/String;&quot;</span>,<span class="string">&quot;cPKpWAMuRxJVSJORW&quot;</span>).toString();</span><br><span class="line">        System.out.print(res);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 

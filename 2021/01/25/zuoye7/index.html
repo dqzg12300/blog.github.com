@@ -15,13 +15,13 @@
 <meta property="og:site_name" content="king的博客">
 <meta property="og:description" content="分析样例下载：链接: https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;13iMgWwFattwNS6PmEA16Bg  密码: avtb 练习algorithmbase_70.apk 老样子直接ida打开libnative-lib.so然后frida打印一下输入和输出 1234567891011121314function hook_java()&amp;#123;    Java.perform(fun">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://missking.cc/blog.github.io/2021/01/25/zuoye7/image-20210126224654619.png">
+<meta property="og:image" content="http://missking.cc/2021/01/25/zuoye7/image-20210126224654619.png">
 <meta property="article:published_time" content="2021-01-25T12:51:58.000Z">
-<meta property="article:modified_time" content="2021-01-28T14:33:24.974Z">
+<meta property="article:modified_time" content="2021-01-29T14:02:14.584Z">
 <meta property="article:author" content="king">
 <meta property="article:tag" content="实战">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://missking.cc/blog.github.io/2021/01/25/zuoye7/image-20210126224654619.png">
+<meta name="twitter:image" content="http://missking.cc/2021/01/25/zuoye7/image-20210126224654619.png">
   
     <link rel="alternative" href="/atom.xml" title="king的博客" type="application/atom+xml">
   
@@ -181,6 +181,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">input: 000000                                     output: 1B0F4D1A2743DAC43AE630208005759B</span><br><span class="line">input: 000000000000                         output: D19C887F85B85FA7718D07ACE365762F</span><br><span class="line">input: 000000000000000000000000 output: 559CFDDC0EFB9178E92DEFAD02ACA99DECB4EB6F7C6A3C2AF24E34BE3615498A</span><br></pre></td></tr></table></figure>
 
 <p>测试了一下后。发现特征。当长度不超过0x10时。加密结果的长度不会变。当长度超过0x10时。则长度发生变化。这个特征和aes、rc2的特征非常像。我们用aes和rc2的加密随便测试一下看看特征</p>
+<a id="more"></a>
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#rc2</span><br><span class="line">input: 000000                                        output: 6d31ec02d637b158</span><br><span class="line">input: 000000000000                         output: 28c39f84769cabe1df0cbae8524aba1b</span><br><span class="line">input: 000000000000000000000000 output: 28c39f84769cabe1c82b75ff9fd684274ab4dcbf91c63296c4e12ee98c721fc7</span><br><span class="line">#aes</span><br><span class="line">input: 000000                                        output: a2ddb2109958049280e4b4f1da0ed884</span><br><span class="line">input: 000000000000                         output: e4a62440cf35c675a2afc6c0373c526e</span><br><span class="line">input: 000000000000000000000000 output: 7f81b6fe31ddef2804cd2430b950d124523f6f448be52698c1986b956fd26ea2</span><br></pre></td></tr></table></figure>
 
 <p>从特征上面看。这个可能是aes加密。这个时候就要继续静态分析找更多的特征来确定是aes。</p>
@@ -206,7 +208,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">onEnter sub_57514</span><br><span class="line">             0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">77bea70080  6b 61 6e 78 75 65 5f 69 6d 79 61 6e 67 5f 5f 5f  kanxue_imyang___</span><br><span class="line">77bea70090  00 00 00 00 00 00 00 00 62 61 73 69 63 5f 73 74  ........basic_st</span><br><span class="line">77bea700a0  72 69 6e 67 00 00 00 00 00 00 00 00 00 00 00 00  ring............</span><br><span class="line">77bea700b0  61 6c 6c 6f 63 61 74 6f 72 3c 54 3e 3a 3a 61 6c  allocator&lt;T&gt;::al</span><br><span class="line">             0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">77bea70080  6b 61 6e 78 75 65 5f 69 6d 79 61 6e 67 5f 5f 5f  kanxue_imyang___</span><br><span class="line">77bea70090  00 00 00 00 00 00 00 00 62 61 73 69 63 5f 73 74  ........basic_st</span><br><span class="line">77bea700a0  72 69 6e 67 00 00 00 00 00 00 00 00 00 00 00 00  ring............</span><br><span class="line">77bea700b0  61 6c 6c 6f 63 61 74 6f 72 3c 54 3e 3a 3a 61 6c  allocator&lt;T&gt;::al</span><br><span class="line">             0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">77ca65b240  30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30  0000000000000000</span><br><span class="line">77ca65b250  30 30 30 30 30 30 30 30 08 08 08 08 08 08 08 08  00000000........</span><br><span class="line">77ca65b260  00 6f 6d 55 74 69 6c 73 2e 6e 65 78 74 49 6e 74  .omUtils.nextInt</span><br><span class="line">77ca65b270  28 69 6e 74 2c 20 69 6e 74 29 00 6c 65 28 29 00  (int, int).le().</span><br><span class="line">onLeave sub_57514</span><br><span class="line">0x0</span><br><span class="line">input: 000000000000000000000000 output: 559CFDDC0EFB9178E92DEFAD02ACA99DECB4EB6F7C6A3C2AF24E34BE3615498A</span><br></pre></td></tr></table></figure>
 
 <p>这个函数就很明显像是加密函数了。正好和我们猜测的aes需要的字段相近。参数1应该是key。参数2应该是iv。参数3是输入数据。那么验证一下看看。结果和上面的能对上了。搞定了。</p>
-<p><img src="/blog.github.io/2021/01/25/zuoye7/image-20210126224654619.png" alt="image-20210126224654619"></p>
+<p><img src="/2021/01/25/zuoye7/image-20210126224654619.png" alt="image-20210126224654619"></p>
 
       
 
