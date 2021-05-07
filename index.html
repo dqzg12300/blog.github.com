@@ -66,6 +66,8 @@
     			
             
     			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友情链接</a>
+    			
             
     			
     			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
@@ -137,6 +139,274 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-ollvm2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/04/ollvm2/">反混淆ollvm利用unidbg或者stalker去虚假分支</a>
+    </h1>
+  
+
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2021/05/04/ollvm2/" class="pageViews">0</span>次
+  </a>
+
+
+        
+        <a href="/2021/05/04/ollvm2/" class="archive-article-date">
+  	<time datetime="2021-05-04T04:54:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>从原理上面来讲。去除虚假分支其实很简单。所以先简单说下理论。</p>
+<p>虚假分支的混淆会在增加大量的if else分支。增加静态分析的复杂度。但是实际在动态执行的时候。很多if else实际都是没有执行的。所以去掉虚假分支其实就是删除掉那些没有执行到的代码块。那么我们只要知道目标函数中，哪些汇编代码执行了，并且记录下执行汇编的address。然后把这些汇编以外的代码全部标记为nop。然后再用ida反汇编看到的结果。就直接是去掉虚假分支的结果了。</p>
+<p>下面我们从准备环境开始。</p>
+<p>1、编译ollvm</p>
+<p>​    <code>cd ~/ollvm/llvm-project-llvmorg-9.0.1/build-debug</code></p>
+<p>​    <code>cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS=&quot;clang;clang++&quot; ../llvm</code></p>
+<p>​    <code>ninja</code></p>
+<p>2、配置ndk，使用ollvm的clang来进行编译apk</p>
+<p>​    2.1、直接在llvm中增加ollvm的修改。使用下面的方式来配置</p>
+<p>​    首先下载ndk，地址：<a target="_blank" rel="noopener" href="https://developer.android.google.cn/ndk/downloads/">https://developer.android.google.cn/ndk/downloads/</a></p>
+<p>​    然后将ollvm编译好的cmake-build-release这个目录下的bin、lib、include三个目录拷贝到下载的ndk的目录~/ndk/toolchains/llvm/prebuilt/linux-x86_64/中。</p>
+<p>​    然后修改我们的apk项目中的使用ndk的目录。否则会默认使用sdk中的ndk来编译。找到local.properties增加<code>ndk.dir=/home/king/android-ndk-r21e</code></p>
+<p>​    最后配置ollvm的参数在cpp/CMakeLists.txt中添加配置<code>add_definitions(&quot;-mllvm -bcf -mllvm -bcf_loop=3&quot;)</code></p>
+<p>​    然后这里碰到了一个问题。就是带上-mllvm -bcf这个参数。就会导致一直在gradle build中。这个实际上是ollvm的一个bug。由于我拉去的分支是没有修复这个bug的。所以需要根据这个地址的提交代码修改下就可以了<a target="_blank" rel="noopener" href="https://github.com/obfuscator-llvm/obfuscator/pull/76">https://github.com/obfuscator-llvm/obfuscator/pull/76</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">反混淆</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/04/ollvm2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-zhuabao" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/04/zhuabao/">android的http、https、tcp、udp抓包</a>
+    </h1>
+  
+
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2021/05/04/zhuabao/" class="pageViews">0</span>次
+  </a>
+
+
+        
+        <a href="/2021/05/04/zhuabao/" class="archive-article-date">
+  	<time datetime="2021-05-04T02:35:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">andorid,抓包</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/04/zhuabao/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-zuoye9" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/03/zuoye9/">算法还原实战9</a>
+    </h1>
+  
+
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2021/02/03/zuoye9/" class="pageViews">0</span>次
+  </a>
+
+
+        
+        <a href="/2021/02/03/zuoye9/" class="archive-article-date">
+  	<time datetime="2021-02-03T14:46:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>练习algorithmbase_80.apk</p>
+<p>先是用frida脚本跑几个数据看看加密特征</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">call_encode80</span>(<span class="params">input</span>)</span>&#123;</span><br><span class="line">    Java.perform(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> MainActivity=Java.use(<span class="string">&quot;com.kanxue.algorithmbase.MainActivity&quot;</span>);</span><br><span class="line">        <span class="keyword">var</span> res=MainActivity.encodeFromJni_80(input);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;input:&quot;</span>,input,<span class="string">&quot;output&quot;</span>,res);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后加密几个测试数据看到了。当输入长度为16以下时。输出长度为128.输入长度为&gt;=16并且&lt;32时。输出长度为160。由此可以判断这应该是一个组合的非标准算法。前面组合的部分目测为某个hash算法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[AOSP on msm8996::com.kanxue.algorithmbase]-&gt; call_encode80(&quot;0000&quot;)</span><br><span class="line">input: 0000 output 23A92603A73333E2EE8DA421C319BB6743595D02CF5AC0CCD1AE26CDE40334589CA0983402D21FA53A1B6FB796328E9CC0B4A8CE1BB68F7E7A7C4C25B7667FA5 output len: 128</span><br><span class="line">[AOSP on msm8996::com.kanxue.algorithmbase]-&gt; call_encode80(&quot;000000000000000&quot;)</span><br><span class="line">input: 000000000000000 output CF3FFB756CEC35BD04AACB520E23ED3BCF3E332956275DF8E2E0A5C6D88B88B2845CA6A4AF374AF2B7618074119E919F8A673BDCC60E5DFAEF0CF103CD71790C output len: 128</span><br><span class="line">[AOSP on msm8996::com.kanxue.algorithmbase]-&gt; call_encode80(&quot;0000000000000000&quot;)</span><br><span class="line">input: 0000000000000000 output 5F5AB31F6BEF26F7FE5BA423B4B71D76357787C9E7DBFB39FAD9FE0BBB67587E6E8F24CAEF7EFFF52A539F37997FD51836824D20AD230940BFC5206145FD52434B72058D139812D5ADA7EBB12BD4333A output len: 160</span><br><span class="line">[AOSP on msm8996::com.kanxue.algorithmbase]-&gt; call_encode80(&quot;0000000000000000000000000000000&quot;)</span><br><span class="line">input: 0000000000000000000000000000000 output D06F822D572D89CB569BA83A63E11A1800861418ED2CB432419B6FD36C1DFD5488067965E42841424E40DDE955974C16AECBF485F828DE38663C7923BF7003456A64EFCCF070DD817D13E137D0CC3471 output len: 160</span><br><span class="line">[AOSP on msm8996::com.kanxue.algorithmbase]-&gt; call_encode80(&quot;00000000000000000000000000000000&quot;)</span><br><span class="line">input: 00000000000000000000000000000000 output 6E46BE17EB55AE1CCA05E85E542A9EC24A948CF9ECB563C932F98002C7AF2D214FA3625C9D1B8B163D59699EFBB0E698313560682808B623278697B8DB9477F82AC8F580971AD97A104177862B9E833B0DFC80A63852524BD3E183A4D0252061 output len: 192</span><br></pre></td></tr></table></figure>
+
+<p>由于这个起始长度特征很眼熟。128的长度sha256的长度一致的。所以直接测试一下。</p>
+<p><img src="/2021/02/03/zuoye9/image-20210203225936678.png" alt="image-20210203225936678"></p>
+<p>看到结果和上面的不一致。可能这不是sha256算法。或者是一个修改了的sha256。我们接下来验证一下。先搜索一下。看看sha256标准算法有哪些常量</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">uint32_t</span> k[<span class="number">64</span>] = &#123;</span><br><span class="line">    <span class="number">0x428a2f98</span>, <span class="number">0x71374491</span>, <span class="number">0xb5c0fbcf</span>, <span class="number">0xe9b5dba5</span>, <span class="number">0x3956c25b</span>, <span class="number">0x59f111f1</span>, <span class="number">0x923f82a4</span>, <span class="number">0xab1c5ed5</span>,</span><br><span class="line">    <span class="number">0xd807aa98</span>, <span class="number">0x12835b01</span>, <span class="number">0x243185be</span>, <span class="number">0x550c7dc3</span>, <span class="number">0x72be5d74</span>, <span class="number">0x80deb1fe</span>, <span class="number">0x9bdc06a7</span>, <span class="number">0xc19bf174</span>,</span><br><span class="line">    <span class="number">0xe49b69c1</span>, <span class="number">0xefbe4786</span>, <span class="number">0x0fc19dc6</span>, <span class="number">0x240ca1cc</span>, <span class="number">0x2de92c6f</span>, <span class="number">0x4a7484aa</span>, <span class="number">0x5cb0a9dc</span>, <span class="number">0x76f988da</span>,</span><br><span class="line">    <span class="number">0x983e5152</span>, <span class="number">0xa831c66d</span>, <span class="number">0xb00327c8</span>, <span class="number">0xbf597fc7</span>, <span class="number">0xc6e00bf3</span>, <span class="number">0xd5a79147</span>, <span class="number">0x06ca6351</span>, <span class="number">0x14292967</span>,</span><br><span class="line">    <span class="number">0x27b70a85</span>, <span class="number">0x2e1b2138</span>, <span class="number">0x4d2c6dfc</span>, <span class="number">0x53380d13</span>, <span class="number">0x650a7354</span>, <span class="number">0x766a0abb</span>, <span class="number">0x81c2c92e</span>, <span class="number">0x92722c85</span>,</span><br><span class="line">    <span class="number">0xa2bfe8a1</span>, <span class="number">0xa81a664b</span>, <span class="number">0xc24b8b70</span>, <span class="number">0xc76c51a3</span>, <span class="number">0xd192e819</span>, <span class="number">0xd6990624</span>, <span class="number">0xf40e3585</span>, <span class="number">0x106aa070</span>,</span><br><span class="line">    <span class="number">0x19a4c116</span>, <span class="number">0x1e376c08</span>, <span class="number">0x2748774c</span>, <span class="number">0x34b0bcb5</span>, <span class="number">0x391c0cb3</span>, <span class="number">0x4ed8aa4a</span>, <span class="number">0x5b9cca4f</span>, <span class="number">0x682e6ff3</span>,</span><br><span class="line">    <span class="number">0x748f82ee</span>, <span class="number">0x78a5636f</span>, <span class="number">0x84c87814</span>, <span class="number">0x8cc70208</span>, <span class="number">0x90befffa</span>, <span class="number">0xa4506ceb</span>, <span class="number">0xbef9a3f7</span>, <span class="number">0xc67178f2</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sha256</span><span class="params">(<span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> *data, <span class="keyword">size_t</span> len, <span class="keyword">unsigned</span> <span class="keyword">char</span> *out)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">uint32_t</span> h0 = <span class="number">0x6a09e667</span>;</span><br><span class="line">    <span class="keyword">uint32_t</span> h1 = <span class="number">0xbb67ae85</span>;</span><br><span class="line">    <span class="keyword">uint32_t</span> h2 = <span class="number">0x3c6ef372</span>;</span><br><span class="line">    <span class="keyword">uint32_t</span> h3 = <span class="number">0xa54ff53a</span>;</span><br><span class="line">    <span class="keyword">uint32_t</span> h4 = <span class="number">0x510e527f</span>;</span><br><span class="line">    <span class="keyword">uint32_t</span> h5 = <span class="number">0x9b05688c</span>;</span><br><span class="line">    <span class="keyword">uint32_t</span> h6 = <span class="number">0x1f83d9ab</span>;</span><br><span class="line">    <span class="keyword">uint32_t</span> h7 = <span class="number">0x5be0cd19</span>;</span><br><span class="line">    <span class="comment">//省略掉其他逻辑的代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后搜索一下常量特征</p>
+<p><img src="/2021/02/03/zuoye9/image-20210203230322069.png" alt="image-20210203230322069"></p>
+<p>然后我们看看那个类似MD5_Init的常量是否发生了改变。搜索一下特征0x6a09e667</p>
+<p><img src="/2021/02/03/zuoye9/image-20210203232750391.png" alt="image-20210203232750391"></p>
+<p>没有啥变化。和上面的h0-h7的常量对比。是一致的。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">实战</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/03/zuoye9/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-frida1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -936,303 +1206,6 @@
 
 
   
-    <article id="post-vmp" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/16/vmp/">vmp入门</a>
-    </h1>
-  
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2020/11/16/vmp/" class="pageViews">0</span>次
-  </a>
-
-
-        
-        <a href="/2020/11/16/vmp/" class="archive-article-date">
-  	<time datetime="2020-11-16T13:02:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>记录学习的过程</p>
-<p>vmp壳的应用。从效果上面看，是把java的函数，加密成了native的函数，在实现函数加密保护时，主要是对相同参数并且相同返回值的函数加密成native的。所以会一般是两种情况，一个是直接对onCreate函数进行vmp保护，或者是抽象出一个统一参数和返回值的函数。然后对这个函数进行vmp保护。</p>
-<p>native的函数都是需要动态注册的。所以我们先改造aosp源码。打印下注册了函数，以及函数的地址，方便我们后续进行调试跟踪，下面修改art_method.cc</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">const</span> <span class="keyword">void</span>* <span class="title">ArtMethod::RegisterNative</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span>* native_method, <span class="keyword">bool</span> is_fast)</span> </span>&#123;</span><br><span class="line">  CHECK(IsNative()) &lt;&lt; PrettyMethod();</span><br><span class="line">  CHECK(!IsFastNative()) &lt;&lt; PrettyMethod();</span><br><span class="line">  CHECK(native_method != <span class="literal">nullptr</span>) &lt;&lt; PrettyMethod();</span><br><span class="line">  <span class="keyword">if</span> (is_fast) &#123;</span><br><span class="line">    AddAccessFlags(kAccFastNative);</span><br><span class="line">  &#125;</span><br><span class="line">  LOG(ERROR)&lt;&lt;<span class="string">&quot;krom ArtMethod::RegisterNative:&quot;</span>&lt;&lt;<span class="keyword">this</span>-&gt;PrettyMethod()&lt;&lt;<span class="string">&quot;----addr:&quot;</span>&lt;&lt;native_method;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">void</span>* new_native_method = <span class="literal">nullptr</span>;</span><br><span class="line">  Runtime::Current()-&gt;GetRuntimeCallbacks()-&gt;RegisterNativeMethod(<span class="keyword">this</span>,</span><br><span class="line">                                                                  native_method,</span><br><span class="line">                                                                  <span class="comment">/*out*/</span>&amp;new_native_method);</span><br><span class="line">  SetEntryPointFromJni(new_native_method);</span><br><span class="line">  <span class="keyword">return</span> new_native_method;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>由于vmp中将java函数转成了native函数，所以函数内肯定有大量jni调用处理。所以为了方便分析，再改造下rom，在jni函数调用的时候将触发调用的函数以及被调用的函数，都打印出来。这样就知道加密的一部分jni调用，InvokeWithArgArray这个函数就满足我们的需求，jni函数都会调用的地方。我们在这里插入日志记录即可。</p>
-        
-          <a class="article-more-a" href="/2020/11/16/vmp/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/vmp//" class="article-tag-list-link color4">vmp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/16/vmp/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-unicorn2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/03/unicorn2/">AndroidNativeEmu和unidbg对抗ollvm的字符串混淆</a>
-    </h1>
-  
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2020/11/03/unicorn2/" class="pageViews">0</span>次
-  </a>
-
-
-        
-        <a href="/2020/11/03/unicorn2/" class="archive-article-date">
-  	<time datetime="2020-11-03T11:15:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>AndroidNativeEmu和unidbg都是对unicorn进行了一定程度封装的开源项目，让我们可以很方便的调用jni函数，以及对没有实现的函数进行hook实现处理。并且让我们可以实现so里面模拟调用java函数。下面首先使用AndroidNativeEmu来对抗ollvm的字符串混淆。对so进行修复。让我们可以更加便捷的进行静态分析。</p>
-<p>在实现之前，先总结下原理。</p>
-<p>ollvm的字符串混淆，我们使用ida的时候。看到的结果如下。</p>
-<p><img src="/2020/11/03/unicorn2/image-20201226224303113.png" alt="image-20201226224303113"></p>
-<p>这里相当于是一个解密函数。通过这个函数将会还原成正常的字符串。然后我们看看在哪里调用到了这个解密函数</p>
-<p><img src="/2020/11/03/unicorn2/image-20201226224514551.png" alt="image-20201226224514551"></p>
-<p>可以看到是在.init_array中使用解密函数对字符串进行还原。也就是说。当我们执行完.init_array后。就会将正常的字符串写入内存中。这时我们就得到了真正的字符串了。所以根据这个情况。</p>
-        
-          <a class="article-more-a" href="/2020/11/03/unicorn2/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/unicorn//" class="article-tag-list-link color3">unicorn</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/03/unicorn2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-fart" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/03/fart/">fart的理解和分析过程</a>
-    </h1>
-  
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2020/11/03/fart/" class="pageViews">0</span>次
-  </a>
-
-
-        
-        <a href="/2020/11/03/fart/" class="archive-article-date">
-  	<time datetime="2020-11-03T11:15:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>文章内的fart的源码素材均来自看雪搞研网课。安卓源码为8.1</p>
-<p>学习了一段时间fart然后整理一下以便哪天忘记了翻翻</p>
-<p>fart是一个art环境下基于主动调用的自动化脱壳方案。在定制的fart环境中，只需要运行需要脱壳的apk即可自动脱壳，将脱壳后的dex文件dump在/sdcard/fart/app包名的目录下，那么这个流程是如何实现的呢。</p>
-<p>内部的一些原理作者有发过帖子详细进行过讲解，所以这里先是跟着作者的思想进行一步步的深入。先贴上地址</p>
-<p>1、[FART：ART环境下基于主动调用的自动化脱壳方案][<a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-252630.htm]">https://bbs.pediy.com/thread-252630.htm]</a></p>
-<p>2、[FART正餐前甜点：ART下几个通用简单高效的dump内存中dex方法][<a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-254028.htm]">https://bbs.pediy.com/thread-254028.htm]</a></p>
-<p>3、[拨云见日：安卓APP脱壳的本质以及如何快速发现ART下的脱壳点][<a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-254555.htm]">https://bbs.pediy.com/thread-254555.htm]</a></p>
-<p>阅读几篇文章后，我简单整理一下收获</p>
-        
-          <a class="article-more-a" href="/2020/11/03/fart/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/fart//" class="article-tag-list-link color5">fart</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/03/fart/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
@@ -1351,6 +1324,8 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
       
     
       
+      
+      
     
       
       
@@ -1362,13 +1337,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     
       
-      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
       
         
       
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" q-class="active:friends">友情链接</a></li>
+      
         
       
-      <li style="width: 50%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
       
         
     </ul>
@@ -1402,6 +1379,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">frida</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">反混淆</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">andorid,抓包</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1455,6 +1440,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     	</section>
     
 
+    
+    	<section class="tools-section tools-section-friends" q-show="friends">
+  		
+        <ul class="search-ul">
+          
+            <li class="search-li">
+              <a href="https://itworker.cn" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>IT小码农</a>
+            </li>
+          
+        </ul>
+  		
+    	</section>
     
 
     
