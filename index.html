@@ -140,6 +140,94 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-ollvm3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/05/14/ollvm3/">使用unidbg去ollvm的fla控制流程平坦化</a>
+    </h1>
+  
+
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2021/05/14/ollvm3/" class="pageViews">0</span>次
+  </a>
+
+
+        
+        <a href="/2021/05/14/ollvm3/" class="archive-article-date">
+  	<time datetime="2021-05-14T12:15:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近网上查了查还原平坦化相关的资料。看了无名侠大佬的文章。由于本人太菜了。好多地方看的有点懵懵懂懂的。最终还是自己摸索着尝试还原平坦化。写的哪里不对。还请大佬指正。</p>
+<p>先贴上几位大佬的文章</p>
+<p>[ARM64 OLLVM反混淆][<a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-252321.htm]">https://bbs.pediy.com/thread-252321.htm]</a></p>
+<p>[利用符号执行去除控制流平坦化][<a target="_blank" rel="noopener" href="https://security.tencent.com/index.php/blog/msg/112]">https://security.tencent.com/index.php/blog/msg/112]</a></p>
+<p>翻阅过大佬的文章后。本菜菜得到两个简单的结论。</p>
+<p><strong>一、fla主要功能是将if else这类的逻辑给转换成while+switch组合来处理。达到将简单的逻辑给复杂化，增加静态分析难度的目的。</strong></p>
+<p><strong>二、模拟执行找出真实块之间的关联，patch修改相应的代码。直接将真实块关联起来，从而实现反混淆</strong></p>
+        
+          <a class="article-more-a" href="/2021/05/14/ollvm3/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">反混淆</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/05/14/ollvm3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-ollvm2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1101,95 +1189,9 @@
 
 
   
-    <article id="post-zuoye1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/05/zuoye1/">还原算法实战</a>
-    </h1>
-  
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2021/01/05/zuoye1/" class="pageViews">0</span>次
-  </a>
-
-
-        
-        <a href="/2021/01/05/zuoye1/" class="archive-article-date">
-  	<time datetime="2021-01-05T12:40:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>练习第一题的algorithmbase_10.apk连接如下</p>
-<p>链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1hUyNDzd0VDzqD16X_IhiPg">https://pan.baidu.com/s/1hUyNDzd0VDzqD16X_IhiPg</a>  密码: ocg5</p>
-<p>首先用jadx打开目标应用。看到下面的代码</p>
-<p><img src="/2021/01/05/zuoye1/image-20210105204400773.png" alt="image-20210105204400773"></p>
-<p>看到我们需要还原算法的函数是encodeFromJni_10。参数是随机16个ascii字符。接下来用ida打开libnative-jni.so。找到我们的目标函数。然后修改第一个参数的类型为JNIEnv*，然后把第三个参数的名称修改成input。最后把F5的代码贴到下面</p>
-        
-          <a class="article-more-a" href="/2021/01/05/zuoye1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">实战</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/05/zuoye1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
     </nav>
   
 
