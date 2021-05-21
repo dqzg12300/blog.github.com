@@ -6,15 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://missking.cc">
-  <title>android的http、https、tcp、udp抓包 | king的博客</title>
+  <title>android的抓包 | king的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
-<meta property="og:title" content="android的http、https、tcp、udp抓包">
+  <meta name="description" content="最近学习了各种抓包。为了防止忘记。学到的东西必须是整理一波啊。向大佬们看齐。如果有啥地方写的不对，希望大家多多指点 抓包主要是针对网络通讯数据，客户端向服务端上报的数据拦截下来。一般都是抓取http、https、tcp、udp这四种数据包。想要获取到数据包。有多种方式，下面简单列一下。 抓包方式1、hook app业务层，根据业务代码逻辑找到触发请求的函数，比如按钮触发，或者触发数据上报时的提示框">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android的抓包">
 <meta property="og:url" content="http://missking.cc/2021/05/04/zhuabao/index.html">
 <meta property="og:site_name" content="king的博客">
+<meta property="og:description" content="最近学习了各种抓包。为了防止忘记。学到的东西必须是整理一波啊。向大佬们看齐。如果有啥地方写的不对，希望大家多多指点 抓包主要是针对网络通讯数据，客户端向服务端上报的数据拦截下来。一般都是抓取http、https、tcp、udp这四种数据包。想要获取到数据包。有多种方式，下面简单列一下。 抓包方式1、hook app业务层，根据业务代码逻辑找到触发请求的函数，比如按钮触发，或者触发数据上报时的提示框">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-05-04T02:35:17.000Z">
-<meta property="article:modified_time" content="2021-05-04T03:09:53.194Z">
+<meta property="article:modified_time" content="2021-05-21T15:48:58.498Z">
 <meta property="article:author" content="king">
 <meta property="article:tag" content="andorid,抓包">
 <meta name="twitter:card" content="summary">
@@ -148,7 +150,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      android的http、https、tcp、udp抓包
+      android的抓包
     </h1>
   
 
@@ -167,7 +169,27 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>最近学习了各种抓包。为了防止忘记。学到的东西必须是整理一波啊。向大佬们看齐。如果有啥地方写的不对，希望大家多多指点</p>
+<p>抓包主要是针对网络通讯数据，客户端向服务端上报的数据拦截下来。一般都是抓取http、https、tcp、udp这四种数据包。想要获取到数据包。有多种方式，下面简单列一下。</p>
+<h2 id="抓包方式"><a href="#抓包方式" class="headerlink" title="抓包方式"></a>抓包方式</h2><p>1、hook app业务层，根据业务代码逻辑找到触发请求的函数，比如按钮触发，或者触发数据上报时的提示框等方式。分析后找到发送数据的地方hook打印。</p>
+<p>**优点：不受app的防抓包手段的影响，只要能hook到就能抓到包。 **</p>
+<p><strong>缺点：必须分析app找关键点，并且每个不同的请求都要找对应的触发函数，效率太慢。</strong></p>
+<p>2、系统框架层的hook。直接hook系统源码发送和接受数据的地方。</p>
+<p><strong>优点：可以直接省略掉业务层的分析。因为业务层不论逻辑怎么样最终都是调用系统的或者是第三方的库来进行数据传输。并且通用性更好。基本不用修改就可以抓很多app的包。并且可以在这里直接打印堆栈回溯请求触发的函数，提高分析的效率。同样不受防抓包手段影响。</strong></p>
+<p><strong>缺点：hook出来的抓包数据不便于我们分析和筛选。只能在日志中查找对应的数据，分析数据包会比较繁琐。简单的需求或者是溯源时使用比较好</strong></p>
+<p>3、中间人抓包，使用charles、burp等抓包工具进行拦截，中间人抓包在https请求时，抓包软件的证书在中间冒充服务端接收客服端的请求。然后又冒充客户端，发送请求给服务端。在中间拿到了客户端和服务端的数据。</p>
+<p><strong>优点：专业的抓包分析软件，更加友好的分析页面。更加强大的功能，例如可以拦截请求进行改写替换，安装证书可以解析抓到的https数据包。支持vpn抓包</strong></p>
+<p><strong>缺点：防抓包手段针对的主要目标，例如服务端验证客户端证书，不正确就拒绝访问，我们需要把客户端的证书给dump出来，然后让中间人抓包使用指定证书。或者是客户端验证服务端证书。我们需要找到并hook去掉验证的代码。无法抓tcp和udp的包</strong></p>
+<p>4、网卡抓包、路由抓包。如wireshark，科来之类的。</p>
+<p><strong>优点：这种方式不受任何限制，并且通杀，绝对能抓到。</strong></p>
+<p><strong>缺点：对于加密的数据没有办法。需要自己进行解密，对于http和https包的展示不太友好</strong></p>
+<p>其中比较通用一点的是系统层的hook。所以我这里主要针对这个记录下系统层hook的方式抓取http、https、tcp、udp的数据。</p>
+<h2 id="系统层hook抓包http"><a href="#系统层hook抓包http" class="headerlink" title="系统层hook抓包http"></a>系统层hook抓包http</h2><h3 id="1、android的http发包"><a href="#1、android的http发包" class="headerlink" title="1、android的http发包"></a>1、android的http发包</h3><p>最常听到别人说的一句话就是想要逆向先会正向。我们得先知道如何在android中发送http包。然后再顺着代码去分析。下面贴上代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">GetByHttpURL</span><span class="params">(<span class="keyword">final</span> String url)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                String resultData=<span class="string">&quot;&quot;</span>;</span><br><span class="line">                URL connUrl=<span class="keyword">new</span> URL (url);</span><br><span class="line">                HttpURLConnection urlConn= (HttpURLConnection)connUrl.openConnection (); </span><br><span class="line">                InputStreamReader in=<span class="keyword">new</span> InputStreamReader (urlConn.getInputStream());</span><br><span class="line">                BufferedReader buffer=<span class="keyword">new</span> BufferedReader (in);</span><br><span class="line">                String inputLine=<span class="keyword">null</span>;</span><br><span class="line">                <span class="keyword">while</span> (((inputLine=buffer.readLine()) !=<span class="keyword">null</span>)) &#123;</span><br><span class="line">                    resultData+=inputLine+<span class="string">&quot;\n&quot;</span>; </span><br><span class="line">                &#125;</span><br><span class="line">                in.close();</span><br><span class="line">                urlConn.disconnect();</span><br><span class="line">                Log.d(TAG, <span class="string">&quot;GetByHttpURL &quot;</span>+resultData);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                Log.d(TAG, <span class="string">&quot;GetByHttpURL error &quot;</span>+e.getMessage());</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;).start();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">GetByOkHttp</span><span class="params">(String url)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        OkHttpClient okHttpClient = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line">        <span class="keyword">final</span> Request request = <span class="keyword">new</span> Request.Builder()</span><br><span class="line">                .url(url)</span><br><span class="line">                .get()<span class="comment">//默认就是GET请求，可以不写</span></span><br><span class="line">                .build();</span><br><span class="line">        Call call = okHttpClient.newCall(request);</span><br><span class="line">        call.enqueue(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call call, IOException e)</span> </span>&#123;</span><br><span class="line">                Log.d(TAG, <span class="string">&quot;onFailure: &quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call call, Response response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                Log.d(TAG, <span class="string">&quot;GetByOkHttp onResponse: &quot;</span> + response.body().string());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        Log.d(TAG, <span class="string">&quot;GetByOkHttp error &quot;</span>+e.getMessage());</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面列出了两种http包的请求方式一个是通过HttpURLConnection请求。另一个是通过OkHttp3的库来请求。接下来分析一下这两个方式的源码。找到这两个请求最终调用的native函数。</p>
+<p>未完待续….</p>
+
       
 
       
@@ -287,27 +309,20 @@
 
 
   
-  <div id="gitalk-container" style="padding: 0px 30px 0px 46px;"></div> 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  
+  
+  
+
+  
+  <div id="SOHUCS" sid="zhuabao" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
 <script type="text/javascript">
-var gitalk = new Gitalk({
-        clientID:  'e9248ff35ccfaf344499', 
-        clientSecret: '29a53e013802099f3eea9f54af3f50edf93a4d20',
-        id: window.location.pathname,
-        repo: 'blog.github.io', 
-        owner: 'dqzg12300', 
-        admin: 'dqzg12300', 
-        distractionFreeMode: 'true',
-     })
-gitalk.render('gitalk-container')
+    window.changyan.api.config({
+        appid: "cyvsXGPbP",
+        conf: "76dcf89e5759e72fc81f769f6735ae1c"
+    });
 </script>
-
-  
-  
-  
-  
-
+</script>
   
 
   
