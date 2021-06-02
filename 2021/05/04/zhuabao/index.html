@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://missking.cc">
   <title>android抓包学习的整理和归纳 | king的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近学习了各种抓包。为了防止忘记。学到的东西必须是整理一波啊。向大佬们看齐。如果有啥地方写的不对，希望大家多多指点 抓包主要是针对网络通讯数据，客户端向服务端上报的数据拦截下来。一般都是抓取http、https、tcp、udp这四种数据包。想要获取到数据包。有多种方式，下面简单列一下。 抓包方式1、hook app业务层，根据业务代码逻辑找到触发请求的函数，比如按钮触发，或者触发数据上报时的提示框">
+  <meta name="description" content="最近学习了各种抓包。为了防止忘记。学到的东西必须是整理一波啊。向大佬们看齐。如果有啥地方写的不对，希望大家多多指点 抓包主要是针对网络通讯数据，客户端向服务端上报的数据拦截下来。一般都是抓取http、https、tcp、udp。想要获取到数据包。有多种方式，下面简单列一下。 抓包方式1、hook app业务层，根据业务代码逻辑找到触发请求的函数，比如按钮触发，或者触发数据上报时的提示框等方式。分析">
 <meta property="og:type" content="article">
 <meta property="og:title" content="android抓包学习的整理和归纳">
 <meta property="og:url" content="http://missking.cc/2021/05/04/zhuabao/index.html">
 <meta property="og:site_name" content="king的博客">
-<meta property="og:description" content="最近学习了各种抓包。为了防止忘记。学到的东西必须是整理一波啊。向大佬们看齐。如果有啥地方写的不对，希望大家多多指点 抓包主要是针对网络通讯数据，客户端向服务端上报的数据拦截下来。一般都是抓取http、https、tcp、udp这四种数据包。想要获取到数据包。有多种方式，下面简单列一下。 抓包方式1、hook app业务层，根据业务代码逻辑找到触发请求的函数，比如按钮触发，或者触发数据上报时的提示框">
+<meta property="og:description" content="最近学习了各种抓包。为了防止忘记。学到的东西必须是整理一波啊。向大佬们看齐。如果有啥地方写的不对，希望大家多多指点 抓包主要是针对网络通讯数据，客户端向服务端上报的数据拦截下来。一般都是抓取http、https、tcp、udp。想要获取到数据包。有多种方式，下面简单列一下。 抓包方式1、hook app业务层，根据业务代码逻辑找到触发请求的函数，比如按钮触发，或者触发数据上报时的提示框等方式。分析">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://missking.cc/2021/05/04/zhuabao/zhuabao.png">
 <meta property="og:image" content="http://missking.cc/2021/05/04/zhuabao/image-20210525222902261.png">
@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://missking.cc/Users/king/git_src/kblog/blog/source/_posts/zhuabao/src=http___s3.51cto.com_wyfs02_M00_75_6E_wKioL1Y5VM6CeCy2AAKzte4z14o841.jpg&refer=http___s3.51cto.png">
 <meta property="og:image" content="http://missking.cc/2021/05/04/zhuabao/image-20210602225401073.png">
 <meta property="article:published_time" content="2021-05-04T02:35:17.000Z">
-<meta property="article:modified_time" content="2021-06-02T15:11:35.590Z">
+<meta property="article:modified_time" content="2021-06-02T15:27:08.497Z">
 <meta property="article:author" content="king">
 <meta property="article:tag" content="andorid,抓包">
 <meta name="twitter:card" content="summary">
@@ -188,7 +188,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>最近学习了各种抓包。为了防止忘记。学到的东西必须是整理一波啊。向大佬们看齐。如果有啥地方写的不对，希望大家多多指点</p>
-<p>抓包主要是针对网络通讯数据，客户端向服务端上报的数据拦截下来。一般都是抓取http、https、tcp、udp这四种数据包。想要获取到数据包。有多种方式，下面简单列一下。</p>
+<p>抓包主要是针对网络通讯数据，客户端向服务端上报的数据拦截下来。一般都是抓取http、https、tcp、udp。想要获取到数据包。有多种方式，下面简单列一下。</p>
 <h2 id="抓包方式"><a href="#抓包方式" class="headerlink" title="抓包方式"></a>抓包方式</h2><p>1、hook app业务层，根据业务代码逻辑找到触发请求的函数，比如按钮触发，或者触发数据上报时的提示框等方式。分析后找到发送数据的地方hook打印。</p>
 <p><strong>优点：不受app的防抓包手段的影响，只要能hook到就能抓到包。</strong></p>
 <p><strong>缺点：必须分析app找关键点，并且每个不同的请求都要找对应的触发函数，效率太慢。</strong></p>
@@ -338,11 +338,6 @@
 <p>解决这个的开源项目有很多。</p>
 <p>xposed解决方案:<a target="_blank" rel="noopener" href="https://github.com/Fuzion24/JustTrustMe">JustTrustMe</a></p>
 <p>frida解决方案:<a target="_blank" rel="noopener" href="https://github.com/WooyunDota/DroidSSLUnpinning">DroidSSLUnpinning</a></p>
-<p>整体的意思就是针对客户端的SSLSocketFactory直接替换掉。比如DroidSSLUnpinning中的下面一段代码。直接将正常客户端中设置的TrustManagers和keyManager给覆盖掉了。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> TrustManagers = [TrustManager.$new()];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// Prepare a Empty SSLFactory</span></span><br><span class="line">        <span class="keyword">var</span> TLS_SSLContext = SSLContext.getInstance(<span class="string">&quot;TLS&quot;</span>);</span><br><span class="line">        TLS_SSLContext.init(<span class="literal">null</span>, TrustManagers, <span class="literal">null</span>);</span><br><span class="line">        <span class="keyword">var</span> EmptySSLFactory = TLS_SSLContext.getSocketFactory();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        quiet_send(e.message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    send(<span class="string">&#x27;Custom, Empty TrustManager ready&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Get a handle on the init() on the SSLContext class</span></span><br><span class="line">    <span class="keyword">var</span> SSLContext_init = SSLContext.init.overload(</span><br><span class="line">        <span class="string">&#x27;[Ljavax.net.ssl.KeyManager;&#x27;</span>, <span class="string">&#x27;[Ljavax.net.ssl.TrustManager;&#x27;</span>, <span class="string">&#x27;java.security.SecureRandom&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Override the init method, specifying our new TrustManager</span></span><br><span class="line">        SSLContext_init.implementation = <span class="function"><span class="keyword">function</span>(<span class="params">keyManager, trustManager, secureRandom</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">        quiet_send(<span class="string">&#x27;Overriding SSLContext.init() with the custom TrustManager&#x27;</span>);</span><br><span class="line"></span><br><span class="line">        SSLContext_init.call(<span class="built_in">this</span>, <span class="literal">null</span>, TrustManagers, <span class="literal">null</span>);</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
-
-
-
 
       
 
