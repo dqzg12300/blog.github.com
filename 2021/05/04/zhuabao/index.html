@@ -30,10 +30,10 @@
 <meta property="og:image" content="http://missking.cc/2021/05/04/zhuabao/image-20210528210239341.png">
 <meta property="og:image" content="http://missking.cc/2021/05/04/zhuabao/image-20210531232115639.png">
 <meta property="og:image" content="http://missking.cc/2021/05/04/zhuabao/image-20210531232306136.png">
-<meta property="og:image" content="http://missking.cc/Users/king/git_src/kblog/blog/source/_posts/zhuabao/src=http___s3.51cto.com_wyfs02_M00_75_6E_wKioL1Y5VM6CeCy2AAKzte4z14o841.jpg&refer=http___s3.51cto.png">
+<meta property="og:image" content="http://missking.cc/2021/05/04/zhuabao/image-20210602233051668.png">
 <meta property="og:image" content="http://missking.cc/2021/05/04/zhuabao/image-20210602225401073.png">
 <meta property="article:published_time" content="2021-05-04T02:35:17.000Z">
-<meta property="article:modified_time" content="2021-06-02T15:27:08.497Z">
+<meta property="article:modified_time" content="2021-06-02T15:30:58.155Z">
 <meta property="article:author" content="king">
 <meta property="article:tag" content="andorid,抓包">
 <meta name="twitter:card" content="summary">
@@ -312,7 +312,7 @@
 <p><img src="/2021/05/04/zhuabao/image-20210531232115639.png" alt="image-20210531232115639"></p>
 <p><img src="/2021/05/04/zhuabao/image-20210531232306136.png" alt="image-20210531232306136"></p>
 <h2 id="中间人抓包"><a href="#中间人抓包" class="headerlink" title="中间人抓包"></a>中间人抓包</h2><p>我们常常用的burp和charles就是属于中间人抓包。前面我们看过了https的加密方式，需要使用证书的公钥去交换加密再发送数据。那么这些工具是如何做到抓取https的数据包并解密的呢。方式就和他的名字一样。这个抓包的应用他也有一个证书。然后客户端向服务端发送数据时，中间人就假装自己是服务端。将自己证书的公钥发送给客户端，然后拿到客户发送的数据后，再假装自己是客户端，把自己的证书公钥发送给服务端。大概可以想象成一个双面间谍。客户端面前冒充服务端，服务端面前冒充客户端。下面贴上网上找的交互的示意图，包括握手流程都写的非常详细了。</p>
-<p><img src="/Users/king/git_src/kblog/blog/source/_posts/zhuabao/src=http___s3.51cto.com_wyfs02_M00_75_6E_wKioL1Y5VM6CeCy2AAKzte4z14o841.jpg&refer=http___s3.51cto.png" alt="src=http___s3.51cto.com_wyfs02_M00_75_6E_wKioL1Y5VM6CeCy2AAKzte4z14o841.jpg&amp;refer=http___s3.51cto"></p>
+<p><img src="/2021/05/04/zhuabao/image-20210602233051668.png" alt="image-20210602233051668"></p>
 <p>而使用中间人抓包。常常会碰到防抓包手段。这些手段一般都是针对证书的检测。</p>
 <h3 id="1、服务端验证客户端证书"><a href="#1、服务端验证客户端证书" class="headerlink" title="1、服务端验证客户端证书"></a>1、服务端验证客户端证书</h3><p>服务端会检测客户端交互使用的证书是不是正确的。这种情况我们可以直接将客户端里面使用的证书导出来，然后设置让charles使用指定的证书来抓包。这里导出证书的办法有两种。</p>
 <p>第一种是直接hook代码中设置证书的地方，直接重新设置一次空的证书。让其不要验证。</p>
