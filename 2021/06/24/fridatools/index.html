@@ -16,10 +16,11 @@
 <meta property="og:description" content="入行两年了，从刚开始的丝毫不懂。到现在的蹒跚学步，可谓是一步一个脚印走过来的。当然现在依然还是菜鸟一只。但是比起两年前茫然不知学习方向来说，现在有了明确前进的目标，只要不停下脚本，终有一天能飞上枝头成为合格的老鸟。下面整理了一些我的学习方式。希望能够帮到和曾经的我一样茫然的萌新。 1、阅读书籍最核心的基础大多是在书中有详细的介绍。看书一般不是只读一遍。我个人的方式是先大致的过一遍，每页都粗略的翻一">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://missking.cc/2021/06/24/fridatools/image-20210619205558276.png">
-<meta property="og:image" content="http://missking.cc/2021/06/24/fridatools/image-20210624001447924.png">
-<meta property="og:image" content="http://missking.cc/2021/06/24/fridatools/image-20210624202757409.png">
+<meta property="og:image" content="http://missking.cc/2021/06/24/fridatools/image-20210624230938895.png">
+<meta property="og:image" content="http://missking.cc/2021/06/24/fridatools/image-20210624210905380.png">
+<meta property="og:image" content="http://missking.cc/2021/06/24/fridatools/image-20210624205727455.png">
 <meta property="article:published_time" content="2021-06-24T11:15:40.000Z">
-<meta property="article:modified_time" content="2021-06-24T12:51:31.880Z">
+<meta property="article:modified_time" content="2021-06-24T15:09:54.649Z">
 <meta property="article:author" content="king">
 <meta property="article:tag" content="基础">
 <meta name="twitter:card" content="summary">
@@ -365,7 +366,7 @@
 <h3 id="实现原理：-7"><a href="#实现原理：-7" class="headerlink" title="实现原理："></a>实现原理：</h3><blockquote>
 <p>首先是设置了三个rpc功能。然后py根据这三个功能去根据dex特征检索内存，找到后验证数据，然后读取这段数据出来，再保存到文件。</p>
 <p>1、scandex：枚举内存中所有只读的数据，检索只读数据中所有出现<code>64 65 78 0a 30 ?? ?? 00</code>数据的段。这个是dex的二进制数据的头部特征。如下图。版本有的是035，有的是037.所以他把版本部分没有匹配。匹配到结果后，就开始验证这段数据是不是一个正常的dex。验证通过后就返回这段数据的地址和大小。</p>
-<p><img src="/2021/06/24/fridatools/image-20210624001447924.png" alt="image-20210624001447924"></p>
+<p><img src="/2021/06/24/fridatools/image-20210624230938895.png" alt="image-20210624230938895"></p>
 <p>2、memorydump：用来读取指定地址，指定大小的数据，并返回。代码很简单。</p>
 <p>3、switchmode：设置是否深度搜索。这里是有一个比较模糊的特征<code>70 00 00 00</code>来进行搜索。上面的图也有一个正常dex中的该特征。</p>
 </blockquote>
@@ -384,9 +385,9 @@
 </blockquote>
 <h3 id="实现原理：-8"><a href="#实现原理：-8" class="headerlink" title="实现原理："></a>实现原理：</h3><blockquote>
 <p>fart的原理比较长，详细的可以直接看作者的详细文章</p>
-<p>1、[FART：ART环境下基于主动调用的自动化脱壳方案][<a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-252630.htm]">https://bbs.pediy.com/thread-252630.htm]</a></p>
-<p>2、[FART正餐前甜点：ART下几个通用简单高效的dump内存中dex方法][<a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-254028.htm]">https://bbs.pediy.com/thread-254028.htm]</a> </p>
-<p>3、[拨云见日：安卓APP脱壳的本质以及如何快速发现ART下的脱壳点][<a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-254555.htm]">https://bbs.pediy.com/thread-254555.htm]</a></p>
+<p>1、<a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-252630.htm">FART：ART环境下基于主动调用的自动化脱壳方案</a></p>
+<p>2、<a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-254028.htm">FART正餐前甜点：ART下几个通用简单高效的dump内存中dex方法</a></p>
+<p>3、<a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-254555.htm">拨云见日：安卓APP脱壳的本质以及如何快速发现ART下的脱壳点</a></p>
 <p>另外有我以前自己整理的一片文章</p>
 <p><a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-263401.htm">fart的理解和分析过程</a></p>
 </blockquote>
@@ -411,7 +412,8 @@
 <h3 id="改造并整理：-1"><a href="#改造并整理：-1" class="headerlink" title="改造并整理："></a>改造并整理：</h3><blockquote>
 <p>结果输出方式调整。rpc.exports修改初始化方式，以免覆盖到其他js的rpc函数。将需要使用的所有脚本添加后，最后默认追加这个脚本。由于我默认做了类列表和过滤功能，所以classsearch可能有点鸡肋。</p>
 </blockquote>
-<h3 id="相关贴图：-1"><a href="#相关贴图：-1" class="headerlink" title="相关贴图："></a>相关贴图：</h3><p><img src="/2021/06/24/fridatools/image-20210624202757409.png" alt="image-20210624202757409"></p>
+<h3 id="相关贴图：-1"><a href="#相关贴图：-1" class="headerlink" title="相关贴图："></a>相关贴图：</h3><p><img src="/2021/06/24/fridatools/image-20210624210905380.png" alt="image-20210624210905380"></p>
+<p><img src="/2021/06/24/fridatools/image-20210624205727455.png" alt="image-20210624205727455"></p>
 <p><strong>最后整理完成，目前功能还不是很多，而且bug估计还挺多的。希望大佬们多多指点，有什么比较好的想法也可以给点建议。</strong></p>
 
       
