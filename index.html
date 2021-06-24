@@ -140,6 +140,185 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-fridatools" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/06/24/fridatools/">菜鸟学飞之frida整合怪</a>
+    </h1>
+  
+
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2021/06/24/fridatools/" class="pageViews">0</span>次
+  </a>
+
+
+        
+        <a href="/2021/06/24/fridatools/" class="archive-article-date">
+  	<time datetime="2021-06-24T11:15:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>入行两年了，从刚开始的丝毫不懂。到现在的蹒跚学步，可谓是一步一个脚印走过来的。当然现在依然还是菜鸟一只。但是比起两年前茫然不知学习方向来说，现在有了明确前进的目标，只要不停下脚本，终有一天能飞上枝头成为合格的老鸟。下面整理了一些我的学习方式。希望能够帮到和曾经的我一样茫然的萌新。</p>
+<h3 id="1、阅读书籍"><a href="#1、阅读书籍" class="headerlink" title="1、阅读书籍"></a>1、阅读书籍</h3><p>最核心的基础大多是在书中有详细的介绍。看书一般不是只读一遍。我个人的方式是先大致的过一遍，每页都粗略的翻一遍，过完一遍就能大概知道哪些内容以自己目前的知识量，很难看明白，哪些是自己熟悉但是却理解不深的。然后第二遍才开始细翻，暂时跳过很难读懂的，先做个标记，以后知识面广了。再回过头来看。简单推荐几本《android软件安全权威指南》、《android应用安全防护和逆向分析》、《深入理解android java虚拟机ART》、《深入理解计算机系统》</p>
+        
+          <a class="article-more-a" href="/2021/06/24/fridatools/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/frida//" class="article-tag-list-link color1">frida</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/06/24/fridatools/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-android1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/06/03/android1/">android基础篇一（笔记）</a>
+    </h1>
+  
+
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2021/06/03/android1/" class="pageViews">0</span>次
+  </a>
+
+
+        
+        <a href="/2021/06/03/android1/" class="archive-article-date">
+  	<time datetime="2021-06-03T13:10:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这里主要是看书的笔记。从基础开始。不断记录。直到啃完这本书（android软件安全权威指南：丰生强）</p>
+<h2 id="第一章、反编译和回编"><a href="#第一章、反编译和回编" class="headerlink" title="第一章、反编译和回编"></a>第一章、反编译和回编</h2><p>android最常用的反编译工具apktool。可以跨平台win、linux、maos。用来反编译apk文件，反汇编成smali代码。然后可以修改smali代码后。再用apktool重新编译回apk，再签名。就可以直接安装了。贴上github地址：<a target="_blank" rel="noopener" href="https://github.com/iBotPeaches/Apktool">https://github.com/iBotPeaches/Apktool</a></p>
+<p>mac可以直接<code>brew install apktool</code>安装</p>
+<p>反编译命令：<code>apktool d ./app-debug.apk -o outdir</code> </p>
+        
+          <a class="article-more-a" href="/2021/06/03/android1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">andorid基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/06/03/android1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-ollvm3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1017,185 +1196,6 @@
 
 
   
-    <article id="post-zuoye3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/09/zuoye3/">算法还原实战练习3</a>
-    </h1>
-  
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2021/01/09/zuoye3/" class="pageViews">0</span>次
-  </a>
-
-
-        
-        <a href="/2021/01/09/zuoye3/" class="archive-article-date">
-  	<time datetime="2021-01-09T13:34:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>分析样例下载：链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1qxkYqMovR8Fe6sO-Zr-8ow">https://pan.baidu.com/s/1qxkYqMovR8Fe6sO-Zr-8ow</a>  密码: dh7g</p>
-<p>第一题algorithmbase_32</p>
-<p>直接ida打开找到encodeFromJni_32函数。然后F5后。发现是ollvm混淆的。然后大概的分析一下。我的分析思路是。首先是大概的翻一下参数较多的那些函数，看看是否有什么比较眼熟的函数。果然很快锁定了一个函数sub_1D920。下面贴上交为眼熟的部分</p>
-<p><img src="/2021/01/09/zuoye3/image-20210109220431469.png" alt="image-20210109220431469"></p>
-<p>我圈出来的这几个特征和我们之前分析过的md5的特征高度的相似。v10的那些明显就是MD5的那个key。而下面是拼接的三段固定数据再加上我们的输入值。所以我们先看看那三段数据分别是什么</p>
-<p><img src="/2021/01/09/zuoye3/image-20210109220926171.png" alt="image-20210109220926171"></p>
-<p>点开后发现字符串被加密了。所以我们用之前研究的解ollvm字符串混淆的工具unidbg或者是AndroidNativeEmu来生成一个解密的so跑一下。下面贴上解完之后的结果</p>
-        
-          <a class="article-more-a" href="/2021/01/09/zuoye3/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">实战</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/09/zuoye3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-zuoye2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/07/zuoye2/">算法还原实战练习2</a>
-    </h1>
-  
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2021/01/07/zuoye2/" class="pageViews">0</span>次
-  </a>
-
-
-        
-        <a href="/2021/01/07/zuoye2/" class="archive-article-date">
-  	<time datetime="2021-01-07T11:48:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>练习的例子</p>
-<p>链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1BhKdDik8zOx_ioPNFdhQDg">https://pan.baidu.com/s/1BhKdDik8zOx_ioPNFdhQDg</a>  密码: 0npf</p>
-<p>第一题algorithmbase_20.apk</p>
-<p>先是jadx打开apk。然后找到入口页面的代码如下</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle bundle)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(bundle);</span><br><span class="line">        setContentView(C0575R.layout.activity_main);</span><br><span class="line">        <span class="keyword">final</span> TextView textView = (TextView) findViewById(C0575R.C0578id.sample_text);</span><br><span class="line">        ((Button) findViewById(C0575R.C0578id.button)).setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="comment">/* class com.kanxue.algorithmbase.MainActivity.C05741 */</span></span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                String randomAlphabetic = RandomStringUtils.randomAlphabetic(RandomUtils.nextInt(<span class="number">16</span>, <span class="number">32</span>));</span><br><span class="line">                String encodeFromJni_20 = MainActivity.encodeFromJni_20(randomAlphabetic);</span><br><span class="line">                Log.e(<span class="string">&quot;Kanxue&quot;</span>, randomAlphabetic + <span class="string">&quot; -&gt; &quot;</span> + encodeFromJni_20);</span><br><span class="line">                textView.setText(encodeFromJni_20);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>然后ida打开看encodeFromJni_20看到下面的c++代码，然后把第一个参数类型改下。把参数和返回值都修改下名字。代码如下</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">v3 = a1;</span><br><span class="line">  input_1 = input;</span><br><span class="line">  v5 = ((<span class="keyword">int</span> (__fastcall *)(JNIEnv *, <span class="keyword">int</span>, _DWORD))(*a1)-&gt;GetStringUTFChars)(a1, input, <span class="number">0</span>);</span><br><span class="line">  sub_87A4(&amp;v11, v5);</span><br><span class="line">  ((<span class="keyword">void</span> (__fastcall *)(JNIEnv *, <span class="keyword">int</span>, <span class="keyword">int</span>))(*v3)-&gt;ReleaseStringUTFChars)(v3, input_1, v5);</span><br><span class="line">  v6 = v14;</span><br><span class="line">  <span class="keyword">if</span> ( !(v11 &amp; <span class="number">1</span>) )</span><br><span class="line">    v6 = v12;</span><br><span class="line">  v7 = v13;</span><br><span class="line">  <span class="keyword">if</span> ( !(v11 &amp; <span class="number">1</span>) )</span><br><span class="line">    v7 = (<span class="keyword">unsigned</span> <span class="keyword">int</span>)v11 &gt;&gt; <span class="number">1</span>;</span><br><span class="line">  output_1 = sub_8D24(<span class="number">0</span>, v6, v7);</span><br><span class="line">  _aeabi_memclr8(&amp;output, <span class="number">512</span>);</span><br><span class="line">  <span class="built_in">sprintf</span>(&amp;output, (<span class="keyword">const</span> <span class="keyword">char</span> *)&amp;unk_15728, output_1);</span><br><span class="line">  v9 = ((<span class="keyword">int</span> (__fastcall *)(JNIEnv *, <span class="keyword">char</span> *))(*v3)-&gt;NewStringUTF)(v3, &amp;output);</span><br><span class="line">  sub_87E6(&amp;v11);</span><br><span class="line">  result = _stack_chk_guard - v16;</span><br><span class="line">  <span class="keyword">if</span> ( _stack_chk_guard == v16 )</span><br><span class="line">    result = v9;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br></pre></td></tr></table></figure>
-
-<p>然后继续根据返回值来向上找相关函数sub_8D24。然后下面贴上相关代码</p>
-        
-          <a class="article-more-a" href="/2021/01/07/zuoye2/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">实战</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/07/zuoye2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
@@ -1385,6 +1385,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">安卓</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">andorid基础</a>
               </li>
             
             <div class="clearfix"></div>

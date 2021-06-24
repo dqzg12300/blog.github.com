@@ -140,6 +140,187 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-JNI-DexClassLoader" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/30/JNI-DexClassLoader/">jni函数动态注册分析</a>
+    </h1>
+  
+
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2020/08/30/JNI-DexClassLoader/" class="pageViews">0</span>次
+  </a>
+
+
+        
+        <a href="/2020/08/30/JNI-DexClassLoader/" class="archive-article-date">
+  	<time datetime="2020-08-30T13:43:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="动态注册jni函数时的流程"><a href="#动态注册jni函数时的流程" class="headerlink" title="动态注册jni函数时的流程"></a>动态注册jni函数时的流程</h3><p>学习过程的记录，以下代码参考自aosp8.1</p>
+<p>jni函数绑定主要是有两种方式。静态注册和动态注册的jni函数</p>
+<p>静态注册的jni函数有两次绑定，在类加载时会绑定一次，在jni函数第一次被调用时，art会对jni函数的地址进行查询并绑定</p>
+<p>动态注册的jni函数也有两次绑定，在类加载时绑定一次，第二次由开发人员的代码主动绑定。</p>
+        
+          <a class="article-more-a" href="/2020/08/30/JNI-DexClassLoader/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/android//" class="article-tag-list-link color3">android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/08/30/JNI-DexClassLoader/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-IOSDump" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/26/IOSDump/">ios的砸壳和基础工具</a>
+    </h1>
+  
+
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2020/08/26/IOSDump/" class="pageViews">0</span>次
+  </a>
+
+
+        
+        <a href="/2020/08/26/IOSDump/" class="archive-article-date">
+  	<time datetime="2020-08-26T12:42:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、砸壳"><a href="#一、砸壳" class="headerlink" title="一、砸壳"></a>一、砸壳</h2><h3 id="1、dumpdecrypted"><a href="#1、dumpdecrypted" class="headerlink" title="1、dumpdecrypted"></a>1、dumpdecrypted</h3><p>这种砸壳方式我在ios11的机子上测试没能解密成功，然后ios10一点问题都没有。可能是我太渣了吧。新手还请用ios10来尝试</p>
+<p>首先从github上下载了编译出来dumpdecrypted，这个基本没啥问题的。</p>
+<p>接着我们用到了两个路径，一个是沙盒到路径，还有一个是运行的路径</p>
+<p>运行想要砸壳的应用，然后ps -e|grep Application找到要砸壳的应用，将路径保存出来</p>
+        
+          <a class="article-more-a" href="/2020/08/26/IOSDump/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">砸壳</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/ios逆向//" class="article-tag-list-link color1">ios逆向</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/08/26/IOSDump/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-ClassStructure" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -431,6 +612,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">安卓</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">andorid基础</a>
               </li>
             
             <div class="clearfix"></div>

@@ -140,6 +140,185 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-zuoye3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/09/zuoye3/">算法还原实战练习3</a>
+    </h1>
+  
+
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2021/01/09/zuoye3/" class="pageViews">0</span>次
+  </a>
+
+
+        
+        <a href="/2021/01/09/zuoye3/" class="archive-article-date">
+  	<time datetime="2021-01-09T13:34:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>分析样例下载：链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1qxkYqMovR8Fe6sO-Zr-8ow">https://pan.baidu.com/s/1qxkYqMovR8Fe6sO-Zr-8ow</a>  密码: dh7g</p>
+<p>第一题algorithmbase_32</p>
+<p>直接ida打开找到encodeFromJni_32函数。然后F5后。发现是ollvm混淆的。然后大概的分析一下。我的分析思路是。首先是大概的翻一下参数较多的那些函数，看看是否有什么比较眼熟的函数。果然很快锁定了一个函数sub_1D920。下面贴上交为眼熟的部分</p>
+<p><img src="/2021/01/09/zuoye3/image-20210109220431469.png" alt="image-20210109220431469"></p>
+<p>我圈出来的这几个特征和我们之前分析过的md5的特征高度的相似。v10的那些明显就是MD5的那个key。而下面是拼接的三段固定数据再加上我们的输入值。所以我们先看看那三段数据分别是什么</p>
+<p><img src="/2021/01/09/zuoye3/image-20210109220926171.png" alt="image-20210109220926171"></p>
+<p>点开后发现字符串被加密了。所以我们用之前研究的解ollvm字符串混淆的工具unidbg或者是AndroidNativeEmu来生成一个解密的so跑一下。下面贴上解完之后的结果</p>
+        
+          <a class="article-more-a" href="/2021/01/09/zuoye3/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">实战</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/09/zuoye3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-zuoye2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/07/zuoye2/">算法还原实战练习2</a>
+    </h1>
+  
+
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2021/01/07/zuoye2/" class="pageViews">0</span>次
+  </a>
+
+
+        
+        <a href="/2021/01/07/zuoye2/" class="archive-article-date">
+  	<time datetime="2021-01-07T11:48:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>练习的例子</p>
+<p>链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1BhKdDik8zOx_ioPNFdhQDg">https://pan.baidu.com/s/1BhKdDik8zOx_ioPNFdhQDg</a>  密码: 0npf</p>
+<p>第一题algorithmbase_20.apk</p>
+<p>先是jadx打开apk。然后找到入口页面的代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle bundle)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(bundle);</span><br><span class="line">        setContentView(C0575R.layout.activity_main);</span><br><span class="line">        <span class="keyword">final</span> TextView textView = (TextView) findViewById(C0575R.C0578id.sample_text);</span><br><span class="line">        ((Button) findViewById(C0575R.C0578id.button)).setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="comment">/* class com.kanxue.algorithmbase.MainActivity.C05741 */</span></span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                String randomAlphabetic = RandomStringUtils.randomAlphabetic(RandomUtils.nextInt(<span class="number">16</span>, <span class="number">32</span>));</span><br><span class="line">                String encodeFromJni_20 = MainActivity.encodeFromJni_20(randomAlphabetic);</span><br><span class="line">                Log.e(<span class="string">&quot;Kanxue&quot;</span>, randomAlphabetic + <span class="string">&quot; -&gt; &quot;</span> + encodeFromJni_20);</span><br><span class="line">                textView.setText(encodeFromJni_20);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后ida打开看encodeFromJni_20看到下面的c++代码，然后把第一个参数类型改下。把参数和返回值都修改下名字。代码如下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">v3 = a1;</span><br><span class="line">  input_1 = input;</span><br><span class="line">  v5 = ((<span class="keyword">int</span> (__fastcall *)(JNIEnv *, <span class="keyword">int</span>, _DWORD))(*a1)-&gt;GetStringUTFChars)(a1, input, <span class="number">0</span>);</span><br><span class="line">  sub_87A4(&amp;v11, v5);</span><br><span class="line">  ((<span class="keyword">void</span> (__fastcall *)(JNIEnv *, <span class="keyword">int</span>, <span class="keyword">int</span>))(*v3)-&gt;ReleaseStringUTFChars)(v3, input_1, v5);</span><br><span class="line">  v6 = v14;</span><br><span class="line">  <span class="keyword">if</span> ( !(v11 &amp; <span class="number">1</span>) )</span><br><span class="line">    v6 = v12;</span><br><span class="line">  v7 = v13;</span><br><span class="line">  <span class="keyword">if</span> ( !(v11 &amp; <span class="number">1</span>) )</span><br><span class="line">    v7 = (<span class="keyword">unsigned</span> <span class="keyword">int</span>)v11 &gt;&gt; <span class="number">1</span>;</span><br><span class="line">  output_1 = sub_8D24(<span class="number">0</span>, v6, v7);</span><br><span class="line">  _aeabi_memclr8(&amp;output, <span class="number">512</span>);</span><br><span class="line">  <span class="built_in">sprintf</span>(&amp;output, (<span class="keyword">const</span> <span class="keyword">char</span> *)&amp;unk_15728, output_1);</span><br><span class="line">  v9 = ((<span class="keyword">int</span> (__fastcall *)(JNIEnv *, <span class="keyword">char</span> *))(*v3)-&gt;NewStringUTF)(v3, &amp;output);</span><br><span class="line">  sub_87E6(&amp;v11);</span><br><span class="line">  result = _stack_chk_guard - v16;</span><br><span class="line">  <span class="keyword">if</span> ( _stack_chk_guard == v16 )</span><br><span class="line">    result = v9;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br></pre></td></tr></table></figure>
+
+<p>然后继续根据返回值来向上找相关函数sub_8D24。然后下面贴上相关代码</p>
+        
+          <a class="article-more-a" href="/2021/01/07/zuoye2/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">实战</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/07/zuoye2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-zuoye1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1104,187 +1283,6 @@
 
 
   
-    <article id="post-JNI-DexClassLoader" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/08/30/JNI-DexClassLoader/">jni函数动态注册分析</a>
-    </h1>
-  
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2020/08/30/JNI-DexClassLoader/" class="pageViews">0</span>次
-  </a>
-
-
-        
-        <a href="/2020/08/30/JNI-DexClassLoader/" class="archive-article-date">
-  	<time datetime="2020-08-30T13:43:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="动态注册jni函数时的流程"><a href="#动态注册jni函数时的流程" class="headerlink" title="动态注册jni函数时的流程"></a>动态注册jni函数时的流程</h3><p>学习过程的记录，以下代码参考自aosp8.1</p>
-<p>jni函数绑定主要是有两种方式。静态注册和动态注册的jni函数</p>
-<p>静态注册的jni函数有两次绑定，在类加载时会绑定一次，在jni函数第一次被调用时，art会对jni函数的地址进行查询并绑定</p>
-<p>动态注册的jni函数也有两次绑定，在类加载时绑定一次，第二次由开发人员的代码主动绑定。</p>
-        
-          <a class="article-more-a" href="/2020/08/30/JNI-DexClassLoader/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/android//" class="article-tag-list-link color3">android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/08/30/JNI-DexClassLoader/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-IOSDump" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/08/26/IOSDump/">ios的砸壳和基础工具</a>
-    </h1>
-  
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2020/08/26/IOSDump/" class="pageViews">0</span>次
-  </a>
-
-
-        
-        <a href="/2020/08/26/IOSDump/" class="archive-article-date">
-  	<time datetime="2020-08-26T12:42:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一、砸壳"><a href="#一、砸壳" class="headerlink" title="一、砸壳"></a>一、砸壳</h2><h3 id="1、dumpdecrypted"><a href="#1、dumpdecrypted" class="headerlink" title="1、dumpdecrypted"></a>1、dumpdecrypted</h3><p>这种砸壳方式我在ios11的机子上测试没能解密成功，然后ios10一点问题都没有。可能是我太渣了吧。新手还请用ios10来尝试</p>
-<p>首先从github上下载了编译出来dumpdecrypted，这个基本没啥问题的。</p>
-<p>接着我们用到了两个路径，一个是沙盒到路径，还有一个是运行的路径</p>
-<p>运行想要砸壳的应用，然后ps -e|grep Application找到要砸壳的应用，将路径保存出来</p>
-        
-          <a class="article-more-a" href="/2020/08/26/IOSDump/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">砸壳</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/ios逆向//" class="article-tag-list-link color1">ios逆向</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/08/26/IOSDump/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
@@ -1474,6 +1472,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">安卓</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">andorid基础</a>
               </li>
             
             <div class="clearfix"></div>
