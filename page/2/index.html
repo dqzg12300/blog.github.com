@@ -140,6 +140,92 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-zuoye4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/12/zuoye4/">算法还原实战练习4</a>
+    </h1>
+  
+
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2021/01/12/zuoye4/" class="pageViews">0</span>次
+  </a>
+
+
+        
+        <a href="/2021/01/12/zuoye4/" class="archive-article-date">
+  	<time datetime="2021-01-12T14:32:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>分析样例下载：链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1Mb6U4D24SlG_K6n1dxszOQ">https://pan.baidu.com/s/1Mb6U4D24SlG_K6n1dxszOQ</a>  密码: ikpe</p>
+<p>第一题algorithmbase_40.apk</p>
+<p>直接ida打开libnative-lib.so。找到Java_com_kanxue_algorithmbase_MainActivity_encodeFromJni_140。然后根据返回值看来源。最后v15是返回的。然后v8=&amp;v15。然后v8的值是v17逐个字节赋值的。所以关键在于v17。关键函数直接定位出来在sub_AB90.另外看v16的值。和MD5的算法有点像。可能也是一个hash算法。</p>
+<p><img src="/2021/01/12/zuoye4/image-20210112223827223.png" alt="image-20210112223827223"></p>
+<p>接着看到里面只有一个函数sub_9AFC。直接进去看看。</p>
+        
+          <a class="article-more-a" href="/2021/01/12/zuoye4/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">实战</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/12/zuoye4/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-zuoye3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1185,104 +1271,6 @@
 
 
   
-    <article id="post-Frida-Native-Register" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/02/Frida-Native-Register/">使用frida来hook artmethod的RegisterNative</a>
-    </h1>
-  
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2020/09/02/Frida-Native-Register/" class="pageViews">0</span>次
-  </a>
-
-
-        
-        <a href="/2020/09/02/Frida-Native-Register/" class="archive-article-date">
-  	<time datetime="2020-09-02T14:07:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>继续学习记录</p>
-<p>之前找到了最终有调用到ArtMethod的RegisterNative来进行绑定。现在使用frida来hook打印一下注册的函数名和地址。先用ida找到我们之前找到的ArtMethod下的RegisterNative</p>
-<p>找到了导出函数符号<code>_ZN3art9ArtMethod14RegisterNativeEPKvb</code></p>
-<p>然后这里只有ArtMethod的指针，要获取完整的函数名。要使用ArtMethod的函数PrettyMethod。</p>
-<p>导出函数符号为 <code>_ZN3art9ArtMethod12PrettyMethodEb</code></p>
-<p>然后frida的代码就是先hook到RegisterNative，然后调用PrettyMethod来获取函数名</p>
-        
-          <a class="article-more-a" href="/2020/09/02/Frida-Native-Register/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">基础,frida</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/android//" class="article-tag-list-link color3">android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/02/Frida-Native-Register/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
@@ -1476,6 +1464,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">andorid基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">android基础</a>
               </li>
             
             <div class="clearfix"></div>
