@@ -140,6 +140,181 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-zuoye6" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/19/zuoye6/">算法还原实战练习6</a>
+    </h1>
+  
+
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2021/01/19/zuoye6/" class="pageViews">0</span>次
+  </a>
+
+
+        
+        <a href="/2021/01/19/zuoye6/" class="archive-article-date">
+  	<time datetime="2021-01-19T13:46:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>分析样例下载：链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1Df_8OhozSEE17MIuIigvhg">https://pan.baidu.com/s/1Df_8OhozSEE17MIuIigvhg</a>  密码: 4tgi</p>
+<p>练习algorithmbase_60.apk</p>
+<p>老样子ida打开libnative-lib.so找到encodeFromJni_160。然后看到了有个byte_2F050字符串加密处理了。unidbg跑一下解开看看字符串是什么</p>
+<p><img src="/2021/01/19/zuoye6/image-20210119215422863.png" alt="image-20210119215422863"></p>
+<p>然后打开这个使用了加密字符串的函数。发现里面是ollvm混淆过了的</p>
+<p>这里我先静态分析一下。把每个函数打开大致的浏览下里面的内容。然后发现了两个比较特殊的函数sub_121DC和sub_C29C。这两个函数里面直接就有疑似算法部分的代码。特别是sub_C29C函数中直接看到了有base64的特征。</p>
+<p><img src="/2021/01/19/zuoye6/image-20210119222948239.png" alt="image-20210119222948239"></p>
+<p>接下来静态分析一下sub_121DC的参数。发现第一个参数应该是一个大小为258字节的数据。可能是用来加密的表。</p>
+        
+          <a class="article-more-a" href="/2021/01/19/zuoye6/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">实战</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/19/zuoye6/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-zuoye5" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/14/zuoye5/">算法还原实战练习5</a>
+    </h1>
+  
+
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2021/01/14/zuoye5/" class="pageViews">0</span>次
+  </a>
+
+
+        
+        <a href="/2021/01/14/zuoye5/" class="archive-article-date">
+  	<time datetime="2021-01-14T13:54:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>分析样例下载：链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1TErQmcjNbLG54yJbD31mLg">https://pan.baidu.com/s/1TErQmcjNbLG54yJbD31mLg</a>  密码: j455</p>
+<p>练习1、algorithmbase_50.apk</p>
+<p>老样子直接ida分析libnative-lib.so。根据返回值处理找到关键函数sub_B9F4</p>
+<p><img src="/2021/01/14/zuoye5/image-20210114220409205.png" alt="image-20210114220409205"></p>
+<p>写个frida来查一下看看参数都是些什么</p>
+        
+          <a class="article-more-a" href="/2021/01/14/zuoye5/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">实战</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/01/14/zuoye5/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-zuoye4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1047,201 +1222,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/09/11/llvm2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-llvm1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/10/llvm1/">llvm简单的使用</a>
-    </h1>
-  
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2020/09/10/llvm1/" class="pageViews">0</span>次
-  </a>
-
-
-        
-        <a href="/2020/09/10/llvm1/" class="archive-article-date">
-  	<time datetime="2020-09-10T14:05:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>学习记录</p>
-<p>llvm是一款跨平台的编译器，我们可以用它来优化编译代码，让代码执行的更加高效，而ollvm是将代码进行编译混淆，增加代码的不可读性。它的官方网站是<a target="_blank" rel="noopener" href="http://llvm.org/">http://llvm.org/</a></p>
-<p>llvm中有一个中间语言是LLVM IR，这里看一段官方的说明</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The LLVM Core libraries provide a modern source- and target-independent optimizer, along with code generation support for many popular CPUs (as well as some less common ones!) These libraries are built around a well specified code representation known as the LLVM intermediate representation (&quot;LLVM IR&quot;). The LLVM Core libraries are well documented, and it is particularly easy to invent your own language (or port an existing compiler) to use LLVM as an optimizer and code generator.</span><br></pre></td></tr></table></figure>
-
-<p>大概意思就是，LLVM IR是核心库的一个中间的语言，主要用来跨平台针对不同cpu的。在跨平台的时候我们可以这样编译，c源码编译成IR文件，然后IR是平台无关性的，我们在linux下编译的IR文件可以拿到win上面，然后再将IR文件编译成当前cpu的汇编。然后再由汇编编译成可执行二进制。这样就达到了跨平台的目的。</p>
-        
-          <a class="article-more-a" href="/2020/09/10/llvm1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/llvm//" class="article-tag-list-link color5">llvm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/10/llvm1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Hook-Interpreter" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/03/Hook-Interpreter/">使用frida hook解释器Interpreter</a>
-    </h1>
-  
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2020/09/03/Hook-Interpreter/" class="pageViews">0</span>次
-  </a>
-
-
-        
-        <a href="/2020/09/03/Hook-Interpreter/" class="archive-article-date">
-  	<time datetime="2020-09-03T14:29:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>学习的记录</p>
-<p>准备hook一下Interpreter解释器的所有执行函数。先看下art/runtime/interpreter/interpreter.cc这个主要文件</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> InterpreterImplKind &#123;</span><br><span class="line">  kSwitchImplKind,        <span class="comment">// Switch-based interpreter implementation.</span></span><br><span class="line">  kMterpImplKind          <span class="comment">// Assembly interpreter</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">constexpr</span> InterpreterImplKind kInterpreterImplKind = kMterpImplKind;</span><br></pre></td></tr></table></figure>
-
-<p>然后在中间看到了这个枚举，就是说我当前这个8.1的有两种解释器，一个是switch的，另一个是Assembly汇编的，然后看到当前选择的是汇编解释器，继续看下面如果是汇编解释器就怎么处理，代码太长，只截取中间关键的部分了。</p>
-        
-          <a class="article-more-a" href="/2020/09/03/Hook-Interpreter/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">基础,frida</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/android//" class="article-tag-list-link color3">android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/03/Hook-Interpreter/">展开全文 >></a>
         </p>
       
 

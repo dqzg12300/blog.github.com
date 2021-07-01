@@ -140,6 +140,158 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-android3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/07/01/android3/">android基础篇三（笔记）</a>
+    </h1>
+  
+
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2021/07/01/android3/" class="pageViews">0</span>次
+  </a>
+
+
+        
+        <a href="/2021/07/01/android3/" class="archive-article-date">
+  	<time datetime="2021-07-01T12:05:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这里主要是看书的笔记。从基础开始。不断记录。直到啃完这本书（android软件安全权威指南：丰生强）</p>
+<h2 id="常见的android文件格式-2"><a href="#常见的android文件格式-2" class="headerlink" title="常见的android文件格式(2)"></a>常见的android文件格式(2)</h2><h3 id="AndroidManifest-xml"><a href="#AndroidManifest-xml" class="headerlink" title="AndroidManifest.xml"></a>AndroidManifest.xml</h3><p>存放了apk的大量配置信息，包括软件名称、图标、主题、包名、组件配置。</p>
+<p>所有配置都属于manifest标签，与程序配置相关的属于android标签。</p>
+        
+          <a class="article-more-a" href="/2021/07/01/android3/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">android基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/07/01/android3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-ghidra" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/06/30/ghidra/">ghidra</a>
+    </h1>
+  
+
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2021/06/30/ghidra/" class="pageViews">0</span>次
+  </a>
+
+
+        
+        <a href="/2021/06/30/ghidra/" class="archive-article-date">
+  	<time datetime="2021-06-30T15:11:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/06/30/ghidra/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-android2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -167,8 +319,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>这里主要是看书的笔记。从基础开始。不断记录。直到啃完这本书（android软件安全权威指南：丰生强）</p>
-<h2 id="常见的android文件格式"><a href="#常见的android文件格式" class="headerlink" title="常见的android文件格式"></a>常见的android文件格式</h2><p>1、jar包</p>
-<p>就是一个zip格式的压缩包，里面是编译后的java字节码class文件集合。所以jar文件常叫作jar包。有些安全较高的jar包会对包含的class文件进行签名。并且把签名信息保存在META-INF目录。静态分析可以使用jd-gui。动态分析可以使用AspectJ。</p>
+<h2 id="常见的android文件格式"><a href="#常见的android文件格式" class="headerlink" title="常见的android文件格式"></a>常见的android文件格式</h2><h3 id="1、jar包"><a href="#1、jar包" class="headerlink" title="1、jar包"></a>1、jar包</h3><p>就是一个zip格式的压缩包，里面是编译后的java字节码class文件集合。所以jar文件常叫作jar包。有些安全较高的jar包会对包含的class文件进行签名。并且把签名信息保存在META-INF目录。静态分析可以使用jd-gui。动态分析可以使用AspectJ。</p>
         
           <a class="article-more-a" href="/2021/06/28/android2/#more">more >></a>
         
@@ -990,181 +1141,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/01/25/zuoye7/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-zuoye6" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/19/zuoye6/">算法还原实战练习6</a>
-    </h1>
-  
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2021/01/19/zuoye6/" class="pageViews">0</span>次
-  </a>
-
-
-        
-        <a href="/2021/01/19/zuoye6/" class="archive-article-date">
-  	<time datetime="2021-01-19T13:46:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>分析样例下载：链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1Df_8OhozSEE17MIuIigvhg">https://pan.baidu.com/s/1Df_8OhozSEE17MIuIigvhg</a>  密码: 4tgi</p>
-<p>练习algorithmbase_60.apk</p>
-<p>老样子ida打开libnative-lib.so找到encodeFromJni_160。然后看到了有个byte_2F050字符串加密处理了。unidbg跑一下解开看看字符串是什么</p>
-<p><img src="/2021/01/19/zuoye6/image-20210119215422863.png" alt="image-20210119215422863"></p>
-<p>然后打开这个使用了加密字符串的函数。发现里面是ollvm混淆过了的</p>
-<p>这里我先静态分析一下。把每个函数打开大致的浏览下里面的内容。然后发现了两个比较特殊的函数sub_121DC和sub_C29C。这两个函数里面直接就有疑似算法部分的代码。特别是sub_C29C函数中直接看到了有base64的特征。</p>
-<p><img src="/2021/01/19/zuoye6/image-20210119222948239.png" alt="image-20210119222948239"></p>
-<p>接下来静态分析一下sub_121DC的参数。发现第一个参数应该是一个大小为258字节的数据。可能是用来加密的表。</p>
-        
-          <a class="article-more-a" href="/2021/01/19/zuoye6/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">实战</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/19/zuoye6/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-zuoye5" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/14/zuoye5/">算法还原实战练习5</a>
-    </h1>
-  
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2021/01/14/zuoye5/" class="pageViews">0</span>次
-  </a>
-
-
-        
-        <a href="/2021/01/14/zuoye5/" class="archive-article-date">
-  	<time datetime="2021-01-14T13:54:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>分析样例下载：链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1TErQmcjNbLG54yJbD31mLg">https://pan.baidu.com/s/1TErQmcjNbLG54yJbD31mLg</a>  密码: j455</p>
-<p>练习1、algorithmbase_50.apk</p>
-<p>老样子直接ida分析libnative-lib.so。根据返回值处理找到关键函数sub_B9F4</p>
-<p><img src="/2021/01/14/zuoye5/image-20210114220409205.png" alt="image-20210114220409205"></p>
-<p>写个frida来查一下看看参数都是些什么</p>
-        
-          <a class="article-more-a" href="/2021/01/14/zuoye5/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">实战</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/01/14/zuoye5/">展开全文 >></a>
         </p>
       
 
