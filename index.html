@@ -140,6 +140,93 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-android4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/07/08/android4/">dex起步探索</a>
+    </h1>
+  
+
+
+  <a href="javascript:;" class="archive-article-date">
+      <i class="icon-smile icon"></i> 阅读数:<span id="/2021/07/08/android4/" class="pageViews">0</span>次
+  </a>
+
+
+        
+        <a href="/2021/07/08/android4/" class="archive-article-date">
+  	<time datetime="2021-07-08T14:08:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>部分内容摘自：android软件安全权威指南：丰生强</p>
+<p>从根源上搞懂基础的原理是很有必要的，这样有助于我们更方便的利用它的特性，达到我们的目的。</p>
+<p>我把内容主要分为二个部分。原理探索、案例分析</p>
+</blockquote>
+<h1 id="原理探索"><a href="#原理探索" class="headerlink" title="原理探索"></a>原理探索</h1><h2 id="dex文件"><a href="#dex文件" class="headerlink" title="dex文件"></a>dex文件</h2><p>我们在正向开发app编译时，编写的java代码，会编译成java字节码保存在.class后缀的文件中。然后再用dx工具将java字节码转换成dex文件（Dalvik字节码）。在转换的过程中，会将所有java字节码中的所有冗余信息组成一个常量池。例如多个class文件中都存在的字符串”hello world”。转换后将单独存放在一个地方，并且所有类共享。包括方法的签名也会组成常量池。我们将编译好的apk文件解压后就能拿到classes.dex文件。</p>
+        
+          <a class="article-more-a" href="/2021/07/08/android4/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">android基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/07/08/android4/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-android3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -195,74 +282,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/07/01/android3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-ghidra" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/30/ghidra/">ghidra</a>
-    </h1>
-  
-
-
-  <a href="javascript:;" class="archive-article-date">
-      <i class="icon-smile icon"></i> 阅读数:<span id="/2021/06/30/ghidra/" class="pageViews">0</span>次
-  </a>
-
-
-        
-        <a href="/2021/06/30/ghidra/" class="archive-article-date">
-  	<time datetime="2021-06-30T15:11:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/30/ghidra/">展开全文 >></a>
         </p>
       
 
